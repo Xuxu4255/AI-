@@ -8,3 +8,10 @@ venv/
 .vscode/
 .idea/
 *.log
+
+database_experiment/
+.env
+__pycache__/
+*.pyc
+venv/
+.venv/
