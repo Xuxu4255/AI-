@@ -1,23 +1,44 @@
-from fastapi import FastAPI,Depends
-from app.database import get_db
 from sqlalchemy.orm import Session
 from app import models
 
-app = FastAPI()
+
+#哈希加密
+def hash_password(password: str)->str:
+    import hashlib
+    return hashlib.sha256(password.encode("utf-8")).hexdigest()
 
 
-@app.post("/users")
 def create_user(db: Session,input_username: str,input_password: str,input_email: str):
     new_user = models.User(
-        user= input_username,
-        password_hash = input_password,
+        username= input_username,
+        password_hash = hash_password(input_password),
         email=input_email
     )
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
     return new_user
-    
+
+
+
+def get_user_by_username(db: Session,input_username: str):
+    user=db.query(models.User).filter(models.User.username==input_username).first()
+    return user
+
+
+
+def login_user(db: Session,input_username: str,input_password: str):
+    user=db.query(models.User).filter(models.User.username==input_username).first()
+
+    if user==None:
+        return False
+
+    if user.hash_password==input_password:
+        return True
+    return False
+
+
+
 #增加一个知识问答对
 def create_category(db: Session,input_name: str, input_description: str=None):
     #新建一个Category实例，调用MOD层封装好的数据库类
@@ -38,21 +59,46 @@ def create_category(db: Session,input_name: str, input_description: str=None):
     return new_category
 
 
+
 #通过cid来查询Category表里面的一条
 def get_category_by_id(db: Session,input_cid: int): 
     #在数据库会话中查询表Category,.filter加筛选条件，.first()只取第一条
     return db.query(models.Category).filter(models.Category.cid == input_cid).first()
+
     
 
-
+#
 def get_category_list(db: Session):
     return db.query(models.Category).all()
 
 
+
 #models.XX代表了表名 告诉我们要修改哪一个表
 def update_category(db: Session,input_cid: int,input_new_name: str,input_new_description: str):
-    db.query(models.Category).name=input_new_name
-    db.query(models.Category).description=input_new_description
+    category = db.query(models.Category).filter(models.Category.cid == input_cid).first()
+
+    if category is None:
+        return None
+
+    category.name = input_new_name
+    category.desrciption = input_new_description
+
+    db.commit()
+    db.refresh(category)
+
+    return category
 
 
-def
+
+def delete_category(db: Session,input_cid: int):
+    category = db.query(models.Category).filter(models.Category.cid==input_cid).first()
+    
+    if category is None:
+        return False
+
+    db.delete(category)
+    db.commit()
+    return True
+
+
+
