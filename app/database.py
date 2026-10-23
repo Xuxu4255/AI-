@@ -8,17 +8,22 @@
 #生成数据库会话
 #给其他模块提供 db 对象
 #让后面的 CRUD / 模型 能真正访问数据库
-from sqlalchemy import sessionmaker
+from sqlalchemy.orm import declarative_base, sessionmaker
 from sqlalchemy import create_engine
 from app.config import DATABASE_URL
+
+Base = declarative_base()
+#创建一个 SQLAlchemy 的“模型基类”，让后面的所有表模型都继承它。
+
+
 
 engine = create_engine(DATABASE_URL)
 #生成一个数据库连接引擎
 
-session = sessionmaker(bind = engine)
+SessionLocal = sessionmaker(bind = engine,autocommit=False,autoflush=False)
 
 def get_db():
-    db = session()
+    db = SessionLocal()
     try:
         yield db
     finally:
