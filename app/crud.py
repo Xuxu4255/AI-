@@ -33,7 +33,7 @@ def login_user(db: Session,input_username: str,input_password: str):
     if user==None:
         return False
 
-    if user.hash_password==input_password:
+    if user.password_hash==hash_password(input_password):
         return True
     return False
 
@@ -90,6 +90,7 @@ def update_category(db: Session,input_cid: int,input_new_name: str,input_new_des
 
 
 
+
 def delete_category(db: Session,input_cid: int):
     category = db.query(models.Category).filter(models.Category.cid==input_cid).first()
     
@@ -102,3 +103,73 @@ def delete_category(db: Session,input_cid: int):
 
 
 
+def create_knowledge(db: Session,input_title: str,input_content: str,
+                    input_category_id: int,input_keyword: str,input_summary: str,input_created_by: int):
+    new_knowledge = models.Knowledge(
+        title = input_title,
+        content = input_content,
+        category_id = input_category_id,
+        keyword = input_keyword,
+        summary=input_summary,
+        created_by=input_created_by
+    )
+
+    db.add(new_knowledge)
+    db.commit()
+    db.refresh(new_knowledge)
+    return new_knowledge
+
+
+
+def get_knowledge_list(db: Session,input_category_id: int,input_keyword: str):
+    if input_category_id==None and input_keyword==None :
+        return db.query(models.Knowledge).all()
+    elif input_category_id==None and input_keyword!=None :#模糊搜索
+        return db.query(models.Knowledge).filter(models.Knowledge.keyword.like(f"%{input_keyword}%")).all()
+    elif input_category_id!=None and input_keyword!=None :
+        return db.query(models.Knowledge).filter((models.Knowledge.keyword.like(f"%{input_keyword}%")) & (models.Knowledge.category_id==input_category_id))
+    else:
+        return db.query(models.Knowledge).filter(models.Knowledge.category_id==input_category_id)
+
+
+#kid在数据库中是主键
+def update_knowledge(db: Session,input_title: str,input_content: str,
+                     input_summary: str,input_kid: int,input_keyword: str,
+                     input_created_by: int,input_category_id: int):
+    under_update_knowledge = db.query(models.Knowledge).filter(models.Knowledge.kid==input_kid).first()
+    if under_update_knowledge==None:
+        return None
+    if input_title !=None:
+        under_update_knowledge.title = input_title
+    if input_content != None:
+        under_update_knowledge.content = input_content
+    if input_summary != None:
+        under_update_knowledge.summary = input_summary
+    if input_keyword != None:
+        under_update_knowledge.keyword = input_keyword
+    if input_category_id != None:
+        under_update_knowledge.category_id = input_category_id
+    if input_created_by != None:
+        under_update_knowledge.created_by = input_created_by
+
+    db.commit()
+    db.refresh(under_update_knowledge)
+    return under_update_knowledge
+
+
+def delete_knowledge(db: Session,input_kid: int):
+    under_delete_knowledge = db.query(models.Knowledge).filter(models.Knowledge.kid==input_kid).first()
+
+    if under_delete_knowledge==None:
+        return False
+
+    db.delete(under_delete_knowledge)
+    db.commit()
+    return True
+
+def get_knowledge_by_id(db: Session, input_kid: int):
+    return db.query(models.Knowledge).filter(models.Knowledge.kid == input_kid).first()
+
+
+    
+    

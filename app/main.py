@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 from app.database import get_db
-from app import crud
+from app import crud, schemas
 
 app=FastAPI()
 
@@ -65,9 +65,113 @@ def get_user_by_username(input_username: str,db: Session=Depends(get_db)):
 修改知识
 删除知识
 '''
+#payload，前端转来的JSON数据对象
+
+@app.post("/knowledge")
+def create_knowledge_api(payload: schemas.KnowledgeCreate, db: Session = Depends(get_db)):
+    knowledge = crud.create_knowledge(
+        db=db,
+        input_title=payload.title,
+        input_content=payload.content,
+        input_summary=payload.summary,
+        input_category_id=payload.category_id,
+        input_created_by=payload.created_by,
+        input_keyword=payload.keyword,
+    )
+
+    if knowledge is None:
+        return {"message": "分类或用户不存在，知识创建失败"}
+
+    return {
+        "message": "知识创建成功，感谢你的提交！",
+        "knowledge": {
+            "kid": knowledge.kid,
+            "title": knowledge.title,
+            "category_id": knowledge.category_id,
+            "created_by": knowledge.created_by,
+            "keyword": knowledge.keyword,
+        }
+    }
+
+#“查询知识列表接口，支持可选的分类筛选和关键词搜索，并把结果按 JSON 返回给前端。
 
 
 
+@app.get("/knowledge/{knowledge_id}")
+def get_knowledge_detail_api(knowledge_id: int, db: Session = Depends(get_db)):
+    knowledge = crud.get_knowledge_by_id(db, knowledge_id)
+    if knowledge is None:
+        return {"message": "知识不存在"}
+
+    return {
+        "kid": knowledge.kid,
+        "title": knowledge.title,
+        "content": knowledge.content,
+        "summary": knowledge.summary,
+        "category_id": knowledge.category_id,
+        "created_by": knowledge.created_by,
+        "keyword": knowledge.keyword,
+        "status": knowledge.status,
+    }
+
+
+@app.put("/knowledge/{knowledge_id}")
+def update_knowledge_api(knowledge_kid: int, payload: schemas.KnowledgeUpdate, db: Session = Depends(get_db)):
+    knowledge = crud.update_knowledge(
+        db=db,
+        input_kid=knowledge_kid,
+        input_title=payload.title,
+        input_content=payload.content,
+        input_summary=payload.summary,
+        input_category_id=payload.category_id,
+        input_created_by=payload.created_by,
+        input_keyword=payload.keyword,
+    )
+
+    if knowledge is None:
+        return {"message": "知识不存在或关联数据无效"}
+
+    return {
+        "message": "知识更新成功",
+        "knowledge": {
+            "kid": knowledge.kid,
+            "title": knowledge.title,
+            "category_id": knowledge.category_id,
+            "keyword": knowledge.keyword,
+        }
+    }
+
+
+@app.delete("/knowledge/{knowledge_id}")
+def delete_knowledge_api(knowledge_kid: int, db: Session = Depends(get_db)):
+    is_deleted = crud.delete_knowledge(db, knowledge_kid)
+    if not is_deleted:
+        return {"message": "知识不存在"}
+    return {"message": "知识删除成功"}
+
+
+@app.get("/knowledge")
+def get_knowledge_list_api(category_id: int = None, keyword: str = None, db: Session = Depends(get_db)):
+    knowledge_list = crud.get_knowledge_list(
+        db=db,
+        input_category_id=category_id,
+        input_keyword=keyword
+    )
+    return {
+        "count": len(knowledge_list),
+        "items": [
+            {
+                "kid": item.kid,
+                "title": item.title,
+                "summary": item.summary,
+                "category_id": item.category_id,
+                "created_by": item.created_by,
+                "keyword": item.keyword,
+                "status": item.status,
+            }
+            for item in knowledge_list
+        ]
+    }
 #3.问答模块
 '''
 创建问答对
