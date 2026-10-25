@@ -92,7 +92,7 @@ class QaPair(Base):
     qid = Column(Integer, primary_key=True, autoincrement=True)
     question_text = Column(Text, nullable=False)
     answer_text = Column(Text, nullable=False)
-    knowledge_id = Column(Integer, ForeignKey("knowledge.kid"), nullable=False)
+    knowledge_kid = Column(Integer, ForeignKey("knowledge.kid"), nullable=False)
     created_by = Column(Integer, ForeignKey("users.uid"), nullable=False)
     created_at = Column(DateTime, server_default=func.current_timestamp(), nullable=False)
     status = Column(String(20), default="pending", nullable=False)
@@ -106,7 +106,7 @@ class Feedback(Base):
     __tablename__ = "feedback"
 
     fid = Column(Integer, primary_key=True, autoincrement=True)
-    knowledge_id = Column(Integer, ForeignKey("knowledge.kid"))
+    knowledge_kid = Column(Integer, ForeignKey("knowledge.kid"))
     qa_id = Column(Integer, ForeignKey("qa_pairs.qid"))
     user_id = Column(Integer, ForeignKey("users.uid"), nullable=False)
     feedback_type = Column(String(20), nullable=False)

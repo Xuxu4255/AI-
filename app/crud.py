@@ -101,7 +101,7 @@ def delete_category(db: Session,input_cid: int):
     db.commit()
     return True
 
-
+#知识的增删改查
 
 def create_knowledge(db: Session,input_title: str,input_content: str,
                     input_category_id: int,input_keyword: str,input_summary: str,input_created_by: int):
@@ -121,7 +121,7 @@ def create_knowledge(db: Session,input_title: str,input_content: str,
 
 
 
-def get_knowledge_list(db: Session,input_category_id: int,input_keyword: str):
+def get_knowledge_list(db: Session,input_category_id: int = None,input_keyword: str = None):
     if input_category_id==None and input_keyword==None :
         return db.query(models.Knowledge).all()
     elif input_category_id==None and input_keyword!=None :#模糊搜索
@@ -169,6 +169,84 @@ def delete_knowledge(db: Session,input_kid: int):
 
 def get_knowledge_by_id(db: Session, input_kid: int):
     return db.query(models.Knowledge).filter(models.Knowledge.kid == input_kid).first()
+
+
+# 创建问答对
+def create_qapair(db: Session, input_question_text: str,
+                input_answer_text: str, input_knowledge_kid: int, input_created_by: int):
+    new_qapair = models.QaPair(
+        question_text=input_question_text,
+        answer_text=input_answer_text,
+        knowledge_kid=input_knowledge_kid,
+        created_by=input_created_by,
+        status="pending"#默认为审核
+    )
+
+    db.add(new_qapair)
+    db.commit()
+    db.refresh(new_qapair)
+
+    return new_qapair
+
+
+# 查询条件说明：
+# 1. qid 是主键，优先作为唯一查询条件
+# 2. knowledge_id 和 created_by 只能作为辅助筛选条件
+# 3. 这两个字段可以分开用，也可以一起用
+# 4. 三个条件可以同时存在，最终是“AND”关系
+# 5. 只传 qid 时，按主键精确查询
+# 6. 只传 knowledge_id 或 created_by 时，按对应筛选查询
+# 7. 传两个条件时，按两者组合筛选
+# 8. 传三个条件时，按三者同时满足筛选
+
+def get_qapair_list(db: Session, input_qid: int = None, input_knowledge_kid: int = None,
+                   input_created_by: int = None,input_status: str = None):
+    query = db.query(models.QaPair)
+
+    if input_qid is not None:
+        query = query.filter(models.QaPair.qid == input_qid)
+    if input_knowledge_kid is not None:
+        query = query.filter(models.QaPair.knowledge_kid == input_knowledge_kid)
+    if input_created_by is not None:
+        query = query.filter(models.QaPair.created_by == input_created_by)
+    if input_status is not None:
+        query = query.filter(models.QaPair.status == input_status)
+
+    return query.all()
+
+
+
+def get_qapair_by_id(db: Session, input_qid: int = None):
+    return db.query(models.QaPair).filter(models.QaPair.qid == input_qid).first()
+
+
+
+
+def review_qapair(db: Session, input_qid: int, input_status: str):
+    under_review_qapair = db.query(models.QaPair).filter(models.QaPair.qid == input_qid).first()
+
+    if under_review_qapair == None:
+        return None
+    if input_status not in ["approved", "rejected"]:
+        return None
+
+    under_review_qapair.status = input_status
+    db.commit()
+    db.refresh(under_review_qapair)
+
+    return under_review_qapair
+
+
+
+    
+
+
+
+
+
+
+
+
 
 
     

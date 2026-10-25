@@ -56,7 +56,7 @@ class KnowledgeUpdate(BaseModel):
 
 
 class FeedbackCreate(BaseModel):
-    knowledge_id: Optional[int]=None
+    knowledge_kid: Optional[int]=None
     qa_id: Optional[int]=None
     user_id: int
     content: Optional[str]=None
@@ -65,11 +65,11 @@ class FeedbackCreate(BaseModel):
 
 
 class QaCreate(BaseModel):
-    knowledge_id: int
+    knowledge_kid: int
     question_text: str
     answer_text: str
     created_by: int
-    status: Literal["pending","approved","reject"] = "pending"
+    status: Literal["pending","approved","rejected"] = "pending"
 
 
 

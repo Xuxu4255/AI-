@@ -97,9 +97,9 @@ def create_knowledge_api(payload: schemas.KnowledgeCreate, db: Session = Depends
 
 
 
-@app.get("/knowledge/{knowledge_id}")
-def get_knowledge_detail_api(knowledge_id: int, db: Session = Depends(get_db)):
-    knowledge = crud.get_knowledge_by_id(db, knowledge_id)
+@app.get("/knowledge/{knowledge_kid}")
+def get_knowledge_detail_api(knowledge_kid: int, db: Session = Depends(get_db)):
+    knowledge = crud.get_knowledge_by_id(db, knowledge_kid)
     if knowledge is None:
         return {"message": "知识不存在"}
 
@@ -115,7 +115,7 @@ def get_knowledge_detail_api(knowledge_id: int, db: Session = Depends(get_db)):
     }
 
 
-@app.put("/knowledge/{knowledge_id}")
+@app.put("/knowledge/{knowledge_kid}")
 def update_knowledge_api(knowledge_kid: int, payload: schemas.KnowledgeUpdate, db: Session = Depends(get_db)):
     knowledge = crud.update_knowledge(
         db=db,
@@ -179,6 +179,70 @@ def get_knowledge_list_api(category_id: int = None, keyword: str = None, db: Ses
 审核问答对
 处理问答反馈
 '''
+@app.post("/qa_pairs")
+def create_qapair_api(payload: schemas.QaCreate, db: Session = Depends(get_db)):
+    qapair = crud.create_qapair(
+        db=db,
+        input_question_text=payload.question_text,
+        input_answer_text=payload.answer_text,
+        input_knowledge_kid=payload.knowledge_kid,
+        input_created_by=payload.created_by
+    )
+
+    return {
+        "message": "问答对已提交，等待审核",
+        "qa_pair": {
+            "qid": qapair.qid,
+            "question_text": qapair.question_text,
+            "answer_text": qapair.answer_text,
+            "status": qapair.status
+        }
+    }
+
+@app.get("/qa_pairs")
+def get_qapair_api(
+    qid: int = None,
+    knowledge_kid: int = None,
+    created_by: int = None,
+    status: str = None,
+    db: Session = Depends(get_db)
+):
+    qas = crud.get_qapair_list(
+        db=db,
+        input_qid=qid,
+        input_knowledge_kid=knowledge_kid,
+        input_created_by=created_by,
+        input_status=status
+    )
+
+    return {
+        "count": len(qas),
+        "items": [
+            {
+                "qid": item.qid,
+                "question_text": item.question_text,
+                "answer_text": item.answer_text,
+                "knowledge_id": item.knowledge_id,
+                "created_by": item.created_by,
+                "status": item.status
+            }
+            for item in qas
+        ]
+    }
+
+@app.patch("/qa_pairs/{qid}/review")
+def review_qapair_api(qid: int, status: str, db: Session = Depends(get_db)):
+    qapair = crud.review_qapair(db, qid, status)
+
+    if qapair is None:
+        return {"message": "审核失败，未找到该问答对或状态非法"}
+
+    return {
+        "message": "审核成功",
+        "qid": qapair.qid,
+        "status": qapair.status
+    }
+
 
 #4.反馈模块
 '''
@@ -188,6 +252,8 @@ def get_knowledge_list_api(category_id: int = None, keyword: str = None, db: Ses
 反馈统计
 '''
 
+
+
 #5.设计与搜索
 '''
 tags
@@ -196,10 +262,16 @@ related_knowledge
 knowledge_embedding
 '''
 
+
+
+
 #6.日志模块
 '''
 query_logs
 update_logs
 '''
+
+
+
 
 #7.AI模块
