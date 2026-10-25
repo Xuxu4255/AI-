@@ -56,16 +56,23 @@ class KnowledgeUpdate(BaseModel):
 
 
 class FeedbackCreate(BaseModel):
-    knowledge_kid: Optional[int]=None
+    knowledge_id: Optional[int]=None
     qa_id: Optional[int]=None
     user_id: int
     content: Optional[str]=None
     feedback_type: Literal["like","dislike","error","suggestion"]
 
 
+class FeedbackUpdate(BaseModel):
+    knowledge_id: Optional[int]=None
+    qa_id: Optional[int]=None
+    content: Optional[str]=None
+    feedback_type: Optional[Literal["like","dislike","error","suggestion"]]=None
+
+
 
 class QaCreate(BaseModel):
-    knowledge_kid: int
+    knowledge_id: int
     question_text: str
     answer_text: str
     created_by: int

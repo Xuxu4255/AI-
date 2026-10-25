@@ -1,3 +1,4 @@
+from sqlalchemy import or_
 from sqlalchemy.orm import Session
 from app import models
 
@@ -9,6 +10,13 @@ def hash_password(password: str)->str:
 
 
 def create_user(db: Session,input_username: str,input_password: str,input_email: str):
+    # 用户名或邮箱已存在时直接返回 None
+    exists = db.query(models.User).filter(
+        or_(models.User.username == input_username, models.User.email == input_email)
+    ).first()
+    if exists is not None:
+        return None
+
     new_user = models.User(
         username= input_username,
         password_hash = hash_password(input_password),
@@ -24,6 +32,10 @@ def create_user(db: Session,input_username: str,input_password: str,input_email:
 def get_user_by_username(db: Session,input_username: str):
     user=db.query(models.User).filter(models.User.username==input_username).first()
     return user
+
+
+def get_user_by_id(db: Session, input_uid: int):
+    return db.query(models.User).filter(models.User.uid == input_uid).first()
 
 
 
@@ -81,7 +93,7 @@ def update_category(db: Session,input_cid: int,input_new_name: str,input_new_des
         return None
 
     category.name = input_new_name
-    category.desrciption = input_new_description
+    category.description = input_new_description
 
     db.commit()
     db.refresh(category)
@@ -105,6 +117,12 @@ def delete_category(db: Session,input_cid: int):
 
 def create_knowledge(db: Session,input_title: str,input_content: str,
                     input_category_id: int,input_keyword: str,input_summary: str,input_created_by: int):
+    # 先校验外键是否存在，避免数据库抛 IntegrityError
+    if get_category_by_id(db, input_category_id) is None:
+        return None
+    if get_user_by_id(db, input_created_by) is None:
+        return None
+
     new_knowledge = models.Knowledge(
         title = input_title,
         content = input_content,
@@ -122,14 +140,14 @@ def create_knowledge(db: Session,input_title: str,input_content: str,
 
 
 def get_knowledge_list(db: Session,input_category_id: int = None,input_keyword: str = None):
-    if input_category_id==None and input_keyword==None :
-        return db.query(models.Knowledge).all()
-    elif input_category_id==None and input_keyword!=None :#模糊搜索
-        return db.query(models.Knowledge).filter(models.Knowledge.keyword.like(f"%{input_keyword}%")).all()
-    elif input_category_id!=None and input_keyword!=None :
-        return db.query(models.Knowledge).filter((models.Knowledge.keyword.like(f"%{input_keyword}%")) & (models.Knowledge.category_id==input_category_id))
-    else:
-        return db.query(models.Knowledge).filter(models.Knowledge.category_id==input_category_id)
+    query = db.query(models.Knowledge)
+
+    if input_category_id is not None:
+        query = query.filter(models.Knowledge.category_id == input_category_id)
+    if input_keyword is not None and input_keyword != "":
+        query = query.filter(models.Knowledge.keyword.like(f"%{input_keyword}%"))
+
+    return query.all()
 
 
 #kid在数据库中是主键
@@ -139,6 +157,13 @@ def update_knowledge(db: Session,input_title: str,input_content: str,
     under_update_knowledge = db.query(models.Knowledge).filter(models.Knowledge.kid==input_kid).first()
     if under_update_knowledge==None:
         return None
+
+    # 要修改的外键必须先存在
+    if input_category_id is not None and get_category_by_id(db, input_category_id) is None:
+        return None
+    if input_created_by is not None and get_user_by_id(db, input_created_by) is None:
+        return None
+
     if input_title !=None:
         under_update_knowledge.title = input_title
     if input_content != None:
@@ -173,11 +198,17 @@ def get_knowledge_by_id(db: Session, input_kid: int):
 
 # 创建问答对
 def create_qapair(db: Session, input_question_text: str,
-                input_answer_text: str, input_knowledge_kid: int, input_created_by: int):
+                input_answer_text: str, input_knowledge_id: int, input_created_by: int):
+    # 先校验外键是否存在
+    if get_knowledge_by_id(db, input_knowledge_id) is None:
+        return None
+    if get_user_by_id(db, input_created_by) is None:
+        return None
+
     new_qapair = models.QaPair(
         question_text=input_question_text,
         answer_text=input_answer_text,
-        knowledge_kid=input_knowledge_kid,
+        knowledge_id=input_knowledge_id,
         created_by=input_created_by,
         status="pending"#默认为审核
     )
@@ -199,14 +230,14 @@ def create_qapair(db: Session, input_question_text: str,
 # 7. 传两个条件时，按两者组合筛选
 # 8. 传三个条件时，按三者同时满足筛选
 
-def get_qapair_list(db: Session, input_qid: int = None, input_knowledge_kid: int = None,
+def get_qapair_list(db: Session, input_qid: int = None, input_knowledge_id: int = None,
                    input_created_by: int = None,input_status: str = None):
     query = db.query(models.QaPair)
 
     if input_qid is not None:
         query = query.filter(models.QaPair.qid == input_qid)
-    if input_knowledge_kid is not None:
-        query = query.filter(models.QaPair.knowledge_kid == input_knowledge_kid)
+    if input_knowledge_id is not None:
+        query = query.filter(models.QaPair.knowledge_id == input_knowledge_id)
     if input_created_by is not None:
         query = query.filter(models.QaPair.created_by == input_created_by)
     if input_status is not None:
@@ -238,7 +269,96 @@ def review_qapair(db: Session, input_qid: int, input_status: str):
 
 
 
-    
+
+
+
+def create_feedback(db: Session, input_user_id: int, input_feedback_type: str,
+                   input_content: str = None, input_knowledge_id: int = None,
+                   input_qa_id: int = None):
+    # 先校验外键是否存在
+    if get_user_by_id(db, input_user_id) is None:
+        return None
+    if input_knowledge_id is not None and get_knowledge_by_id(db, input_knowledge_id) is None:
+        return None
+    if input_qa_id is not None and get_qapair_by_id(db, input_qa_id) is None:
+        return None
+
+    new_feedback = models.Feedback(
+        knowledge_id=input_knowledge_id,
+        qa_id=input_qa_id,
+        user_id=input_user_id,
+        feedback_type=input_feedback_type,
+        content=input_content,
+    )
+
+    db.add(new_feedback)
+    db.commit()
+    db.refresh(new_feedback)
+
+    return new_feedback
+
+
+def get_feedback_list(db: Session, input_fid: int = None, input_knowledge_id: int = None,
+                    input_qa_id: int = None, input_user_id: int = None,
+                    input_feedback_type: str = None):
+    query = db.query(models.Feedback)
+
+    if input_fid is not None:
+        query = query.filter(models.Feedback.fid == input_fid)
+    if input_knowledge_id is not None:
+        query = query.filter(models.Feedback.knowledge_id == input_knowledge_id)
+    if input_qa_id is not None:
+        query = query.filter(models.Feedback.qa_id == input_qa_id)
+    if input_user_id is not None:
+        query = query.filter(models.Feedback.user_id == input_user_id)
+    if input_feedback_type is not None:
+        query = query.filter(models.Feedback.feedback_type == input_feedback_type)
+
+    return query.all()
+
+
+def get_feedback_by_id(db: Session, input_fid: int):
+    return db.query(models.Feedback).filter(models.Feedback.fid == input_fid).first()
+
+
+def update_feedback(db: Session, input_fid: int, input_content: str = None,
+                  input_feedback_type: str = None, input_knowledge_id: int = None,
+                  input_qa_id: int = None):
+    feedback = db.query(models.Feedback).filter(models.Feedback.fid == input_fid).first()
+
+    if feedback is None:
+        return None
+
+    # 要修改的外键必须先存在
+    if input_knowledge_id is not None and get_knowledge_by_id(db, input_knowledge_id) is None:
+        return None
+    if input_qa_id is not None and get_qapair_by_id(db, input_qa_id) is None:
+        return None
+
+    if input_content is not None:
+        feedback.content = input_content
+    if input_feedback_type is not None:
+        feedback.feedback_type = input_feedback_type
+    if input_knowledge_id is not None:
+        feedback.knowledge_id = input_knowledge_id
+    if input_qa_id is not None:
+        feedback.qa_id = input_qa_id
+
+    db.commit()
+    db.refresh(feedback)
+    return feedback
+
+
+def delete_feedback(db: Session, input_fid: int):
+    feedback = db.query(models.Feedback).filter(models.Feedback.fid == input_fid).first()
+
+    if feedback is None:
+        return False
+
+    db.delete(feedback)
+    db.commit()
+    return True
+
 
 
 
