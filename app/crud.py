@@ -188,6 +188,30 @@ def delete_knowledge(db: Session,input_kid: int):
     if under_delete_knowledge==None:
         return False
 
+    # 先把挂在知识下面的子数据清掉，不然外键会把删除拦住
+    # 1. 反馈：既可能挂着知识，也可能挂着这条知识下的问答对
+    qa_id_list = db.query(models.QaPair.qid).filter(models.QaPair.knowledge_id == input_kid).all()
+    qa_id_list = [row[0] for row in qa_id_list]
+    db.query(models.Feedback).filter(or_(
+        models.Feedback.knowledge_id == input_kid,
+        models.Feedback.qa_id.in_(qa_id_list),
+    )).delete()
+
+    # 2. 问答对、文档、更新日志
+    db.query(models.QaPair).filter(models.QaPair.knowledge_id == input_kid).delete()
+    db.query(models.Document).filter(models.Document.knowledge_id == input_kid).delete()
+    db.query(models.UpdateLog).filter(models.UpdateLog.knowledge_id == input_kid).delete()
+
+    # 3. 标签绑定、向量、关联知识
+    db.query(models.KnowledgeTag).filter(models.KnowledgeTag.knowledge_id == input_kid).delete()
+    db.query(models.KnowledgeEmbedding).filter(models.KnowledgeEmbedding.knowledge_id == input_kid).delete()
+    db.query(models.RelatedKnowledge).filter(
+        or_(
+            models.RelatedKnowledge.knowledge_id == input_kid,
+            models.RelatedKnowledge.related_knowledge_id == input_kid,
+        )
+    ).delete()
+
     db.delete(under_delete_knowledge)
     db.commit()
     return True
@@ -356,6 +380,419 @@ def delete_feedback(db: Session, input_fid: int):
         return False
 
     db.delete(feedback)
+    db.commit()
+    return True
+
+
+#5.标签、关联知识、向量的增删改查，以及搜索
+
+#标签的增删改查
+
+def get_tag_by_id(db: Session, input_tid: int):
+    return db.query(models.Tag).filter(models.Tag.tid == input_tid).first()
+
+
+def get_tag_by_name(db: Session, input_name: str):
+    return db.query(models.Tag).filter(models.Tag.name == input_name).first()
+
+
+def get_tag_list(db: Session):
+    return db.query(models.Tag).all()
+
+
+def create_tag(db: Session, input_name: str, input_description: str = None):
+    # 标签名是唯一的，重名就直接返回 None
+    if get_tag_by_name(db, input_name) is not None:
+        return None
+
+    new_tag = models.Tag(
+        name=input_name,
+        description=input_description
+    )
+
+    db.add(new_tag)
+    db.commit()
+    db.refresh(new_tag)
+    return new_tag
+
+
+def update_tag(db: Session, input_tid: int, input_new_name: str = None, input_new_description: str = None):
+    tag = get_tag_by_id(db, input_tid)
+
+    if tag is None:
+        return None
+
+    # 改名字的时候要保证不和别的标签重名
+    if input_new_name is not None and input_new_name != tag.name:
+        if get_tag_by_name(db, input_new_name) is not None:
+            return None
+
+    if input_new_name is not None:
+        tag.name = input_new_name
+    if input_new_description is not None:
+        tag.description = input_new_description
+
+    db.commit()
+    db.refresh(tag)
+    return tag
+
+
+def delete_tag(db: Session, input_tid: int):
+    tag = get_tag_by_id(db, input_tid)
+
+    if tag is None:
+        return False
+
+    # 先解绑知识，不然外键会拦住删除
+    db.query(models.KnowledgeTag).filter(models.KnowledgeTag.tag_id == input_tid).delete()
+
+    db.delete(tag)
+    db.commit()
+    return True
+
+
+#知识和标签的绑定
+
+def get_knowledge_tag(db: Session, input_knowledge_id: int, input_tag_id: int):
+    return db.query(models.KnowledgeTag).filter(
+        models.KnowledgeTag.knowledge_id == input_knowledge_id,
+        models.KnowledgeTag.tag_id == input_tag_id
+    ).first()
+
+
+def add_knowledge_tag(db: Session, input_knowledge_id: int, input_tag_id: int):
+    # 先校验两个外键是否存在
+    if get_knowledge_by_id(db, input_knowledge_id) is None:
+        return None
+    if get_tag_by_id(db, input_tag_id) is None:
+        return None
+    # 组合主键，重复绑定会报错，这里提前挡掉
+    if get_knowledge_tag(db, input_knowledge_id, input_tag_id) is not None:
+        return None
+
+    new_knowledge_tag = models.KnowledgeTag(
+        knowledge_id=input_knowledge_id,
+        tag_id=input_tag_id
+    )
+
+    db.add(new_knowledge_tag)
+    db.commit()
+    db.refresh(new_knowledge_tag)
+    return new_knowledge_tag
+
+
+def remove_knowledge_tag(db: Session, input_knowledge_id: int, input_tag_id: int):
+    knowledge_tag = get_knowledge_tag(db, input_knowledge_id, input_tag_id)
+
+    if knowledge_tag is None:
+        return False
+
+    db.delete(knowledge_tag)
+    db.commit()
+    return True
+
+
+#某个知识身上的所有标签
+def get_tags_by_knowledge(db: Session, input_knowledge_id: int):
+    return db.query(models.Tag).join(
+        models.KnowledgeTag, models.KnowledgeTag.tag_id == models.Tag.tid
+    ).filter(
+        models.KnowledgeTag.knowledge_id == input_knowledge_id
+    ).all()
+
+
+#某个标签下的所有知识
+def get_knowledge_by_tag(db: Session, input_tag_id: int):
+    return db.query(models.Knowledge).join(
+        models.KnowledgeTag, models.KnowledgeTag.knowledge_id == models.Knowledge.kid
+    ).filter(
+        models.KnowledgeTag.tag_id == input_tag_id
+    ).all()
+
+
+#相关知识的增删查
+
+def get_related_knowledge_by_id(db: Session, input_rid: int):
+    return db.query(models.RelatedKnowledge).filter(models.RelatedKnowledge.rid == input_rid).first()
+
+
+def create_related_knowledge(db: Session, input_knowledge_id: int,
+                            input_related_knowledge_id: int, input_relevance_score: float = 0.0):
+    # 两条知识都必须存在
+    if get_knowledge_by_id(db, input_knowledge_id) is None:
+        return None
+    if get_knowledge_by_id(db, input_related_knowledge_id) is None:
+        return None
+    # 自己不能和自己关联
+    if input_knowledge_id == input_related_knowledge_id:
+        return None
+    # 同一条关联不重复插入
+    exists = db.query(models.RelatedKnowledge).filter(
+        models.RelatedKnowledge.knowledge_id == input_knowledge_id,
+        models.RelatedKnowledge.related_knowledge_id == input_related_knowledge_id
+    ).first()
+    if exists is not None:
+        return None
+
+    new_relation = models.RelatedKnowledge(
+        knowledge_id=input_knowledge_id,
+        related_knowledge_id=input_related_knowledge_id,
+        relevance_score=input_relevance_score
+    )
+
+    db.add(new_relation)
+    db.commit()
+    db.refresh(new_relation)
+    return new_relation
+
+
+#查某条知识关联出去的知识，相关度高的排前面
+def get_related_knowledge_list(db: Session, input_knowledge_id: int):
+    return db.query(models.RelatedKnowledge).filter(
+        models.RelatedKnowledge.knowledge_id == input_knowledge_id
+    ).order_by(
+        models.RelatedKnowledge.relevance_score.desc()
+    ).all()
+
+
+def delete_related_knowledge(db: Session, input_rid: int):
+    relation = get_related_knowledge_by_id(db, input_rid)
+
+    if relation is None:
+        return False
+
+    db.delete(relation)
+    db.commit()
+    return True
+
+
+#知识向量
+
+def get_embedding_by_id(db: Session, input_embedding_id: int):
+    return db.query(models.KnowledgeEmbedding).filter(
+        models.KnowledgeEmbedding.embedding_id == input_embedding_id
+    ).first()
+
+
+#取某条知识最新的一条向量
+def get_embedding_by_knowledge(db: Session, input_knowledge_id: int):
+    return db.query(models.KnowledgeEmbedding).filter(
+        models.KnowledgeEmbedding.knowledge_id == input_knowledge_id
+    ).order_by(
+        models.KnowledgeEmbedding.embedding_id.desc()
+    ).first()
+
+
+def create_embedding(db: Session, input_knowledge_id: int, input_embedding_model: str,
+                    input_embedding_text: str = None, input_embedding_vector: str = None):
+    # 先校验外键是否存在
+    if get_knowledge_by_id(db, input_knowledge_id) is None:
+        return None
+
+    new_embedding = models.KnowledgeEmbedding(
+        knowledge_id=input_knowledge_id,
+        embedding_model=input_embedding_model,
+        embedding_text=input_embedding_text,
+        embedding_vector=input_embedding_vector
+    )
+
+    db.add(new_embedding)
+    db.commit()
+    db.refresh(new_embedding)
+    return new_embedding
+
+
+def update_embedding(db: Session, input_embedding_id: int, input_embedding_model: str = None,
+                    input_embedding_text: str = None, input_embedding_vector: str = None):
+    embedding = get_embedding_by_id(db, input_embedding_id)
+
+    if embedding is None:
+        return None
+
+    if input_embedding_model is not None:
+        embedding.embedding_model = input_embedding_model
+    if input_embedding_text is not None:
+        embedding.embedding_text = input_embedding_text
+    if input_embedding_vector is not None:
+        embedding.embedding_vector = input_embedding_vector
+
+    db.commit()
+    db.refresh(embedding)
+    return embedding
+
+
+def delete_embedding(db: Session, input_embedding_id: int):
+    embedding = get_embedding_by_id(db, input_embedding_id)
+
+    if embedding is None:
+        return False
+
+    db.delete(embedding)
+    db.commit()
+    return True
+
+
+#搜索：关键词、分类、标签、状态可以单独用，也可以组合用
+def search_knowledge(db: Session, input_keyword: str = None, input_category_id: int = None,
+                    input_tag_id: int = None, input_status: str = None):
+    query = db.query(models.Knowledge)
+
+    if input_category_id is not None:
+        query = query.filter(models.Knowledge.category_id == input_category_id)
+    if input_status is not None:
+        query = query.filter(models.Knowledge.status == input_status)
+    if input_keyword is not None and input_keyword != "":
+        # 标题、正文、摘要、关键词任意一个命中就算搜索到
+        query = query.filter(or_(
+            models.Knowledge.title.like(f"%{input_keyword}%"),
+            models.Knowledge.content.like(f"%{input_keyword}%"),
+            models.Knowledge.summary.like(f"%{input_keyword}%"),
+            models.Knowledge.keyword.like(f"%{input_keyword}%"),
+        ))
+    if input_tag_id is not None:
+        query = query.join(
+            models.KnowledgeTag, models.KnowledgeTag.knowledge_id == models.Knowledge.kid
+        ).filter(models.KnowledgeTag.tag_id == input_tag_id)
+
+    # 标签join可能让一条知识出现多次，用distinct去重
+    return query.distinct().all()
+
+
+#6.日志模块：查询日志和更新日志
+
+#查询日志：记录用户问了什么、系统答了什么
+
+def create_query_log(db: Session, input_question_text: str, input_user_id: int = None,
+                    input_answer_text: str = None, input_model_name: str = None,
+                    input_retrieval_count: int = 0, input_feedback_status: str = "unrated"):
+    # user_id 可以为空（游客提问），但传了就必须是真实用户
+    if input_user_id is not None and get_user_by_id(db, input_user_id) is None:
+        return None
+
+    new_query_log = models.QueryLog(
+        user_id=input_user_id,
+        question_text=input_question_text,
+        answer_text=input_answer_text,
+        model_name=input_model_name,
+        retrieval_count=input_retrieval_count,
+        feedback_status=input_feedback_status
+    )
+
+    db.add(new_query_log)
+    db.commit()
+    db.refresh(new_query_log)
+    return new_query_log
+
+
+def get_query_log_by_id(db: Session, input_lid: int):
+    return db.query(models.QueryLog).filter(models.QueryLog.lid == input_lid).first()
+
+
+#查询条件可以单独用，也可以组合用，最终是AND关系
+def get_query_log_list(db: Session, input_lid: int = None, input_user_id: int = None,
+                    input_feedback_status: str = None):
+    query = db.query(models.QueryLog)
+
+    if input_lid is not None:
+        query = query.filter(models.QueryLog.lid == input_lid)
+    if input_user_id is not None:
+        query = query.filter(models.QueryLog.user_id == input_user_id)
+    if input_feedback_status is not None:
+        query = query.filter(models.QueryLog.feedback_status == input_feedback_status)
+
+    #日志按时间倒序，最新的排前面
+    return query.order_by(models.QueryLog.lid.desc()).all()
+
+
+def update_query_log(db: Session, input_lid: int, input_answer_text: str = None,
+                    input_model_name: str = None, input_retrieval_count: int = None,
+                    input_feedback_status: str = None):
+    query_log = get_query_log_by_id(db, input_lid)
+
+    if query_log is None:
+        return None
+
+    if input_answer_text is not None:
+        query_log.answer_text = input_answer_text
+    if input_model_name is not None:
+        query_log.model_name = input_model_name
+    if input_retrieval_count is not None:
+        query_log.retrieval_count = input_retrieval_count
+    if input_feedback_status is not None:
+        query_log.feedback_status = input_feedback_status
+
+    db.commit()
+    db.refresh(query_log)
+    return query_log
+
+
+def delete_query_log(db: Session, input_lid: int):
+    query_log = get_query_log_by_id(db, input_lid)
+
+    if query_log is None:
+        return False
+
+    db.delete(query_log)
+    db.commit()
+    return True
+
+
+#更新日志：记录谁对哪条知识做了什么操作
+
+def create_update_log(db: Session, input_knowledge_id: int, input_user_id: int,
+                    input_action_type: str, input_old_value: str = None,
+                    input_new_value: str = None):
+    # 先校验外键是否存在
+    if get_knowledge_by_id(db, input_knowledge_id) is None:
+        return None
+    if get_user_by_id(db, input_user_id) is None:
+        return None
+    # 操作类型是枚举，不合法就不写库
+    if input_action_type not in ["create", "update", "delete", "publish", "revert"]:
+        return None
+
+    new_update_log = models.UpdateLog(
+        knowledge_id=input_knowledge_id,
+        user_id=input_user_id,
+        action_type=input_action_type,
+        old_value=input_old_value,
+        new_value=input_new_value
+    )
+
+    db.add(new_update_log)
+    db.commit()
+    db.refresh(new_update_log)
+    return new_update_log
+
+
+def get_update_log_by_id(db: Session, input_log_id: int):
+    return db.query(models.UpdateLog).filter(models.UpdateLog.log_id == input_log_id).first()
+
+
+def get_update_log_list(db: Session, input_log_id: int = None, input_knowledge_id: int = None,
+                    input_user_id: int = None, input_action_type: str = None):
+    query = db.query(models.UpdateLog)
+
+    if input_log_id is not None:
+        query = query.filter(models.UpdateLog.log_id == input_log_id)
+    if input_knowledge_id is not None:
+        query = query.filter(models.UpdateLog.knowledge_id == input_knowledge_id)
+    if input_user_id is not None:
+        query = query.filter(models.UpdateLog.user_id == input_user_id)
+    if input_action_type is not None:
+        query = query.filter(models.UpdateLog.action_type == input_action_type)
+
+    #日志按时间倒序，最新的排前面
+    return query.order_by(models.UpdateLog.log_id.desc()).all()
+
+
+def delete_update_log(db: Session, input_log_id: int):
+    update_log = get_update_log_by_id(db, input_log_id)
+
+    if update_log is None:
+        return False
+
+    db.delete(update_log)
     db.commit()
     return True
 

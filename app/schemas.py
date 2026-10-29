@@ -81,9 +81,67 @@ class QaCreate(BaseModel):
 
 
 class QueryLogCreate(BaseModel):
+    #model_name 会被pydantic当成保留字段，这里放开限制
+    model_config = {"protected_namespaces": ()}
+
     user_id: Optional[int]=None
     question_text: str
     answer_text: str
     model_name: Optional[str]=Field(default=None,max_length=100)
     retrieval_count: int
     feedback_status: Literal["unrated","liked","disliked"]="unrated"
+
+
+class QueryLogUpdate(BaseModel):
+    model_config = {"protected_namespaces": ()}
+
+    answer_text: Optional[str]=None
+    model_name: Optional[str]=Field(default=None,max_length=100)
+    retrieval_count: Optional[int]=Field(default=None,ge=0)
+    feedback_status: Optional[Literal["unrated","liked","disliked"]]=None
+
+
+#知识操作日志
+class UpdateLogCreate(BaseModel):
+    knowledge_id: int
+    user_id: int
+    action_type: Literal["create","update","delete","publish","revert"]
+    old_value: Optional[str]=None
+    new_value: Optional[str]=None
+
+
+
+#标签
+class TagCreate(BaseModel):
+    name: str = Field(...,min_length=1,max_length=100)
+    description: Optional[str]=None
+
+
+class TagUpdate(BaseModel):
+    name: Optional[str]=Field(default=None,min_length=1,max_length=100)
+    description: Optional[str]=None
+
+
+#知识和标签的绑定，knowledge_id 放在URL里，这里只传标签
+class KnowledgeTagCreate(BaseModel):
+    tag_id: int
+
+
+#相关知识，分数是0~1之间的小数
+class RelatedKnowledgeCreate(BaseModel):
+    knowledge_id: int
+    related_knowledge_id: int
+    relevance_score: float = Field(default=0.0,ge=0,le=1)
+
+
+#知识向量
+class EmbeddingCreate(BaseModel):
+    embedding_model: str = Field(...,min_length=1,max_length=100)
+    embedding_text: Optional[str]=None
+    embedding_vector: Optional[str]=None
+
+
+class EmbeddingUpdate(BaseModel):
+    embedding_model: Optional[str]=Field(default=None,min_length=1,max_length=100)
+    embedding_text: Optional[str]=None
+    embedding_vector: Optional[str]=None
