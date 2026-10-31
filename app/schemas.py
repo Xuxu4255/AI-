@@ -3,13 +3,13 @@
 
 
 
-from typing import Optional,Literal
+from typing import Optional,Literal,List
 #typing python自带的类型工具
 
 #Optional:这个字段可以为空
 #Literal:这个字段可以取某几个固定值
 
-from pydantic import BaseModel,EmailStr,Field
+from pydantic import BaseModel,EmailStr,Field,ConfigDict,field_validator
 #fastAPI最核心的库，用来做数据校验
 
 #BaseModel:定义一个数据结构模板
@@ -32,12 +32,28 @@ class UserRegister(BaseModel):
 
 #声明
 class CategoryCreate(BaseModel):
-    name: str
-    description: Optional[str]=None
+    model_config = ConfigDict(str_strip_whitespace=True)
+    name: str = Field(min_length=1, max_length=100)
+    description: Optional[str] = Field(default=None, max_length=1000)
+
+
+class CategoryUpdate(CategoryCreate):
+    pass
+
+
+class AiSearch(BaseModel):
+    model_config = ConfigDict(str_strip_whitespace=True)
+    question: str = Field(min_length=1, max_length=500)
+    category_id: Optional[int] = Field(default=None, gt=0)
+
+
+class AiExplain(AiSearch):
+    knowledge_ids: List[int] = Field(min_length=1, max_length=3)
+    search_id: Optional[str] = Field(default=None, min_length=32, max_length=32)
 
 
 class KnowledgeCreate(BaseModel):
-    title: str = Field(...,min_length=5,max_length=30)
+    title: str = Field(...,min_length=5,max_length=255)
     content: str
     summary: Optional[str]=None
     category_id: int
@@ -53,6 +69,35 @@ class KnowledgeUpdate(BaseModel):
     category_id: Optional[int] = None
     created_by: Optional[int] = None
     keyword: Optional[str]=None
+
+
+class KnowledgeReview(BaseModel):
+    model_config = ConfigDict(str_strip_whitespace=True)
+    action: Literal['reject', 'withdraw', 'restore']
+    reason: Optional[str] = Field(default=None, max_length=500)
+
+
+class KnowledgeSubmission(BaseModel):
+    """用户只能提交内容，作者与审核状态由服务器决定。"""
+    model_config = ConfigDict(str_strip_whitespace=True, extra='forbid')
+    title: str = Field(min_length=5, max_length=255)
+    content: str = Field(min_length=10, max_length=10000)
+    summary: Optional[str] = Field(default=None, max_length=1000)
+    category_id: int = Field(gt=0)
+    keyword: str = Field(default='', max_length=255)
+    source_name: str = Field(default='', max_length=255)
+    source_url: Optional[str] = Field(default=None, max_length=500)
+
+    @field_validator('source_url')
+    @classmethod
+    def validate_source_url(cls, value):
+        from urllib.parse import urlsplit
+        if not value:
+            return None
+        parsed = urlsplit(value)
+        if parsed.scheme not in ('http', 'https') or not parsed.hostname or parsed.username or parsed.password:
+            raise ValueError('来源链接需为不含账号密码的 http 或 https 地址')
+        return value
 
 
 class FeedbackCreate(BaseModel):

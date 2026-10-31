@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status as http_status
 from sqlalchemy.orm import Session
 
-from app import crud, schemas
+from app import crud, schemas, security
 from app.database import get_db
 
 router = APIRouter()
@@ -15,8 +15,11 @@ def search_knowledge_api(
     category_id: int = None,
     tag_id: int = None,
     status: str = None,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    user=Depends(security.get_current_user),
 ):
+    if user.role != "admin":
+        status = "published"
     knowledge_list = crud.search_knowledge(
         db=db,
         input_keyword=keyword,

@@ -21,6 +21,15 @@ class User(Base):
     update_logs = relationship("UpdateLog", back_populates="user")
 
 
+class UserSession(Base):
+    __tablename__ = "user_sessions"
+    session_id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey("users.uid"), nullable=False)
+    token_hash = Column(String(64), nullable=False, unique=True)
+    expires_at = Column(DateTime, nullable=False)
+    created_at = Column(DateTime, server_default=func.current_timestamp(), nullable=False)
+
+
 class Category(Base):
     __tablename__ = "categories"
 
@@ -131,6 +140,16 @@ class QueryLog(Base):
     created_at = Column(DateTime, server_default=func.current_timestamp(), nullable=False)
 
     user = relationship("User", back_populates="query_logs")
+
+
+class SearchContext(Base):
+    """记录搜索的用户、问题和来源快照，防止解释时替换他人的来源。"""
+    __tablename__ = "search_contexts"
+    search_id = Column(String(32), primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.uid"), nullable=False)
+    query_log_id = Column(Integer, ForeignKey("query_logs.lid"), nullable=False)
+    sources_json = Column(Text, nullable=False)
+    expires_at = Column(DateTime, nullable=False)
 
 
 class Tag(Base):

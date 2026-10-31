@@ -15,3 +15,5 @@ __pycache__/
 *.pyc
 venv/
 .venv/
+# 本地模型权重与缓存
+.models/

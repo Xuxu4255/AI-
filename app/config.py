@@ -24,8 +24,20 @@ DATABASE_URL = (
 # DeepSeek 配置
 DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY", "")
 DEEPSEEK_BASE_URL = os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
-DEEPSEEK_MODEL = os.getenv("DEEPSEEK_MODEL", "deepseek-chat")
+DEEPSEEK_MODEL = os.getenv("DEEPSEEK_MODEL", "deepseek-flash")
 AI_TIMEOUT = int(os.getenv("AI_TIMEOUT", "30"))
+
+# 阿里云 Embedding 配置
+EMBEDDING_PROVIDER = os.getenv("EMBEDDING_PROVIDER", "aliyun")
+LOCAL_EMBEDDING_URL = os.getenv("LOCAL_EMBEDDING_URL", "http://127.0.0.1:8011")
+LOCAL_EMBEDDING_MODEL = "BAAI/bge-small-zh-v1.5"
+SEMANTIC_MIN_SCORE = float(os.getenv("SEMANTIC_MIN_SCORE", "0.48"))
+DASHSCOPE_API_KEY = os.getenv("DASHSCOPE_API_KEY", "")
+DASHSCOPE_WORKSPACE_ID = os.getenv("DASHSCOPE_WORKSPACE_ID", "")
+EMBEDDING_MODEL = os.getenv(
+    "EMBEDDING_MODEL",
+    "qwen3.7-text-embedding-flash",
+)
 
 # 应用基础配置
 APP_TITLE = "知识库管理系统"

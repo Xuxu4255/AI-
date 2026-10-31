@@ -18,7 +18,14 @@
 测试
 整理文档和提交 Git
 
+项目名称就定为：基于语义增强搜索的宁波大学校园知识库管理系统。
 
+接下来可以先确定 README 中的“项目介绍”。我建议这样表达：
+本项目面向宁波大学校园信息查询场景，收集和管理学校官方通知、办事指南及用户提交的校园知识。系统支持用户使用自然语言搜索，通过 Embedding 进行语义匹配，并可根据检索结果调用 DeepSeek 生成解释。用户可以投稿，管理员负责核实、审核和发布知识。
+
+系统记录知识的来源和审核状态，帮助用户查看信息依据，同时便于管理员维护和更新内容。
+
+这里有一个我们可以继续讨论的问题：README 是主要给老师查看，突出数据库课程设计，还是给使用者查看，突出功能和运行方法？这会影响数据库设计和部署说明各占多少篇幅。
 
 前端页面
    ↓
@@ -441,3 +448,30 @@ relation_type：关联类型，如 same_topic / prerequisite / extension
 如果某个高频问题常被问，管理员可以整理成标准问答，写入 qa_pairs。
 
 
+
+
+AI模块的方案
+
+
+用户输入完整问题
+        ↓
+AI 应用 / MCP Client
+        ↓  调用 MCP 工具，传入完整问题
+MCP Server：search_knowledge(question)
+        ↓
+分词：split_question(question)
+        ↓
+筛选候选词：去掉标点、空格、常见虚词
+        ↓
+逐个调用：crud.retrieve_for_ai(db, keyword)
+        ↓
+合并结果、根据知识编号去重
+        ↓
+返回知识内容和来源给 AI 应用
+        ↓
+AI 应用根据资料生成答案
+        ↓
+用户看到答案和来源
+
+启动后端的命令：
+.\database_experiment\Scripts\python.exe -m uvicorn app.main:app --reload

@@ -1,0 +1,19 @@
+{
+  "sources": 20,
+  "knowledge": 286,
+  "status": {
+    "draft": 286
+  },
+  "categories": {
+    "宁大·比赛竞赛": 55,
+    "宁大·就业毕业": 4,
+    "宁大·入党党建": 39,
+    "宁大·保研推免": 90,
+    "宁大·奖学金资助": 70,
+    "宁大·转专业": 28
+  },
+  "linked_documents": 286,
+  "existing_published_knowledge": 64,
+  "import_logs": 286,
+  "missing_local_snapshots": []
+}

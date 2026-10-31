@@ -1,0 +1,729 @@
+{
+  "passed": 144,
+  "failed": 0,
+  "route_methods_covered": 58,
+  "route_methods_total": 58,
+  "untested_routes": [],
+  "cases": [
+    {
+      "case": "GET /",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "GET /static/style.css",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "GET /static/script.js",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "GET /docs",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "GET /openapi.json",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "GET /auth/me",
+      "passed": true,
+      "status": 401
+    },
+    {
+      "case": "GET /knowledge",
+      "passed": true,
+      "status": 401
+    },
+    {
+      "case": "GET /submissions",
+      "passed": true,
+      "status": 401
+    },
+    {
+      "case": "GET /query_logs",
+      "passed": true,
+      "status": 401
+    },
+    {
+      "case": "POST /register",
+      "passed": true,
+      "status": 201
+    },
+    {
+      "case": "POST /register",
+      "passed": true,
+      "status": 409
+    },
+    {
+      "case": "POST /register",
+      "passed": true,
+      "status": 422
+    },
+    {
+      "case": "POST /register",
+      "passed": true,
+      "status": 201
+    },
+    {
+      "case": "POST /login",
+      "passed": true,
+      "status": 401
+    },
+    {
+      "case": "POST /login",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "GET /auth/me",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "GET /users/admin-test",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "GET /users/missing",
+      "passed": true,
+      "status": 404
+    },
+    {
+      "case": "GET /categories",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "GET /categories/1",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "POST /categories",
+      "passed": true,
+      "status": 201
+    },
+    {
+      "case": "POST /categories",
+      "passed": true,
+      "status": 409
+    },
+    {
+      "case": "POST /categories",
+      "passed": true,
+      "status": 422
+    },
+    {
+      "case": "PUT /categories/2",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "PUT /categories/2",
+      "passed": true,
+      "status": 409
+    },
+    {
+      "case": "DELETE /categories/2",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "GET /categories/2",
+      "passed": true,
+      "status": 404
+    },
+    {
+      "case": "DELETE /categories/2",
+      "passed": true,
+      "status": 404
+    },
+    {
+      "case": "PUT /categories/99999",
+      "passed": true,
+      "status": 404
+    },
+    {
+      "case": "POST /knowledge",
+      "passed": true,
+      "status": 201
+    },
+    {
+      "case": "DELETE /categories/1",
+      "passed": true,
+      "status": 409
+    },
+    {
+      "case": "GET /knowledge/1",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "PUT /knowledge/1",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "PATCH /knowledge/1/publish",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "PATCH /knowledge/1/review",
+      "passed": true,
+      "status": 409
+    },
+    {
+      "case": "PATCH /knowledge/1/review",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "PATCH /knowledge/1/review",
+      "passed": true,
+      "status": 422
+    },
+    {
+      "case": "PATCH /knowledge/1/review",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "GET /knowledge?status=rejected",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "GET /knowledge/1",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "PATCH /knowledge/1/publish",
+      "passed": true,
+      "status": 409
+    },
+    {
+      "case": "PATCH /knowledge/1/review",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "GET /knowledge?status=draft",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "PATCH /knowledge/1/publish",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "PATCH /knowledge/99999/review",
+      "passed": true,
+      "status": 404
+    },
+    {
+      "case": "PATCH /knowledge/1/review",
+      "passed": true,
+      "status": 422
+    },
+    {
+      "case": "POST /ai/search",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "POST /ai/explain",
+      "passed": true,
+      "status": 503
+    },
+    {
+      "case": "GET /ai/status",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "POST /knowledge",
+      "passed": true,
+      "status": 201
+    },
+    {
+      "case": "GET /knowledge?category_id=1&keyword=stack",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "GET /knowledge/99999",
+      "passed": true,
+      "status": 404
+    },
+    {
+      "case": "PUT /knowledge/99999",
+      "passed": true,
+      "status": 404
+    },
+    {
+      "case": "PATCH /knowledge/99999/publish",
+      "passed": true,
+      "status": 404
+    },
+    {
+      "case": "POST /knowledge",
+      "passed": true,
+      "status": 400
+    },
+    {
+      "case": "POST /knowledge",
+      "passed": true,
+      "status": 422
+    },
+    {
+      "case": "POST /tags",
+      "passed": true,
+      "status": 201
+    },
+    {
+      "case": "POST /tags",
+      "passed": true,
+      "status": 409
+    },
+    {
+      "case": "GET /tags",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "GET /tags/1",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "PUT /tags/1",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "POST /knowledge/1/tags",
+      "passed": true,
+      "status": 201
+    },
+    {
+      "case": "GET /knowledge/1/tags",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "GET /tags/1/knowledge",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "GET /search/knowledge?keyword=stack&tag_id=1&category_id=1&status=published",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "POST /related_knowledge",
+      "passed": true,
+      "status": 201
+    },
+    {
+      "case": "GET /related_knowledge/1",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "POST /related_knowledge",
+      "passed": true,
+      "status": 400
+    },
+    {
+      "case": "POST /qa_pairs",
+      "passed": true,
+      "status": 201
+    },
+    {
+      "case": "GET /qa_pairs?knowledge_id=1",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "PATCH /qa_pairs/1/review?status=approved",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "PATCH /qa_pairs/1/review?status=invalid",
+      "passed": true,
+      "status": 400
+    },
+    {
+      "case": "POST /feedback",
+      "passed": true,
+      "status": 201
+    },
+    {
+      "case": "GET /feedback",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "GET /feedback/1",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "PUT /feedback/1",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "POST /knowledge/1/embedding",
+      "passed": true,
+      "status": 201
+    },
+    {
+      "case": "GET /knowledge/1/embedding",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "PUT /embedding/1",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "POST /knowledge/99999/embedding",
+      "passed": true,
+      "status": 404
+    },
+    {
+      "case": "POST /query_logs",
+      "passed": true,
+      "status": 201
+    },
+    {
+      "case": "GET /query_logs",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "GET /query_logs/2",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "PUT /query_logs/2",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "POST /update_logs",
+      "passed": true,
+      "status": 201
+    },
+    {
+      "case": "GET /update_logs",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "GET /update_logs/6",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "POST /logout",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "case": "POST /logout",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "GET /auth/me",
+      "passed": true,
+      "status": 401
+    },
+    {
+      "case": "POST /login",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "GET /knowledge",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "GET /knowledge/2",
+      "passed": true,
+      "status": 404
+    },
+    {
+      "case": "POST /submissions",
+      "passed": true,
+      "status": 201
+    },
+    {
+      "case": "GET /submissions",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "GET /submissions/3",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "PUT /submissions/3",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "GET /submissions/1",
+      "passed": true,
+      "status": 404
+    },
+    {
+      "case": "PUT /submissions/1",
+      "passed": true,
+      "status": 404
+    },
+    {
+      "case": "GET /knowledge/3",
+      "passed": true,
+      "status": 404
+    },
+    {
+      "case": "POST /submissions",
+      "passed": true,
+      "status": 422
+    },
+    {
+      "case": "POST /submissions",
+      "passed": true,
+      "status": 400
+    },
+    {
+      "case": "GET /knowledge?status=draft",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "GET /knowledge?status=rejected",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "PATCH /knowledge/1/review",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "case": "GET /categories",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "POST /categories",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "case": "PUT /categories/1",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "case": "DELETE /categories/1",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "case": "GET /search/knowledge?status=draft",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "POST /knowledge",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "case": "PUT /knowledge/1",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "case": "DELETE /knowledge/1",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "case": "PATCH /knowledge/1/publish",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "case": "GET /tags",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "case": "GET /qa_pairs",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "case": "GET /feedback",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "case": "GET /query_logs",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "case": "GET /update_logs",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "case": "GET /related_knowledge/1",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "case": "GET /knowledge/1/embedding",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "case": "GET /users/admin-test",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "case": "POST /logout",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "POST /login",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "GET /knowledge/3",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "DELETE /knowledge/3",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "DELETE /feedback/1",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "DELETE /feedback/1",
+      "passed": true,
+      "status": 404
+    },
+    {
+      "case": "DELETE /embedding/1",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "DELETE /embedding/1",
+      "passed": true,
+      "status": 404
+    },
+    {
+      "case": "DELETE /related_knowledge/1",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "DELETE /related_knowledge/1",
+      "passed": true,
+      "status": 404
+    },
+    {
+      "case": "DELETE /knowledge/1/tags/1",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "DELETE /knowledge/1/tags/1",
+      "passed": true,
+      "status": 404
+    },
+    {
+      "case": "DELETE /tags/1",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "DELETE /tags/1",
+      "passed": true,
+      "status": 404
+    },
+    {
+      "case": "DELETE /query_logs/2",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "DELETE /query_logs/2",
+      "passed": true,
+      "status": 404
+    },
+    {
+      "case": "DELETE /update_logs/6",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "DELETE /update_logs/6",
+      "passed": true,
+      "status": 404
+    },
+    {
+      "case": "DELETE /knowledge/1",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "case": "GET /knowledge/1",
+      "passed": true,
+      "status": 404
+    },
+    {
+      "case": "DELETE /knowledge/99999",
+      "passed": true,
+      "status": 404
+    },
+    {
+      "case": "GET /knowledge/2/embedding",
+      "passed": true,
+      "status": 404
+    }
+  ]
+}

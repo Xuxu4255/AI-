@@ -732,6 +732,7 @@ def delete_query_log(db: Session, input_lid: int):
     if query_log is None:
         return False
 
+    db.query(models.SearchContext).filter(models.SearchContext.query_log_id == input_lid).delete()
     db.delete(query_log)
     db.commit()
     return True
@@ -791,16 +792,104 @@ def delete_update_log(db: Session, input_log_id: int):
 
     if update_log is None:
         return False
-
     db.delete(update_log)
     db.commit()
     return True
 
 
+# retrieve_for_ai(db, keyword)
+# 根据关键词检索已发布知识，最多返回 3 条。
+# 用途：为 AI 回答提供参考资料。
+def retrieve_for_ai(db: Session, input_keyword: str):
+    keyword = input_keyword.strip()
+    if keyword == "":
+        return []
+    return (
+        db.query(models.Knowledge)
+        .filter(
+            models.Knowledge.status == "published",#我们这个内容要是被审核过的
+            #,表示并列，然后那个or_里面的满足一个即可
+            or_(
+                models.Knowledge.title.contains(keyword, autoescape=True),
+                models.Knowledge.content.contains(keyword, autoescape=True),
+                models.Knowledge.summary.contains(keyword, autoescape=True),
+                models.Knowledge.keyword.contains(keyword, autoescape=True),
+            ),#title，content，summary，keyword里面有关键字就可 
+        )
+        .order_by(models.Knowledge.kid)
+        .limit(3)
+        .all()
+    )
 
 
 
+# 根据知识编号发布知识
+# 建议函数名：publish_knowledge(db, knowledge_id)
+# 找不到知识时返回 None；找到后设置状态、提交并返回知识对象
+def review_knowledge(db: Session, knowledge_id: int, action: str, user_id: int, reason: str = ''):
+    """限定审核状态流转；理由和操作者保存到现有更新日志，事务内一并提交。"""
+    import json
+    knowledge = db.query(models.Knowledge).filter(models.Knowledge.kid == knowledge_id).with_for_update().first()
+    if knowledge is None:
+        return None
+    transitions = {
+        'publish': ({'draft', 'published'}, 'published'),
+        'reject': ({'draft'}, 'rejected'),
+        'withdraw': ({'published'}, 'draft'),
+        'restore': ({'rejected'}, 'draft'),
+    }
+    if action not in transitions:
+        raise ValueError('不支持的审核操作')
+    allowed, target = transitions[action]
+    if knowledge.status not in allowed:
+        raise ValueError('知识状态已改变，请刷新列表；只有未发布内容可以驳回，已驳回内容需先恢复审核。')
+    reason = (reason or '').strip()
+    if action == 'reject' and not reason:
+        raise ValueError('驳回时必须填写理由')
+    db.add(models.UpdateLog(knowledge_id=knowledge.kid, user_id=user_id,
+        action_type='publish' if action == 'publish' else 'update',
+        old_value=json.dumps({'status': knowledge.status}, ensure_ascii=False),
+        new_value=json.dumps({'event': 'knowledge_review', 'action': action,
+                             'status': target, 'reason': reason}, ensure_ascii=False)))
+    knowledge.status = target
+    db.commit()
+    db.refresh(knowledge)
+    return knowledge
 
+
+def get_knowledge_review_notes(db: Session, knowledge_ids):
+    import json
+    if not knowledge_ids:
+        return {}
+    rows = db.query(models.UpdateLog).filter(models.UpdateLog.knowledge_id.in_(knowledge_ids),
+        models.UpdateLog.new_value.contains('"event": "knowledge_review"', autoescape=True)
+    ).order_by(models.UpdateLog.log_id.desc()).all()
+    notes = {}
+    for row in rows:
+        if row.knowledge_id in notes:
+            continue
+        try:
+            value = json.loads(row.new_value)
+            notes[row.knowledge_id] = value.get('reason', '') if value.get('status') == 'rejected' else ''
+        except (TypeError, ValueError):
+            continue
+    return notes
+
+
+def publish_knowledge(db: Session, input_knowledge_id: int):
+    # 根据编号查找知识
+    knowledge = get_knowledge_by_id(db, input_knowledge_id)
+
+    # 找不到时，返回 None
+    if knowledge is None:
+        return None
+
+    # 修改状态并保存到数据库
+    knowledge.status = "published"
+    db.commit()
+    db.refresh(knowledge)
+
+    return knowledge
 
 
 

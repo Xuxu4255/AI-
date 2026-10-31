@@ -12,6 +12,17 @@ create table users (
     created_at timestamp not null default current_timestamp  #创建的时间戳
 );
 
+CREATE TABLE user_sessions (
+    session_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    token_hash CHAR(64) NOT NULL UNIQUE,
+    expires_at DATETIME NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_session_user
+        FOREIGN KEY (user_id) REFERENCES users(Uid)
+);
+
 #知识的关联
 create table categories (
     Cid int primary key auto_increment,#主键，知识的编号
@@ -29,7 +40,7 @@ create table knowledge (
     category_id int not null,			#知识所属分类编号，外键关联 categories 表
     created_by int not null,			#创建该知识的用户编号，外键关联 users 表
     keyword varchar(255),				#关键词，用于检索和匹配知识
-    status enum('draft', 'published', 'deleted') not null default 'draft',	-- 状态：草稿/已发布/已删除
+    status enum('draft', 'published', 'deleted', 'rejected') not null default 'draft', -- 状态：待审核/已发布/已删除/已驳回
     created_at timestamp not null default current_timestamp,-- 创建时间，默认当前时间
     updated_at timestamp not null default current_timestamp on update current_timestamp, -- 更新时间
     constraint fk_knowledge_category foreign key (category_id) references categories(Cid),-- 关联categories表
@@ -130,4 +141,14 @@ create table update_logs (
     created_at timestamp not null default current_timestamp, -- 创建时间
     constraint fk_update_knowledge foreign key (knowledge_id) references knowledge(Kid), -- 关联 knowledge
     constraint fk_update_user foreign key (user_id) references users(Uid) -- 关联 users
+);
+# 搜索来源快照：用于可选 AI 解释的用户归属、原文变化和有效期校验
+CREATE TABLE IF NOT EXISTS search_contexts (
+    search_id VARCHAR(32) PRIMARY KEY,
+    user_id INT NOT NULL,
+    query_log_id INT NOT NULL,
+    sources_json TEXT NOT NULL,
+    expires_at DATETIME NOT NULL,
+    CONSTRAINT fk_search_user FOREIGN KEY (user_id) REFERENCES users(Uid),
+    CONSTRAINT fk_search_query FOREIGN KEY (query_log_id) REFERENCES query_logs(Lid)
 );
