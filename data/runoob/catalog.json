@@ -1,0 +1,1434 @@
+{
+  "collected_at": "2026-11-08T07:39:35.215059+00:00",
+  "content_type": "chapter_catalog_only",
+  "courses": [
+    {
+      "name": "Python",
+      "url": "https://www.runoob.com/python3/python3-tutorial.html",
+      "chapters": [
+        {
+          "url": "https://www.runoob.com/python3/python3-tutorial.html",
+          "title": "Python3"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-intro.html",
+          "title": "Python3 简介"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-install.html",
+          "title": "Python3 环境搭建"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-pycharm-usage.html",
+          "title": "Python3 Pycharm"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-vscode-setup.html",
+          "title": "Python3 VScode"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-basic-syntax.html",
+          "title": "Python3 基础语法"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-data-type.html",
+          "title": "Python3 基本数据类型"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-type-conversion.html",
+          "title": "Python3 数据类型转换"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-interpreter.html",
+          "title": "Python3 解释器"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-comment.html",
+          "title": "Python3 注释"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-basic-operators.html",
+          "title": "Python3 运算符"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-number.html",
+          "title": "Python3 数字(Number)"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-string.html",
+          "title": "Python3 字符串"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-list.html",
+          "title": "Python3 列表"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-tuple.html",
+          "title": "Python3 元组"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-dictionary.html",
+          "title": "Python3 字典"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-set.html",
+          "title": "Python3 集合"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-conditional-statements.html",
+          "title": "Python3 条件控制"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-loop.html",
+          "title": "Python3 循环语句"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-step1.html",
+          "title": "Python3 编程第一步"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-comprehensions.html",
+          "title": "Python3 推导式"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-iterator-generator.html",
+          "title": "Python3 迭代器与生成器"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-with-keyword.html",
+          "title": "Python3 with"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-function.html",
+          "title": "Python3 函数"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-lambda.html",
+          "title": "Python3 lambda"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-decorators.html",
+          "title": "Python3 装饰器"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-data-structure.html",
+          "title": "Python3 数据结构"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-module.html",
+          "title": "Python3 模块"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-name-main.html",
+          "title": "Python __name__"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-inputoutput.html",
+          "title": "Python3 输入和输出"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-file-methods.html",
+          "title": "Python3 File"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-os-file-methods.html",
+          "title": "Python3 OS"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-errors-execptions.html",
+          "title": "Python3 错误和异常"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-class.html",
+          "title": "Python3 面向对象"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-namespace-scope.html",
+          "title": "Python3 命名空间/作用域"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-venv.html",
+          "title": "Python 虚拟环境的创建"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-type-hints.html",
+          "title": "Python 类型注解"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-stdlib.html",
+          "title": "Python3 标准库概览"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-examples.html",
+          "title": "Python3 实例"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-reg-expressions.html",
+          "title": "Python3 正则表达式"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-cgi-programming.html",
+          "title": "Python3 CGI编程"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-mysql-connector.html",
+          "title": "Python3 MySQL(mysql-connector)"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-mysql.html",
+          "title": "Python3 MySQL(PyMySQL)"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-socket.html",
+          "title": "Python3 网络编程"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-smtp.html",
+          "title": "Python3 SMTP发送邮件"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-multithreading.html",
+          "title": "Python3 多线程"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-xml-processing.html",
+          "title": "Python3 XML 解析"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-json.html",
+          "title": "Python3 JSON"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-date-time.html",
+          "title": "Python3 日期和时间"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-built-in-functions.html",
+          "title": "Python3 内置函数"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-mongodb.html",
+          "title": "Python3 MongoDB"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-urllib.html",
+          "title": "Python3 urllib"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-uwsgi.html",
+          "title": "Python uWSGI 安装配置"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-pip.html",
+          "title": "Python3 pip"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-operator.html",
+          "title": "Python3 operator"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-math.html",
+          "title": "Python math"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-requests.html",
+          "title": "Python requests"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-random.html",
+          "title": "Python random"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-openai.html",
+          "title": "Python OpenAI"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-resources.html",
+          "title": "Python 有用的资源"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-ai-draw.html",
+          "title": "Python AI 绘画"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-statistics.html",
+          "title": "Python statistics"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-hashlib.html",
+          "title": "Python hashlib"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-qt.html",
+          "title": "Python 量化"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-pyecharts.html",
+          "title": "Python pyecharts"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-selenium.html",
+          "title": "Python selenium 库"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-spider-beautifulsoup.html",
+          "title": "Python 爬虫"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-scrapy.html",
+          "title": "Python Scrapy 库"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-markdown2html.html",
+          "title": "Python Markdown"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-sys.html",
+          "title": "Python sys 模块"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-pickle.html",
+          "title": "Python Pickle 模块"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-subprocess.html",
+          "title": "Python subprocess 模块"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-queue.html",
+          "title": "Python queue 模块"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-stringio.html",
+          "title": "Python StringIO 模块"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-logging.html",
+          "title": "Python logging 模块"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-datetime.html",
+          "title": "Python datetime 模块"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-re.html",
+          "title": "Python re 模块"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-csv.html",
+          "title": "Python csv 模块"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-treading.html",
+          "title": "Python threading 模块"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-asyncio.html",
+          "title": "Python asyncio 模块"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-pyqt.html",
+          "title": "Python PyQt"
+        },
+        {
+          "url": "https://www.runoob.com/python3/python-2x-3x.html",
+          "title": "Python2.x与3​​.x版本区别"
+        }
+      ]
+    },
+    {
+      "name": "C++",
+      "url": "https://www.runoob.com/cplusplus/cpp-tutorial.html",
+      "chapters": [
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-tutorial.html",
+          "title": "C++"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-intro.html",
+          "title": "C++ 简介"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-environment-setup.html",
+          "title": "C++ 环境设置"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-basic-syntax.html",
+          "title": "C++ 基本语法"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-comments.html",
+          "title": "C++ 注释"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-data-types.html",
+          "title": "C++ 数据类型"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-variable-types.html",
+          "title": "C++ 变量类型"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-variable-scope.html",
+          "title": "C++ 变量作用域"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-constants-literals.html",
+          "title": "C++ 常量"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-modifier-types.html",
+          "title": "C++ 修饰符类型"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-storage-classes.html",
+          "title": "C++ 存储类"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-operators.html",
+          "title": "C++ 运算符"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-loops.html",
+          "title": "C++ 循环"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-decision.html",
+          "title": "C++ 判断"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-functions.html",
+          "title": "C++ 函数"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-numbers.html",
+          "title": "C++ 数字"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-arrays.html",
+          "title": "C++ 数组"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-strings.html",
+          "title": "C++ 字符串"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-pointers.html",
+          "title": "C++ 指针"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-references.html",
+          "title": "C++ 引用"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-date-time.html",
+          "title": "C++ 日期 & 时间"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-basic-input-output.html",
+          "title": "C++ 基本的输入输出"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-struct.html",
+          "title": "C++ 结构体(struct)"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-vector.html",
+          "title": "C++ vector 容器"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-data-structures.html",
+          "title": "C++ 数据结构"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-classes-objects.html",
+          "title": "C++ 类 & 对象"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-inheritance.html",
+          "title": "C++ 继承"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-overloading.html",
+          "title": "C++ 重载运算符和重载函数"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-polymorphism.html",
+          "title": "C++ 多态"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-data-abstraction.html",
+          "title": "C++ 数据抽象"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-data-encapsulation.html",
+          "title": "C++ 数据封装"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-interfaces.html",
+          "title": "C++ 接口（抽象类）"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-files-streams.html",
+          "title": "C++ 文件和流"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-exceptions-handling.html",
+          "title": "C++ 异常处理"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-dynamic-memory.html",
+          "title": "C++ 动态内存"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-namespaces.html",
+          "title": "C++ 命名空间"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-templates.html",
+          "title": "C++ 模板"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-preprocessor.html",
+          "title": "C++ 预处理器"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-signal-handling.html",
+          "title": "C++ 信号处理"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-multithreading.html",
+          "title": "C++ 多线程"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-web-programming.html",
+          "title": "C++ Web 编程"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-stl-tutorial.html",
+          "title": "C++ STL 教程"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cppo-import-header-file.html",
+          "title": "C++ 导入标准库"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-standard-library.html",
+          "title": "C++ 标准库"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-useful-resources.html",
+          "title": "C++ 有用的资源"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-examples.html",
+          "title": "C++ 实例"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-quiz.html",
+          "title": "C++ 测验"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-iostream.html",
+          "title": "C++ <iostream>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-fstream.html",
+          "title": "C++ <fstream>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-sstream.html",
+          "title": "C++ <sstream>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-iomanip.html",
+          "title": "C++ <iomanip>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-array.html",
+          "title": "C++ <array>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-vector.html",
+          "title": "C++ <vector>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-list.html",
+          "title": "C++ <list>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-forward_list.html",
+          "title": "C++ <forward_list>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-deque.html",
+          "title": "C++ <deque>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-stack.html",
+          "title": "C++ <stack>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-queue.html",
+          "title": "C++ <queue>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-priority_queue.html",
+          "title": "C++ <priority_queue>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-set.html",
+          "title": "C++ <set>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-unordered_set.html",
+          "title": "C++ <unordered_set>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-map.html",
+          "title": "C++ <map>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-unordered_map.html",
+          "title": "C++ <unordered_map>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-bitset.html",
+          "title": "C++ <bitset>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-algorithm.html",
+          "title": "C++ <algorithm>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-iterator.html",
+          "title": "C++ <iterator>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-functional.html",
+          "title": "C++ <functional>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-numeric.html",
+          "title": "C++ <numeric>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-complex.html",
+          "title": "C++ <complex>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-valarray.html",
+          "title": "C++ <valarray>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-cmath.html",
+          "title": "C++ <cmath>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-string.html",
+          "title": "C++ <string>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-regex.html",
+          "title": "C++ <regex>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-ctime.html",
+          "title": "C++ <ctime>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-chrono.html",
+          "title": "C++ <chrono>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-thread.html",
+          "title": "C++ <thread>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-mutex.html",
+          "title": "C++ <mutex>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-condition_variable.html",
+          "title": "C++ <condition_variable>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-future.html",
+          "title": "C++ <future>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-atomic.html",
+          "title": "C++ <atomic>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-type_traits.html",
+          "title": "C++ <type_traits>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-typeinfo.html",
+          "title": "C++ <typeinfo>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-exception.html",
+          "title": "C++ <exception>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-stdexcept.html",
+          "title": "C++ <stdexcept>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-cstdio.html",
+          "title": "C++ <cstdio>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-cstdint.html",
+          "title": "C++ <cstdint>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-memory.html",
+          "title": "C++ <memory>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-new.html",
+          "title": "C++ <new>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-utility.html",
+          "title": "C++ <utility>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-random.html",
+          "title": "C++ <random>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-locale.html",
+          "title": "C++ <locale>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-codecvt.html",
+          "title": "C++ <codecvt>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-cassert.html",
+          "title": "C++ <cassert>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-cwchar.html",
+          "title": "C++ <cwchar>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-climits.html",
+          "title": "C++ <climits>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-cfloat.html",
+          "title": "C++ <cfloat>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-cstdlib.html",
+          "title": "C++ <cstdlib>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-libs-numbers.html",
+          "title": "C++ <numbers>"
+        },
+        {
+          "url": "https://www.runoob.com/cplusplus/cpp-opencv.html",
+          "title": "C++ OpenCV"
+        }
+      ]
+    },
+    {
+      "name": "Java",
+      "url": "https://www.runoob.com/java/java-tutorial.html",
+      "chapters": [
+        {
+          "url": "https://www.runoob.com/java/java-tutorial.html",
+          "title": "Java"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-intro.html",
+          "title": "Java 简介"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-environment-setup.html",
+          "title": "Java 开发环境配置"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-basic-syntax.html",
+          "title": "Java 基础语法"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-comments.html",
+          "title": "Java 注释"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-object-classes.html",
+          "title": "Java 对象和类"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-basic-datatypes.html",
+          "title": "Java 基本数据类型"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-variable-types.html",
+          "title": "Java 变量类型"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-variable-naming-rules.html",
+          "title": "Java 变量命名规则"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-modifier-types.html",
+          "title": "Java 修饰符"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-operators.html",
+          "title": "Java 运算符"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-loop.html",
+          "title": "Java 循环结构"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-if-else-switch.html",
+          "title": "Java 条件语句"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-switch-case.html",
+          "title": "Java switch case"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-number.html",
+          "title": "Java Number & Math 类"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-character.html",
+          "title": "Java Character 类"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-string.html",
+          "title": "Java String 类"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-stringbuffer.html",
+          "title": "Java StringBuffer"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-array.html",
+          "title": "Java 数组"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-date-time.html",
+          "title": "Java 日期时间"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-regular-expressions.html",
+          "title": "Java 正则表达式"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-methods.html",
+          "title": "Java 方法"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-constructor.html",
+          "title": "Java 构造方法"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-files-io.html",
+          "title": "Java Stream、File、IO"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-scanner-class.html",
+          "title": "Java Scanner 类"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-exceptions.html",
+          "title": "Java 异常处理"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-inheritance.html",
+          "title": "Java 继承"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-override-overload.html",
+          "title": "Java Override/Overload"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-polymorphism.html",
+          "title": "Java 多态"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-abstraction.html",
+          "title": "Java 抽象类"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-encapsulation.html",
+          "title": "Java 封装"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-interfaces.html",
+          "title": "Java 接口"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-enum.html",
+          "title": "Java 枚举"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-package.html",
+          "title": "Java 包(package)"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-reflection.html",
+          "title": "Java 反射"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-data-structures.html",
+          "title": "Java 数据结构"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-collections.html",
+          "title": "Java 集合框架"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-arraylist.html",
+          "title": "Java ArrayList"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-linkedlist.html",
+          "title": "Java LinkedList"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-hashset.html",
+          "title": "Java HashSet"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-hashmap.html",
+          "title": "Java HashMap"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-iterator.html",
+          "title": "Java Iterator"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-object-class.html",
+          "title": "Java Object"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-nio-file.html",
+          "title": "Java NIO Files"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-generics.html",
+          "title": "Java 泛型"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-serialization.html",
+          "title": "Java 序列化"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-networking.html",
+          "title": "Java 网络编程"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-sending-email.html",
+          "title": "Java 发送邮件"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-multithreading.html",
+          "title": "Java 多线程编程"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-applet-basics.html",
+          "title": "Java Applet 基础"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-documentation.html",
+          "title": "Java 文档注释"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-examples.html",
+          "title": "Java 实例"
+        },
+        {
+          "url": "https://www.runoob.com/java/java8-new-features.html",
+          "title": "Java 8 新特性"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-mysql-connect.html",
+          "title": "Java MySQL 连接"
+        },
+        {
+          "url": "https://www.runoob.com/java/java9-new-features.html",
+          "title": "Java 9 新特性"
+        },
+        {
+          "url": "https://www.runoob.com/java/java-libs.html",
+          "title": "Java 常用类库"
+        }
+      ]
+    },
+    {
+      "name": "FastAPI",
+      "url": "https://www.runoob.com/fastapi/fastapi-tutorial.html",
+      "chapters": [
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-tutorial.html",
+          "title": "FastAPI 教程"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-install.html",
+          "title": "FastAPI 安装"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/vscode-fastapi.html",
+          "title": "VSCode FastAPI"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-step1.html",
+          "title": "第一个 FastAPI 应用"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-api-doc.html",
+          "title": "FastAPI 交互式 API 文档"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-route.html",
+          "title": "FastAPI 基本路由"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-request-response.html",
+          "title": "FastAPI 请求和响应"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-pydantic.html",
+          "title": "FastAPI Pydantic 模型"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-path-operation-dependencies.html",
+          "title": "FastAPI 依赖注入"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-form.html",
+          "title": "FastAPI 表单数据"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-core.html",
+          "title": "FastAPI 核心概念"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-path-params.html",
+          "title": "FastAPI 路径参数"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-query-params.html",
+          "title": "FastAPI 查询参数"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-request-body.html",
+          "title": "FastAPI 请求体"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-query-params-validation.html",
+          "title": "FastAPI 查询参数校验"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-path-params-validation.html",
+          "title": "FastAPI 路径参数数值校验"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-body-fields.html",
+          "title": "FastAPI 请求体字段与嵌套模型"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-response-model.html",
+          "title": "FastAPI 响应模型"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-status-code.html",
+          "title": "FastAPI 响应状态码"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-file-upload.html",
+          "title": "FastAPI 文件上传"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-header-cookie.html",
+          "title": "FastAPI 请求头与 Cookie"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-error-handling.html",
+          "title": "FastAPI 错误处理"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-middleware.html",
+          "title": "FastAPI 中间件"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-cors.html",
+          "title": "FastAPI CORS 跨域"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-static-files.html",
+          "title": "FastAPI 静态文件"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-security.html",
+          "title": "FastAPI 安全认证"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-testing.html",
+          "title": "FastAPI 测试"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-sql-database.html",
+          "title": "FastAPI 数据库集成"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-blog-project-init.html",
+          "title": "FastAPI Web 应用"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-blog-jinja2-templates.html",
+          "title": "Jinja2 模板"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-blog-sqlalchemy.html",
+          "title": "SQLAlchemy 模型"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-blog-pydantic-schema.html",
+          "title": "Pydantic Schema"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-blog-routers-views.html",
+          "title": "路由"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-blog-alembic.html",
+          "title": "Alembic 数据库迁移"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-blog-search-pagination.html",
+          "title": "关键词搜索与分页"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-blog-jwt-auth.html",
+          "title": "用户系统"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-blog-favorites-admin.html",
+          "title": "收藏功能与后台管理"
+        },
+        {
+          "url": "https://www.runoob.com/fastapi/fastapi-blog-deploy.html",
+          "title": "打包上线"
+        }
+      ]
+    },
+    {
+      "name": "MySQL",
+      "url": "https://www.runoob.com/mysql/mysql-tutorial.html",
+      "chapters": [
+        {
+          "url": "https://www.runoob.com/mysql/mysql-tutorial.html",
+          "title": "MySQL 教程"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-install.html",
+          "title": "MySQL 安装"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-administration.html",
+          "title": "MySQL 管理"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-connection.html",
+          "title": "MySQL 连接"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-create-database.html",
+          "title": "MySQL 创建数据库"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-drop-database.html",
+          "title": "MySQL 删除数据库"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-select-database.html",
+          "title": "MySQL 选择数据库"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-data-types.html",
+          "title": "MySQL 数据类型"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-create-tables.html",
+          "title": "MySQL 创建数据表"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-drop-tables.html",
+          "title": "MySQL 删除数据表"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-insert-query.html",
+          "title": "MySQL 插入数据"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-select-query.html",
+          "title": "MySQL 查询数据"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-where-clause.html",
+          "title": "MySQL WHERE 子句"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-update-query.html",
+          "title": "MySQL UPDATE 更新"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-delete-query.html",
+          "title": "MySQL DELETE 语句"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-like-clause.html",
+          "title": "MySQL LIKE 子句"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-union-operation.html",
+          "title": "MySQL UNION"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-order-by.html",
+          "title": "MySQL ORDER BY 语句"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-group-by-statement.html",
+          "title": "MySQL 分组"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-join.html",
+          "title": "MySQL 连接的使用"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-null.html",
+          "title": "MySQL NULL 值处理"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-regexp.html",
+          "title": "MySQL 正则表达式"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-transaction.html",
+          "title": "MySQL 事务"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-alter.html",
+          "title": "MySQL ALTER 命令"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-index.html",
+          "title": "MySQL 索引"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-temporary-tables.html",
+          "title": "MySQL 临时表"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-clone-tables.html",
+          "title": "MySQL 复制表"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-database-info.html",
+          "title": "MySQL 元数据"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-using-sequences.html",
+          "title": "MySQL 序列"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-handling-duplicates.html",
+          "title": "MySQL 处理重复数据"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-sql-injection.html",
+          "title": "MySQL 及 SQL 注入"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-database-export.html",
+          "title": "MySQL 导出数据"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-database-import.html",
+          "title": "MySQL 导入数据"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-functions.html",
+          "title": "MySQL 函数"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-operator.html",
+          "title": "MySQL 运算符"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-command-manual.html",
+          "title": "MySQL 命令大全"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-quiz.html",
+          "title": "MySQL 测验"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-nodejs-intro.html",
+          "title": "MySQL Node.js"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-php-syntax.html",
+          "title": "MySQL PHP"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-python-intro.html",
+          "title": "MySQL Python"
+        },
+        {
+          "url": "https://www.runoob.com/mysql/mysql-java-intro.html",
+          "title": "MySQL Java"
+        }
+      ]
+    },
+    {
+      "name": "Docker",
+      "url": "https://www.runoob.com/docker/docker-tutorial.html",
+      "chapters": [
+        {
+          "url": "https://www.runoob.com/docker/docker-tutorial.html",
+          "title": "Docker 教程"
+        },
+        {
+          "url": "https://www.runoob.com/docker/docker-intro.html",
+          "title": "Docker 概念"
+        },
+        {
+          "url": "https://www.runoob.com/docker/docker-architecture.html",
+          "title": "Docker 架构"
+        },
+        {
+          "url": "https://www.runoob.com/docker/docker-desktop.html",
+          "title": "Docker Desktop"
+        },
+        {
+          "url": "https://www.runoob.com/docker/ubuntu-docker-install.html",
+          "title": "Ubuntu Docker 安装"
+        },
+        {
+          "url": "https://www.runoob.com/docker/debian-docker-install.html",
+          "title": "Debian Docker 安装"
+        },
+        {
+          "url": "https://www.runoob.com/docker/centos-docker-install.html",
+          "title": "CentOS Docker 安装"
+        },
+        {
+          "url": "https://www.runoob.com/docker/windows-docker-install.html",
+          "title": "Windows Docker 安装"
+        },
+        {
+          "url": "https://www.runoob.com/docker/macos-docker-install.html",
+          "title": "MacOS Docker 安装"
+        },
+        {
+          "url": "https://www.runoob.com/docker/docker-mirror-acceleration.html",
+          "title": "Docker 镜像加速"
+        },
+        {
+          "url": "https://www.runoob.com/docker/docker-hello-world.html",
+          "title": "Docker Hello World"
+        },
+        {
+          "url": "https://www.runoob.com/docker/docker-container-usage.html",
+          "title": "Docker 容器使用"
+        },
+        {
+          "url": "https://www.runoob.com/docker/docker-image-usage.html",
+          "title": "Docker 镜像使用"
+        },
+        {
+          "url": "https://www.runoob.com/docker/docker-container-connection.html",
+          "title": "Docker 容器连接"
+        },
+        {
+          "url": "https://www.runoob.com/docker/docker-repository.html",
+          "title": "Docker 仓库管理"
+        },
+        {
+          "url": "https://www.runoob.com/docker/docker-dockerfile.html",
+          "title": "Docker Dockerfile"
+        },
+        {
+          "url": "https://www.runoob.com/docker/docker-compose.html",
+          "title": "Docker Compose"
+        },
+        {
+          "url": "https://www.runoob.com/docker/docker-machine.html",
+          "title": "Docker Machine"
+        },
+        {
+          "url": "https://www.runoob.com/docker/docker-swarm.html",
+          "title": "Swarm 集群管理"
+        },
+        {
+          "url": "https://www.runoob.com/docker/docker-install-ubuntu.html",
+          "title": "Docker 安装 Ubuntu"
+        },
+        {
+          "url": "https://www.runoob.com/docker/docker-install-centos.html",
+          "title": "Docker 安装 Centos"
+        },
+        {
+          "url": "https://www.runoob.com/docker/docker-install-nginx.html",
+          "title": "Docker 安装 Nginx"
+        },
+        {
+          "url": "https://www.runoob.com/docker/docker-install-node.html",
+          "title": "Docker 安装 Node.js"
+        },
+        {
+          "url": "https://www.runoob.com/docker/docker-install-php.html",
+          "title": "Docker 安装 PHP"
+        },
+        {
+          "url": "https://www.runoob.com/docker/docker-install-mysql.html",
+          "title": "Docker 安装 MySQL"
+        },
+        {
+          "url": "https://www.runoob.com/docker/docker-install-tomcat.html",
+          "title": "Docker 安装 Tomcat"
+        },
+        {
+          "url": "https://www.runoob.com/docker/docker-install-python.html",
+          "title": "Docker 安装 Python"
+        },
+        {
+          "url": "https://www.runoob.com/docker/docker-install-redis.html",
+          "title": "Docker 安装 Redis"
+        },
+        {
+          "url": "https://www.runoob.com/docker/docker-install-mongodb.html",
+          "title": "Docker 安装 MongoDB"
+        },
+        {
+          "url": "https://www.runoob.com/docker/docker-install-apache.html",
+          "title": "Docker 安装 Apache"
+        },
+        {
+          "url": "https://www.runoob.com/docker/docker-command-manual.html",
+          "title": "Docker 命令大全"
+        },
+        {
+          "url": "https://www.runoob.com/docker/docker-resources.html",
+          "title": "Docker 资源汇总"
+        }
+      ]
+    }
+  ]
+}

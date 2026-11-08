@@ -1,46 +1,23 @@
-from fastapi import APIRouter, Depends, HTTPException, status as http_status
+"""兼容关键词搜索，仅查询公有范围，管理员也不能绕过。"""
+from fastapi import APIRouter, Depends
+from sqlalchemy import or_
 from sqlalchemy.orm import Session
-
-from app import crud, schemas, security
+from app import models, security
 from app.database import get_db
+from app.services import spaces
 
 router = APIRouter()
 
 
-#5.5 搜索
-#多条件搜索：关键词、分类、标签、状态任意组合
-@router.get("/search/knowledge")
-def search_knowledge_api(
-    keyword: str = None,
-    category_id: int = None,
-    tag_id: int = None,
-    status: str = None,
-    db: Session = Depends(get_db),
-    user=Depends(security.get_current_user),
-):
-    if user.role != "admin":
-        status = "published"
-    knowledge_list = crud.search_knowledge(
-        db=db,
-        input_keyword=keyword,
-        input_category_id=category_id,
-        input_tag_id=tag_id,
-        input_status=status,
-    )
-
-    return {
-        "count": len(knowledge_list),
-        "items": [
-            {
-                "kid": item.kid,
-                "title": item.title,
-                "summary": item.summary,
-                "category_id": item.category_id,
-                "created_by": item.created_by,
-                "keyword": item.keyword,
-                "status": item.status,
-                "tags": [knowledge_tag.tag.name for knowledge_tag in item.knowledge_tags],
-            }
-            for item in knowledge_list
-        ]
-    }
+@router.get('/search/knowledge')
+def search(keyword: str = None, category_id: int = None, tag_id: int = None, status: str = None,
+           db: Session = Depends(get_db), user=Depends(security.get_current_user)):
+    query = spaces.scoped(db, user, 'public', category_id)
+    if keyword:
+        query = query.filter(or_(*[c.contains(keyword, autoescape=True) for c in
+            [models.Knowledge.title, models.Knowledge.content, models.Knowledge.summary, models.Knowledge.keyword]]))
+    if tag_id is not None:
+        query = query.filter(db.query(models.KnowledgeTag.knowledge_id).filter(
+            models.KnowledgeTag.knowledge_id == models.Knowledge.kid, models.KnowledgeTag.tag_id == tag_id).exists())
+    items = query.order_by(models.Knowledge.kid.desc()).all()
+    return {'count': len(items), 'items': [spaces.serialize(db, k, user) for k in items]}

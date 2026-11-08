@@ -16,30 +16,52 @@ def tokens(text):
 def fingerprint(knowledge):
     return hashlib.sha256(build_embedding_text(knowledge).encode('utf-8')).hexdigest()
 
-def search(db, question, category_id=None):
+def search(db, question, category_id=None, user=None, space='public'):
+    from app.services import spaces
     result=get_local_embeddings([question],'query')
     query=result['vectors'][0]
-    rows=db.query(models.KnowledgeEmbedding,models.Knowledge).join(models.Knowledge,models.KnowledgeEmbedding.knowledge_id==models.Knowledge.kid).filter(models.Knowledge.status=='published',models.KnowledgeEmbedding.embedding_model==result['model'])
-    if category_id is not None:rows=rows.filter(models.Knowledge.category_id==category_id)
-    rows=rows.order_by(models.KnowledgeEmbedding.embedding_id.desc()).all()
+    if user is None:
+        from types import SimpleNamespace
+        user = SimpleNamespace(uid=-1)
+    records = spaces.scoped(db, user, space, category_id).all()
+    allowed = {k.kid: k for k in records}
+    chunks = db.query(models.KnowledgeChunk).filter(models.KnowledgeChunk.knowledge_id.in_(allowed),
+        models.KnowledgeChunk.model == result['model']).all() if allowed else []
+    # 新片段与旧完整向量并存；只在授权集合中检索，正文版本必须匹配。
+    best = {}
+    for chunk in chunks:
+        k = allowed[chunk.knowledge_id]
+        if chunk.content_hash != fingerprint(k): continue
+        try:
+            v = json.loads(chunk.vector)
+            if not isinstance(v, list) or len(v) != len(query) or any(type(x) not in (int, float) or not math.isfinite(x) for x in v): continue
+            norm = math.sqrt(sum(x*x for x in v))
+            if not norm or not math.isfinite(norm): continue
+            dense = sum(a*b for a,b in zip(query,v))/norm
+            if not math.isfinite(dense): continue
+            if k.kid not in best or dense > best[k.kid][0]: best[k.kid] = (dense, chunk.text)
+        except (TypeError, ValueError): continue
+    rows=db.query(models.KnowledgeEmbedding,models.Knowledge).join(models.Knowledge,models.KnowledgeEmbedding.knowledge_id==models.Knowledge.kid).filter(models.Knowledge.kid.in_(allowed),models.KnowledgeEmbedding.embedding_model==result['model']).order_by(models.KnowledgeEmbedding.embedding_id.desc()).all() if allowed else []
     candidates=[];seen=set()
     for row,k in rows:
-        if k.kid in seen:continue
+        if k.kid in seen or k.kid in best:continue
         seen.add(k.kid)
         if row.embedding_text!=build_embedding_text(k):continue
         try:
             v=json.loads(row.embedding_vector)
             if not isinstance(v,list) or len(v)!=len(query) or any(type(x) not in (int,float) or not math.isfinite(x) for x in v):continue
             norm=math.sqrt(sum(x*x for x in v))
-            if norm==0:continue
+            if norm==0 or not math.isfinite(norm):continue
             dense=sum(a*b for a,b in zip(query,v))/norm
-            terms=tokens(k.title+' '+(k.keyword or '')+' '+build_embedding_text(k))
-            candidates.append((k,dense,Counter(terms),len(terms)))
+            if not math.isfinite(dense):continue
+            best[k.kid] = (dense, build_embedding_text(k)[:1800])
         except (TypeError,ValueError):continue
+    for kid, (dense, excerpt) in best.items():
+        k=allowed[kid]
+        terms=tokens(k.title+' '+(k.keyword or '')+' '+build_embedding_text(k))
+        candidates.append((k,dense,Counter(terms),len(terms)))
     if not candidates:
-        published=db.query(models.Knowledge.kid).filter(models.Knowledge.status=='published')
-        if category_id is not None:published=published.filter(models.Knowledge.category_id==category_id)
-        if published.first():raise ValueError('已发布知识尚无有效索引，请管理员生成或更新本地向量。')
+        if allowed:raise ValueError('当前范围尚无有效语义索引，请更新索引，或先使用关键词搜索。')
         return [],result['model']
     qterms=set(tokens(question));n=len(candidates);avg=max(1,sum(c[3] for c in candidates)/n)
     df={t:sum(t in c[2] for c in candidates) for t in qterms}
@@ -54,6 +76,6 @@ def search(db, question, category_id=None):
         fused=dense+0.12*lexical/maxlex
         ranked.append((fused,k,dense))
     ranked.sort(key=lambda x:(-x[0],x[1].kid))
-    sources=[{'knowledge_id':k.kid,'title':k.title,'excerpt':build_embedding_text(k)[:1800],
+    sources=[{'knowledge_id':k.kid,'title':k.title,'excerpt':best[k.kid][1],
               'score':round(score,6),'semantic_score':round(dense,6),'content_hash':fingerprint(k)} for score,k,dense in ranked[:3]]
     return sources,result['model']

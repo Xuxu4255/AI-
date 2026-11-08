@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text, DateTime, DECIMAL, ForeignKey
+from sqlalchemy import Column, Integer, String, Text, DateTime, DECIMAL, ForeignKey, Boolean, Float, UniqueConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from app.database import Base
@@ -221,3 +221,96 @@ class UpdateLog(Base):
 
     knowledge = relationship("Knowledge", back_populates="update_logs")
     user = relationship("User", back_populates="update_logs")
+
+
+# 知识星海：新增附属表，不改动原有知识、用户、向量和来源记录。
+class PersonalCategory(Base):
+    __tablename__ = 'personal_categories'
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.uid'), nullable=False, index=True)
+    name = Column(String(100), nullable=False)
+    color = Column(String(7), nullable=False, default='#74DCFF')
+    __table_args__ = (UniqueConstraint('user_id', 'name'),)
+
+
+class PersonalEntry(Base):
+    __tablename__ = 'personal_entries'
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.uid'), nullable=False, index=True)
+    category_id = Column(Integer, ForeignKey('personal_categories.id'), nullable=False)
+    knowledge_id = Column(Integer, ForeignKey('knowledge.kid'), nullable=False, index=True)
+    __table_args__ = (UniqueConstraint('user_id', 'knowledge_id'),)
+
+
+class PlanetSetting(Base):
+    __tablename__ = 'planet_settings'
+    category_id = Column(Integer, ForeignKey('categories.cid'), primary_key=True)
+    visible = Column(Boolean, nullable=False, default=True)
+    style = Column(String(20), nullable=False, default='jupiter')
+    position = Column(Integer, nullable=False, default=0)
+
+
+class Appearance(Base):
+    __tablename__ = 'user_appearance'
+    user_id = Column(Integer, ForeignKey('users.uid'), primary_key=True)
+    exposure = Column(Float, nullable=False, default=1.0)
+    theme = Column(String(20), nullable=False, default='blue')
+    custom_color = Column(String(7), nullable=False, default='#102A48')
+    paused = Column(Boolean, nullable=False, default=False)
+    reduced_motion = Column(Boolean, nullable=False, default=False)
+
+
+class Moderation(Base):
+    __tablename__ = 'knowledge_moderation'
+    knowledge_id = Column(Integer, ForeignKey('knowledge.kid'), primary_key=True)
+    hidden = Column(Boolean, nullable=False, default=False)
+    reason = Column(String(500), nullable=False, default='')
+
+
+class PersonalLink(Base):
+    __tablename__ = 'personal_links'
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.uid'), nullable=False, index=True)
+    source_id = Column(Integer, ForeignKey('knowledge.kid'), nullable=False)
+    target_id = Column(Integer, ForeignKey('knowledge.kid'), nullable=False)
+    relation = Column(String(30), nullable=False, default='相关')
+    __table_args__ = (UniqueConstraint('user_id', 'source_id', 'target_id'),)
+
+
+class KnowledgeChunk(Base):
+    __tablename__ = 'knowledge_chunks'
+    id = Column(Integer, primary_key=True)
+    knowledge_id = Column(Integer, ForeignKey('knowledge.kid'), nullable=False, index=True)
+    content_hash = Column(String(64), nullable=False)
+    model = Column(String(100), nullable=False)
+    position = Column(Integer, nullable=False)
+    text = Column(Text, nullable=False)
+    vector = Column(Text, nullable=False)
+
+
+class SpaceEvent(Base):
+    __tablename__ = 'space_events'
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.uid'), nullable=False)
+    action = Column(String(50), nullable=False)
+    detail = Column(Text, nullable=False)
+    created_at = Column(DateTime, server_default=func.current_timestamp(), nullable=False)
+
+
+class AiConversation(Base):
+    __tablename__ = 'ai_conversations'
+    conversation_id = Column(String(32), primary_key=True)
+    search_id = Column(String(32), ForeignKey('search_contexts.search_id'), nullable=False, unique=True)
+    user_id = Column(Integer, ForeignKey('users.uid'), nullable=False, index=True)
+    turns = Column(Integer, nullable=False, default=0)
+    messages_json = Column(Text, nullable=False, default='[]')
+
+
+class LibraryShelfAppearance(Base):
+    """分类样式；category_id 由 space 区分公共/个人分类，写入时验证归属。"""
+    __tablename__ = 'library_shelf_appearance'
+    id = Column(Integer, primary_key=True)
+    space = Column(String(20), nullable=False)
+    category_id = Column(Integer, nullable=False)
+    style = Column(String(20), nullable=False, default='glass')
+    __table_args__ = (UniqueConstraint('space', 'category_id'),)

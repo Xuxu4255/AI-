@@ -5,6 +5,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 from app import crud, models, schemas, security
 from app.database import get_db
+from app.services.spaces import public_filter
 
 router = APIRouter()
 
@@ -16,9 +17,7 @@ def serialize(category, count=0):
 
 @router.get("/categories")
 def list_categories(db: Session = Depends(get_db), user=Depends(security.get_current_user)):
-    counts = db.query(models.Knowledge.category_id, func.count(models.Knowledge.kid).label("n"))
-    if user.role != "admin":
-        counts = counts.filter(models.Knowledge.status == "published")
+    counts = db.query(models.Knowledge.category_id, func.count(models.Knowledge.kid).label("n")).outerjoin(models.Moderation, models.Moderation.knowledge_id == models.Knowledge.kid).filter(public_filter())
     counts = counts.group_by(models.Knowledge.category_id).subquery()
     rows = db.query(models.Category, func.coalesce(counts.c.n, 0)).outerjoin(
         counts, counts.c.category_id == models.Category.cid).order_by(models.Category.cid).all()
@@ -30,9 +29,7 @@ def get_category(category_id: int, db: Session = Depends(get_db), user=Depends(s
     category = crud.get_category_by_id(db, category_id)
     if category is None:
         raise HTTPException(404, "分类不存在")
-    query = db.query(models.Knowledge).filter(models.Knowledge.category_id == category_id)
-    if user.role != "admin":
-        query = query.filter(models.Knowledge.status == "published")
+    query = db.query(models.Knowledge).outerjoin(models.Moderation, models.Moderation.knowledge_id == models.Knowledge.kid).filter(models.Knowledge.category_id == category_id, public_filter())
     return serialize(category, query.count())
 
 
@@ -65,6 +62,8 @@ def delete_category(category_id: int, db: Session = Depends(get_db), admin=Depen
     if db.query(models.Knowledge.kid).filter(models.Knowledge.category_id == category_id).first():
         raise HTTPException(409, "分类下还有知识，请先转移知识后再删除")
     try:
+        db.query(models.LibraryShelfAppearance).filter_by(space='public', category_id=category_id).delete()
+        db.query(models.PlanetSetting).filter_by(category_id=category_id).delete()
         crud.delete_category(db, category_id)
     except IntegrityError:
         db.rollback()

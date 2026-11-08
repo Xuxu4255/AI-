@@ -10,10 +10,7 @@ venv/
 *.log
 
 database_experiment/
-.env
-__pycache__/
-*.pyc
-venv/
-.venv/
 # 本地模型权重与缓存
 .models/
+data/backups/
+data/reports/

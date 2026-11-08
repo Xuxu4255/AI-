@@ -40,5 +40,5 @@ EMBEDDING_MODEL = os.getenv(
 )
 
 # 应用基础配置
-APP_TITLE = "知识库管理系统"
-APP_VERSION = "1.0.0"
+APP_TITLE = "知识星海"
+APP_VERSION = "2.0.0"

@@ -1,0 +1,966 @@
+{
+  "generated_at": "2026-11-08T07:46:25.916216+00:00",
+  "kind": "original_study_notes_with_runoob_references",
+  "items": [
+    {
+      "key": "Python:python3-basic-syntax",
+      "category": "Python",
+      "title": "Python｜缩进、语句块与 Python 程序入口",
+      "summary": "Python 用缩进划分语句块，同一层级保持相同缩进。脚本直接运行时 __name__ 为 __main__，可把启动逻辑放进入口判断，避免模块被导入时就执行业务代码。",
+      "keyword": "Python 缩进 语法 入门 main",
+      "content": "Python 用缩进划分语句块，同一层级保持相同缩进。脚本直接运行时 __name__ 为 __main__，可把启动逻辑放进入口判断，避免模块被导入时就执行业务代码。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\ndef greet(name):\n    return f\"你好，{name}\"\n\nif __name__ == \"__main__\":\n    print(greet(\"学习者\"))\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Python3 基础语法",
+      "source_url": "https://www.runoob.com/python3/python3-basic-syntax.html"
+    },
+    {
+      "key": "Python:python3-data-type",
+      "category": "Python",
+      "title": "Python｜可变与不可变：理解 Python 数据类型",
+      "summary": "变量名绑定到对象；类型属于对象。列表、字典和集合可变，整数、字符串和元组不可变，但元组内部引用的可变对象仍可能改变。赋值给另一个变量通常不会复制对象。",
+      "keyword": "Python 类型 列表 字符串 可变 引用",
+      "content": "变量名绑定到对象；类型属于对象。列表、字典和集合可变，整数、字符串和元组不可变，但元组内部引用的可变对象仍可能改变。赋值给另一个变量通常不会复制对象。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nnotes = [\"语法\"]\nalias = notes\nalias.append(\"练习\")\nprint(notes)  # 两个名字指向同一个列表\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Python3 基本数据类型",
+      "source_url": "https://www.runoob.com/python3/python3-data-type.html"
+    },
+    {
+      "key": "Python:python3-list",
+      "category": "Python",
+      "title": "Python｜列表增删、切片与浅拷贝",
+      "summary": "列表是有序可变容器，适合维护一组条目。切片上界不包含在结果中。list.copy() 创建浅拷贝，嵌套列表仍会共享内部对象；需要完全独立的嵌套结构时可考虑 deepcopy。",
+      "keyword": "Python list append 切片 复制",
+      "content": "列表是有序可变容器，适合维护一组条目。切片上界不包含在结果中。list.copy() 创建浅拷贝，嵌套列表仍会共享内部对象；需要完全独立的嵌套结构时可考虑 deepcopy。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\ntopics = [\"变量\", \"函数\", \"异常\"]\ntopics.append(\"模块\")\nprint(topics[1:3])\nbackup = topics.copy()\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Python3 列表",
+      "source_url": "https://www.runoob.com/python3/python3-list.html"
+    },
+    {
+      "key": "Python:python3-dictionary",
+      "category": "Python",
+      "title": "Python｜字典如何按键保存和查找数据",
+      "summary": "字典以键值对组织信息，键必须可哈希。读取可能不存在的键时，用 get 提供默认值可避免 KeyError。字典适合表示一条知识的属性，不应依赖不明确的字段约定。",
+      "keyword": "Python dict key value get 键值",
+      "content": "字典以键值对组织信息，键必须可哈希。读取可能不存在的键时，用 get 提供默认值可避免 KeyError。字典适合表示一条知识的属性，不应依赖不明确的字段约定。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nentry = {\"title\": \"函数\", \"views\": 0}\nentry[\"views\"] += 1\nprint(entry.get(\"summary\", \"暂无摘要\"))\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Python3 字典",
+      "source_url": "https://www.runoob.com/python3/python3-dictionary.html"
+    },
+    {
+      "key": "Python:python3-set",
+      "category": "Python",
+      "title": "Python｜用集合去重与求交集",
+      "summary": "集合用于成员判断和去重，不提供按位置取值。交集找出共同元素，差集找出只属于一侧的元素。若既要去重又保留首次出现顺序，可使用字典的键顺序。",
+      "keyword": "Python set 去重 交集 差集",
+      "content": "集合用于成员判断和去重，不提供按位置取值。交集找出共同元素，差集找出只属于一侧的元素。若既要去重又保留首次出现顺序，可使用字典的键顺序。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nstudied = {\"函数\", \"列表\"}\nrequired = {\"函数\", \"异常\"}\nprint(required - studied)  # 还需学习的主题\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Python3 集合",
+      "source_url": "https://www.runoob.com/python3/python3-set.html"
+    },
+    {
+      "key": "Python:python3-loop",
+      "category": "Python",
+      "title": "Python｜for、while、break 和 continue",
+      "summary": "for 常用于遍历可迭代对象，while 根据条件重复。break 退出当前循环，continue 跳到下一次迭代。修改正在遍历的列表可能漏处理元素，通常应构建新列表。",
+      "keyword": "Python 循环 range 遍历 break continue",
+      "content": "for 常用于遍历可迭代对象，while 根据条件重复。break 退出当前循环，continue 跳到下一次迭代。修改正在遍历的列表可能漏处理元素，通常应构建新列表。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nscores = [48, 72, 90]\nfor score in scores:\n    if score < 60:\n        continue\n    print(score)\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Python3 循环语句",
+      "source_url": "https://www.runoob.com/python3/python3-loop.html"
+    },
+    {
+      "key": "Python:python3-function",
+      "category": "Python",
+      "title": "Python｜函数参数、返回值与可变默认值",
+      "summary": "函数把可复用的步骤封装起来。可变默认参数只在定义时创建一次，容易在多次调用之间意外共享状态；可用 None 作为默认值，在函数内部创建新对象。",
+      "keyword": "Python def 参数 return 默认参数",
+      "content": "函数把可复用的步骤封装起来。可变默认参数只在定义时创建一次，容易在多次调用之间意外共享状态；可用 None 作为默认值，在函数内部创建新对象。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\ndef add_topic(topic, items=None):\n    if items is None:\n        items = []\n    items.append(topic)\n    return items\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Python3 函数",
+      "source_url": "https://www.runoob.com/python3/python3-function.html"
+    },
+    {
+      "key": "Python:python-comprehensions",
+      "category": "Python",
+      "title": "Python｜列表推导式：过滤和转换数据",
+      "summary": "推导式适合表达简单的数据转换和过滤。逻辑过长或需要多步异常处理时，普通循环更便于阅读与调试。字典推导式可用于构建从编号到条目的索引。",
+      "keyword": "Python 推导式 列表 过滤 映射",
+      "content": "推导式适合表达简单的数据转换和过滤。逻辑过长或需要多步异常处理时，普通循环更便于阅读与调试。字典推导式可用于构建从编号到条目的索引。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nnames = [\"Python\", \"Java\", \"C++\"]\nlong_names = [name.lower() for name in names if len(name) > 3]\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Python3 推导式",
+      "source_url": "https://www.runoob.com/python3/python-comprehensions.html"
+    },
+    {
+      "key": "Python:python3-iterator-generator",
+      "category": "Python",
+      "title": "Python｜生成器为什么适合逐条处理大数据",
+      "summary": "生成器通过 yield 暂停函数并保存执行位置，按需产生元素。它适合流式读取和逐条处理，不必一次构造完整列表；但通常只能遍历一次，需要重复使用时应重新创建。",
+      "keyword": "Python yield 迭代器 惰性 内存",
+      "content": "生成器通过 yield 暂停函数并保存执行位置，按需产生元素。它适合流式读取和逐条处理，不必一次构造完整列表；但通常只能遍历一次，需要重复使用时应重新创建。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\ndef pages(total):\n    for number in range(1, total + 1):\n        yield number\n\nfor page in pages(3):\n    print(page)\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Python3 迭代器与生成器",
+      "source_url": "https://www.runoob.com/python3/python3-iterator-generator.html"
+    },
+    {
+      "key": "Python:python3-errors-execptions",
+      "category": "Python",
+      "title": "Python｜异常处理与 finally 清理资源",
+      "summary": "捕获可以恢复的具体异常，比捕获所有异常更利于排查问题。finally 无论是否发生异常都会执行，常用于清理。对非法输入可以主动 raise，让上层决定怎样反馈。",
+      "keyword": "Python try except finally raise 错误",
+      "content": "捕获可以恢复的具体异常，比捕获所有异常更利于排查问题。finally 无论是否发生异常都会执行，常用于清理。对非法输入可以主动 raise，让上层决定怎样反馈。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\ntry:\n    count = int(\"12\")\nexcept ValueError:\n    count = 0\nfinally:\n    print(\"解析结束\")\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Python3 错误和异常",
+      "source_url": "https://www.runoob.com/python3/python3-errors-execptions.html"
+    },
+    {
+      "key": "Python:python3-with-keyword",
+      "category": "Python",
+      "title": "Python｜with 上下文管理与文件关闭",
+      "summary": "with 会调用上下文管理协议，即使代码块发生异常也会执行退出清理。打开文本文件时明确指定编码，可以减少不同操作系统之间的乱码问题。",
+      "keyword": "Python with open 文件 资源关闭",
+      "content": "with 会调用上下文管理协议，即使代码块发生异常也会执行退出清理。打开文本文件时明确指定编码，可以减少不同操作系统之间的乱码问题。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nwith open(\"learning.txt\", \"w\", encoding=\"utf-8\") as file:\n    file.write(\"今天理解了生成器。\")\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Python3 with",
+      "source_url": "https://www.runoob.com/python3/python3-with-keyword.html"
+    },
+    {
+      "key": "Python:python3-json",
+      "category": "Python",
+      "title": "Python｜JSON 与 Python 对象如何互相转换",
+      "summary": "JSON 是文本数据交换格式。loads 把 JSON 字符串解析为 Python 对象，dumps 生成字符串。ensure_ascii=False 便于直接阅读中文；解析外部数据后仍需检查字段和类型。",
+      "keyword": "Python json loads dumps 序列化 中文",
+      "content": "JSON 是文本数据交换格式。loads 把 JSON 字符串解析为 Python 对象，dumps 生成字符串。ensure_ascii=False 便于直接阅读中文；解析外部数据后仍需检查字段和类型。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nimport json\ntext = json.dumps({\"topic\": \"字典\"}, ensure_ascii=False)\nentry = json.loads(text)\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Python3 JSON",
+      "source_url": "https://www.runoob.com/python3/python3-json.html"
+    },
+    {
+      "key": "Python:python3-module",
+      "category": "Python",
+      "title": "Python｜模块导入与组织代码",
+      "summary": "模块通常对应一个 Python 文件，包把相关模块放在一起。将数据库操作、业务逻辑和接口拆开，可减少单个文件复杂度。避免模块间循环导入，也不要在导入阶段执行昂贵任务。",
+      "keyword": "Python import 模块 包 复用",
+      "content": "模块通常对应一个 Python 文件，包把相关模块放在一起。将数据库操作、业务逻辑和接口拆开，可减少单个文件复杂度。避免模块间循环导入，也不要在导入阶段执行昂贵任务。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\n# helpers.py\ndef normalize(text):\n    return text.strip().lower()\n\n# 在其他模块使用：from helpers import normalize\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Python3 模块",
+      "source_url": "https://www.runoob.com/python3/python3-module.html"
+    },
+    {
+      "key": "Python:python3-class",
+      "category": "Python",
+      "title": "Python｜类、实例与实例属性",
+      "summary": "类定义对象的行为，实例保存具体状态。实例方法中的 self 指向当前对象。每个对象独立的列表应在 __init__ 中创建，放在类级别会在实例间共享。",
+      "keyword": "Python class self 对象 构造 __init__",
+      "content": "类定义对象的行为，实例保存具体状态。实例方法中的 self 指向当前对象。每个对象独立的列表应在 __init__ 中创建，放在类级别会在实例间共享。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nclass Notebook:\n    def __init__(self, title):\n        self.title = title\n        self.pages = []\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Python3 面向对象",
+      "source_url": "https://www.runoob.com/python3/python3-class.html"
+    },
+    {
+      "key": "Python:python-type-hints",
+      "category": "Python",
+      "title": "Python｜类型注解有什么作用",
+      "summary": "类型注解帮助编辑器和静态检查工具理解接口，不会单独强制运行时校验。内置泛型 list[str] 需要 Python 3.9 及以上；旧版本可使用 typing.List[str]。",
+      "keyword": "Python typing list Optional 类型检查 Python3.9",
+      "content": "类型注解帮助编辑器和静态检查工具理解接口，不会单独强制运行时校验。内置泛型 list[str] 需要 Python 3.9 及以上；旧版本可使用 typing.List[str]。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nfrom typing import List\n\ndef titles(items: List[str]) -> List[str]:\n    return [item.strip() for item in items]\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Python 类型注解",
+      "source_url": "https://www.runoob.com/python3/python-type-hints.html"
+    },
+    {
+      "key": "Python:python-asyncio",
+      "category": "Python",
+      "title": "Python｜asyncio：异步适合哪些任务",
+      "summary": "协程适合网络请求等等待型工作。await 在等待可异步执行的操作时允许其他任务推进；在协程中直接调用阻塞函数仍会阻塞事件循环。CPU 密集任务通常需要其他并行方案。",
+      "keyword": "Python async await 协程 IO 并发",
+      "content": "协程适合网络请求等等待型工作。await 在等待可异步执行的操作时允许其他任务推进；在协程中直接调用阻塞函数仍会阻塞事件循环。CPU 密集任务通常需要其他并行方案。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nimport asyncio\n\nasync def remind():\n    await asyncio.sleep(0.1)\n    return \"继续学习\"\n\nprint(asyncio.run(remind()))\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Python asyncio 模块",
+      "source_url": "https://www.runoob.com/python3/python-asyncio.html"
+    },
+    {
+      "key": "C++:cpp-basic-syntax",
+      "category": "C++",
+      "title": "C++｜C++ 程序入口与编译流程",
+      "summary": "C++ 源文件通常先编译再链接为可执行程序。main 是程序入口，标准库名称位于 std 命名空间。编译时启用警告有助于发现未初始化变量和可疑转换。",
+      "keyword": "C++ main 编译 链接 iostream",
+      "content": "C++ 源文件通常先编译再链接为可执行程序。main 是程序入口，标准库名称位于 std 命名空间。编译时启用警告有助于发现未初始化变量和可疑转换。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\n#include <iostream>\nint main() {\n    std::cout << \"Start learning\\n\";\n    return 0;\n}\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜C++ 基本语法",
+      "source_url": "https://www.runoob.com/cplusplus/cpp-basic-syntax.html"
+    },
+    {
+      "key": "C++:cpp-data-types",
+      "category": "C++",
+      "title": "C++｜基本数据类型与初始化",
+      "summary": "整数、浮点数和布尔值表达不同的数据。类型的具体大小依赖实现，固定宽度整数可使用标准库提供的类型。优先初始化变量，避免读取未确定的值。",
+      "keyword": "C++ int double bool 初始化",
+      "content": "整数、浮点数和布尔值表达不同的数据。类型的具体大小依赖实现，固定宽度整数可使用标准库提供的类型。优先初始化变量，避免读取未确定的值。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nint chapters{6};\ndouble progress{0.25};\nbool completed{false};\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜C++ 数据类型",
+      "source_url": "https://www.runoob.com/cplusplus/cpp-data-types.html"
+    },
+    {
+      "key": "C++:cpp-variable-scope",
+      "category": "C++",
+      "title": "C++｜作用域、生命周期与局部变量",
+      "summary": "作用域决定名字在哪些位置可见，生命周期决定对象何时存在。返回局部对象的指针或引用会造成悬空访问。传值返回常能通过优化避免多余复制。",
+      "keyword": "C++ 作用域 生命周期 局部 全局",
+      "content": "作用域决定名字在哪些位置可见，生命周期决定对象何时存在。返回局部对象的指针或引用会造成悬空访问。传值返回常能通过优化避免多余复制。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nint next_page(int page) {\n    int result = page + 1;\n    return result;\n}\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜C++ 变量作用域",
+      "source_url": "https://www.runoob.com/cplusplus/cpp-variable-scope.html"
+    },
+    {
+      "key": "C++:cpp-functions",
+      "category": "C++",
+      "title": "C++｜函数参数如何选择传值或传引用",
+      "summary": "小型值通常可直接传值。需要修改调用者对象时传非 const 引用；只读较大对象时可传 const 引用。接口应清楚表达是否会修改数据。",
+      "keyword": "C++ 函数 参数 const 引用",
+      "content": "小型值通常可直接传值。需要修改调用者对象时传非 const 引用；只读较大对象时可传 const 引用。接口应清楚表达是否会修改数据。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\n#include <string>\nstd::size_t title_size(const std::string& title) {\n    return title.size();\n}\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜C++ 函数",
+      "source_url": "https://www.runoob.com/cplusplus/cpp-functions.html"
+    },
+    {
+      "key": "C++:cpp-references",
+      "category": "C++",
+      "title": "C++｜引用与指针的区别",
+      "summary": "引用是已存在对象的别名，初始化后不能改为绑定另一对象。指针保存地址，可以为空或重新指向。无论使用哪种方式，都需要保证被引用对象仍然存活。",
+      "keyword": "C++ 引用 指针 地址 nullptr",
+      "content": "引用是已存在对象的别名，初始化后不能改为绑定另一对象。指针保存地址，可以为空或重新指向。无论使用哪种方式，都需要保证被引用对象仍然存活。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nint page = 1;\nint& alias = page;\nint* pointer = &page;\nalias = 2;\nif (pointer != nullptr) { ++(*pointer); }\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜C++ 引用",
+      "source_url": "https://www.runoob.com/cplusplus/cpp-references.html"
+    },
+    {
+      "key": "C++:cpp-pointers",
+      "category": "C++",
+      "title": "C++｜指针解引用与悬空风险",
+      "summary": "解引用指针前应确保它非空且仍指向有效对象。删除对象后继续使用其地址属于未定义行为。管理拥有关系时，优先采用容器和智能指针而非手动维护裸指针。",
+      "keyword": "C++ 指针 解引用 空指针 内存",
+      "content": "解引用指针前应确保它非空且仍指向有效对象。删除对象后继续使用其地址属于未定义行为。管理拥有关系时，优先采用容器和智能指针而非手动维护裸指针。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nint total{12};\nint* address = &total;\n*address += 3;\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜C++ 指针",
+      "source_url": "https://www.runoob.com/cplusplus/cpp-pointers.html"
+    },
+    {
+      "key": "C++:cpp-arrays",
+      "category": "C++",
+      "title": "C++｜数组边界与长度",
+      "summary": "内置数组在连续内存中保存固定数量的同类元素。合法下标从零开始，越界访问属于未定义行为。需要可变长度时可选择 vector，需要固定长度时也可考虑 std::array。",
+      "keyword": "C++ 数组 越界 连续存储",
+      "content": "内置数组在连续内存中保存固定数量的同类元素。合法下标从零开始，越界访问属于未定义行为。需要可变长度时可选择 vector，需要固定长度时也可考虑 std::array。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nint scores[3]{70, 80, 90};\nfor (int score : scores) {\n    // 对每个元素执行处理\n}\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜C++ 数组",
+      "source_url": "https://www.runoob.com/cplusplus/cpp-arrays.html"
+    },
+    {
+      "key": "C++:cpp-strings",
+      "category": "C++",
+      "title": "C++｜std::string 的拼接和读取",
+      "summary": "std::string 管理字符序列并自动维护存储空间。getline 可读取包含空格的一整行。size 返回字符单元数量，对于 UTF-8 文本通常不等于汉字或可见字符数量。",
+      "keyword": "C++ string 字符串 getline",
+      "content": "std::string 管理字符序列并自动维护存储空间。getline 可读取包含空格的一整行。size 返回字符单元数量，对于 UTF-8 文本通常不等于汉字或可见字符数量。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\n#include <string>\nstd::string topic = \"C++\";\nstd::string title = topic + \" notes\";\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜C++ 字符串",
+      "source_url": "https://www.runoob.com/cplusplus/cpp-strings.html"
+    },
+    {
+      "key": "C++:cpp-vector",
+      "category": "C++",
+      "title": "C++｜vector 扩容与迭代器失效",
+      "summary": "vector 提供连续存储和动态大小。扩容可能移动全部元素，使原有指针、引用和迭代器失效。提前知道大致数量时可 reserve 预留容量，但它不会改变 size。",
+      "keyword": "C++ vector 动态数组 push_back reserve",
+      "content": "vector 提供连续存储和动态大小。扩容可能移动全部元素，使原有指针、引用和迭代器失效。提前知道大致数量时可 reserve 预留容量，但它不会改变 size。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\n#include <vector>\nstd::vector<int> pages;\npages.reserve(8);\npages.push_back(1);\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜C++ vector 容器",
+      "source_url": "https://www.runoob.com/cplusplus/cpp-vector.html"
+    },
+    {
+      "key": "C++:cpp-classes-objects",
+      "category": "C++",
+      "title": "C++｜用类封装状态与行为",
+      "summary": "类把数据和相关操作放在一起。private 限制直接访问内部状态，public 暴露稳定接口。封装应维护对象约束，而不只是为每个字段机械添加 getter 和 setter。",
+      "keyword": "C++ class 对象 public private",
+      "content": "类把数据和相关操作放在一起。private 限制直接访问内部状态，public 暴露稳定接口。封装应维护对象约束，而不只是为每个字段机械添加 getter 和 setter。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nclass Counter {\n    int value{0};\npublic:\n    void increment() { ++value; }\n    int get() const { return value; }\n};\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜C++ 类 & 对象",
+      "source_url": "https://www.runoob.com/cplusplus/cpp-classes-objects.html"
+    },
+    {
+      "key": "C++:cpp-inheritance",
+      "category": "C++",
+      "title": "C++｜继承与组合的选择",
+      "summary": "继承表示派生对象可以作为基类对象使用。若只是复用一个功能模块，组合通常更直接。通过基类指针删除派生对象时，基类应有合适的虚析构函数。",
+      "keyword": "C++ 继承 基类 派生类 组合",
+      "content": "继承表示派生对象可以作为基类对象使用。若只是复用一个功能模块，组合通常更直接。通过基类指针删除派生对象时，基类应有合适的虚析构函数。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nstruct Resource {\n    virtual ~Resource() = default;\n};\nstruct Book : Resource {};\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜C++ 继承",
+      "source_url": "https://www.runoob.com/cplusplus/cpp-inheritance.html"
+    },
+    {
+      "key": "C++:cpp-polymorphism",
+      "category": "C++",
+      "title": "C++｜virtual 如何实现运行时多态",
+      "summary": "通过基类引用或指针调用虚函数，可以选择实际对象的实现。override 帮助编译器检查是否确实重写了基类虚函数。按值传递派生对象可能产生对象切片。",
+      "keyword": "C++ 多态 virtual override 动态绑定",
+      "content": "通过基类引用或指针调用虚函数，可以选择实际对象的实现。override 帮助编译器检查是否确实重写了基类虚函数。按值传递派生对象可能产生对象切片。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nstruct Item { virtual int pages() const = 0; virtual ~Item() = default; };\nstruct Note : Item { int pages() const override { return 1; } };\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜C++ 多态",
+      "source_url": "https://www.runoob.com/cplusplus/cpp-polymorphism.html"
+    },
+    {
+      "key": "C++:cpp-templates",
+      "category": "C++",
+      "title": "C++｜函数模板与类型复用",
+      "summary": "模板描述一组与类型相关的实现，编译器根据实际类型实例化。模板参数仍必须支持代码中用到的操作。错误信息较长时，可以先检查类型是否满足所需操作。",
+      "keyword": "C++ template 泛型 编译期",
+      "content": "模板描述一组与类型相关的实现，编译器根据实际类型实例化。模板参数仍必须支持代码中用到的操作。错误信息较长时，可以先检查类型是否满足所需操作。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\ntemplate<class T>\nT larger(T left, T right) {\n    return left < right ? right : left;\n}\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜C++ 模板",
+      "source_url": "https://www.runoob.com/cplusplus/cpp-templates.html"
+    },
+    {
+      "key": "C++:cpp-libs-memory",
+      "category": "C++",
+      "title": "C++｜unique_ptr 与 RAII 自动释放资源",
+      "summary": "RAII 把资源释放与对象生命周期绑定。unique_ptr 表示独占所有权，不能直接复制但可以移动；shared_ptr 用于共享所有权，需要注意循环引用。",
+      "keyword": "C++ 智能指针 unique_ptr RAII 内存泄漏",
+      "content": "RAII 把资源释放与对象生命周期绑定。unique_ptr 表示独占所有权，不能直接复制但可以移动；shared_ptr 用于共享所有权，需要注意循环引用。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\n#include <memory>\nauto chapter = std::make_unique<int>(12);\n// 离开作用域后自动释放\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜C++ <memory>",
+      "source_url": "https://www.runoob.com/cplusplus/cpp-libs-memory.html"
+    },
+    {
+      "key": "C++:cpp-exceptions-handling",
+      "category": "C++",
+      "title": "C++｜C++ 异常与栈展开",
+      "summary": "throw 报告无法在当前层处理的问题，catch 在合适层恢复或反馈。异常传播时，已构造的局部对象会按规则析构，因此资源应放入 RAII 对象中管理。",
+      "keyword": "C++ try catch throw 异常 RAII",
+      "content": "throw 报告无法在当前层处理的问题，catch 在合适层恢复或反馈。异常传播时，已构造的局部对象会按规则析构，因此资源应放入 RAII 对象中管理。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\n#include <stdexcept>\nint checked(int value) {\n    if (value < 0) throw std::invalid_argument(\"negative\");\n    return value;\n}\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜C++ 异常处理",
+      "source_url": "https://www.runoob.com/cplusplus/cpp-exceptions-handling.html"
+    },
+    {
+      "key": "C++:cpp-stl-tutorial",
+      "category": "C++",
+      "title": "C++｜STL 的容器、迭代器与算法",
+      "summary": "容器负责保存数据，迭代器描述访问范围，算法执行通用操作。算法通常使用左闭右开的区间。排序前确认迭代器类型及容器满足算法要求。",
+      "keyword": "C++ STL sort 容器 算法 iterator",
+      "content": "容器负责保存数据，迭代器描述访问范围，算法执行通用操作。算法通常使用左闭右开的区间。排序前确认迭代器类型及容器满足算法要求。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\n#include <algorithm>\n#include <vector>\nstd::vector<int> order{3, 1, 2};\n// 在函数中调用：std::sort(order.begin(), order.end());\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜C++ STL 教程",
+      "source_url": "https://www.runoob.com/cplusplus/cpp-stl-tutorial.html"
+    },
+    {
+      "key": "Java:java-basic-datatypes",
+      "category": "Java",
+      "title": "Java｜基本类型和引用类型",
+      "summary": "Java 基本类型直接表示数值或布尔值，引用类型变量保存对象引用。引用变量可以为 null，调用方法前需要处理缺失值。包装类型参与自动拆箱时也可能因 null 触发异常。",
+      "keyword": "Java int double boolean 引用类型",
+      "content": "Java 基本类型直接表示数值或布尔值，引用类型变量保存对象引用。引用变量可以为 null，调用方法前需要处理缺失值。包装类型参与自动拆箱时也可能因 null 触发异常。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nint count = 6;\nInteger optionalCount = null;\nint safeCount = optionalCount == null ? 0 : optionalCount;\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Java 基本数据类型",
+      "source_url": "https://www.runoob.com/java/java-basic-datatypes.html"
+    },
+    {
+      "key": "Java:java-object-classes",
+      "category": "Java",
+      "title": "Java｜类、对象与实例字段",
+      "summary": "类定义结构和行为，通过 new 创建实例。实例字段属于具体对象，static 字段属于类。集合等可变实例状态通常应独立创建，避免意外共享。",
+      "keyword": "Java class new 对象 封装",
+      "content": "类定义结构和行为，通过 new 创建实例。实例字段属于具体对象，static 字段属于类。集合等可变实例状态通常应独立创建，避免意外共享。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nclass Notebook {\n    private String title;\n    Notebook(String title) { this.title = title; }\n}\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Java 对象和类",
+      "source_url": "https://www.runoob.com/java/java-object-classes.html"
+    },
+    {
+      "key": "Java:java-constructor",
+      "category": "Java",
+      "title": "Java｜构造方法与对象初始化",
+      "summary": "构造方法在创建对象时建立初始状态，名称与类名一致，没有返回类型。可以通过 this 调用同类其他构造方法，但调用必须位于构造方法的开始位置。",
+      "keyword": "Java 构造方法 this 初始化",
+      "content": "构造方法在创建对象时建立初始状态，名称与类名一致，没有返回类型。可以通过 this 调用同类其他构造方法，但调用必须位于构造方法的开始位置。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nclass Page {\n    private int number;\n    Page() { this(1); }\n    Page(int number) { this.number = number; }\n}\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Java 构造方法",
+      "source_url": "https://www.runoob.com/java/java-constructor.html"
+    },
+    {
+      "key": "Java:java-methods",
+      "category": "Java",
+      "title": "Java｜方法参数为何是按值传递",
+      "summary": "Java 始终按值传递参数。传递对象时复制的是引用值，所以方法可以修改该对象的状态；但把参数重新赋给另一个对象，不会改变调用者变量的绑定。",
+      "keyword": "Java 方法 参数 引用 传值",
+      "content": "Java 始终按值传递参数。传递对象时复制的是引用值，所以方法可以修改该对象的状态；但把参数重新赋给另一个对象，不会改变调用者变量的绑定。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nstatic void addTopic(java.util.List<String> items) {\n    items.add(\"异常处理\");\n}\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Java 方法",
+      "source_url": "https://www.runoob.com/java/java-methods.html"
+    },
+    {
+      "key": "Java:java-string",
+      "category": "Java",
+      "title": "Java｜字符串比较为什么使用 equals",
+      "summary": "String 对象不可变。== 对引用类型比较是否指向同一对象，equals 用来比较字符串内容。常量字符串放在调用侧可简化 null 情况下的比较。",
+      "keyword": "Java String equals == 不可变",
+      "content": "String 对象不可变。== 对引用类型比较是否指向同一对象，equals 用来比较字符串内容。常量字符串放在调用侧可简化 null 情况下的比较。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nString topic = new String(\"Java\");\nboolean sameContent = \"Java\".equals(topic);\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Java String 类",
+      "source_url": "https://www.runoob.com/java/java-string.html"
+    },
+    {
+      "key": "Java:java-array",
+      "category": "Java",
+      "title": "Java｜数组固定长度与边界检查",
+      "summary": "数组创建后长度固定，元素类型统一。访问越界会抛出异常。需要经常增加或删除元素时，ArrayList 往往比手动维护数组更方便。",
+      "keyword": "Java 数组 length 下标 越界",
+      "content": "数组创建后长度固定，元素类型统一。访问越界会抛出异常。需要经常增加或删除元素时，ArrayList 往往比手动维护数组更方便。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nint[] chapters = {2, 4, 6};\nfor (int value : chapters) {\n    System.out.println(value);\n}\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Java 数组",
+      "source_url": "https://www.runoob.com/java/java-array.html"
+    },
+    {
+      "key": "Java:java-arraylist",
+      "category": "Java",
+      "title": "Java｜ArrayList 如何保存有序数据",
+      "summary": "ArrayList 适合按索引访问和在尾部追加元素。中间插入或删除通常需要移动后续元素。它不是线程安全容器，跨线程修改时需要额外的并发设计。",
+      "keyword": "Java List ArrayList 动态数组 集合",
+      "content": "ArrayList 适合按索引访问和在尾部追加元素。中间插入或删除通常需要移动后续元素。它不是线程安全容器，跨线程修改时需要额外的并发设计。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\njava.util.List<String> topics = new java.util.ArrayList<>();\ntopics.add(\"集合\");\nSystem.out.println(topics.get(0));\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Java ArrayList",
+      "source_url": "https://www.runoob.com/java/java-arraylist.html"
+    },
+    {
+      "key": "Java:java-hashmap",
+      "category": "Java",
+      "title": "Java｜HashMap 的键、值和查找",
+      "summary": "HashMap 根据键定位值，不保证固定遍历顺序。自定义键需要正确实现 equals 与 hashCode，并避免在作为键期间改变参与比较的字段。",
+      "keyword": "Java Map HashMap getOrDefault 哈希",
+      "content": "HashMap 根据键定位值，不保证固定遍历顺序。自定义键需要正确实现 equals 与 hashCode，并避免在作为键期间改变参与比较的字段。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\njava.util.Map<String, Integer> visits = new java.util.HashMap<>();\nvisits.put(\"Java\", 3);\nint count = visits.getOrDefault(\"Python\", 0);\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Java HashMap",
+      "source_url": "https://www.runoob.com/java/java-hashmap.html"
+    },
+    {
+      "key": "Java:java-hashset",
+      "category": "Java",
+      "title": "Java｜HashSet 去重与集合成员判断",
+      "summary": "HashSet 保存不重复元素，适合判断某个主题是否已出现。其去重依据是 equals 与 hashCode，而不是对象显示出来的文本。需要顺序时可以选择其他集合实现。",
+      "keyword": "Java Set HashSet 去重 contains",
+      "content": "HashSet 保存不重复元素，适合判断某个主题是否已出现。其去重依据是 equals 与 hashCode，而不是对象显示出来的文本。需要顺序时可以选择其他集合实现。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\njava.util.Set<String> studied = new java.util.HashSet<>();\nstudied.add(\"接口\");\nstudied.add(\"接口\");\nSystem.out.println(studied.size());\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Java HashSet",
+      "source_url": "https://www.runoob.com/java/java-hashset.html"
+    },
+    {
+      "key": "Java:java-generics",
+      "category": "Java",
+      "title": "Java｜泛型如何减少类型转换错误",
+      "summary": "泛型把元素类型纳入编译期检查，减少取值后强制转换的需要。Java 泛型具有类型擦除机制，不能把基本类型直接作为类型实参，应使用对应包装类型。",
+      "keyword": "Java 泛型 类型参数 List 编译检查",
+      "content": "泛型把元素类型纳入编译期检查，减少取值后强制转换的需要。Java 泛型具有类型擦除机制，不能把基本类型直接作为类型实参，应使用对应包装类型。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\njava.util.List<Integer> pages = new java.util.ArrayList<>();\npages.add(12);\nint first = pages.get(0);\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Java 泛型",
+      "source_url": "https://www.runoob.com/java/java-generics.html"
+    },
+    {
+      "key": "Java:java-inheritance",
+      "category": "Java",
+      "title": "Java｜继承、重写与 super",
+      "summary": "子类通过继承扩展父类行为，重写方法时可加 @Override 让编译器检查。构造器不会被继承，子类构造过程中会初始化父类部分。优先保持清晰的替换关系。",
+      "keyword": "Java extends 继承 override super",
+      "content": "子类通过继承扩展父类行为，重写方法时可加 @Override 让编译器检查。构造器不会被继承，子类构造过程中会初始化父类部分。优先保持清晰的替换关系。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nclass Resource { String kind() { return \"resource\"; } }\nclass Note extends Resource {\n    @Override String kind() { return \"note\"; }\n}\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Java 继承",
+      "source_url": "https://www.runoob.com/java/java-inheritance.html"
+    },
+    {
+      "key": "Java:java-interfaces",
+      "category": "Java",
+      "title": "Java｜接口如何解耦实现",
+      "summary": "接口描述调用方依赖的能力，具体实现负责完成操作。面向接口编写业务代码，有利于替换数据库访问方式或在测试中使用替身。",
+      "keyword": "Java interface implements 解耦 多态",
+      "content": "接口描述调用方依赖的能力，具体实现负责完成操作。面向接口编写业务代码，有利于替换数据库访问方式或在测试中使用替身。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\ninterface Repository { String findTitle(int id); }\nclass MemoryRepository implements Repository {\n    public String findTitle(int id) { return \"note-\" + id; }\n}\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Java 接口",
+      "source_url": "https://www.runoob.com/java/java-interfaces.html"
+    },
+    {
+      "key": "Java:java-exceptions",
+      "category": "Java",
+      "title": "Java｜受检异常与运行时异常",
+      "summary": "异常处理应区分预期可恢复的问题与编程错误。受检异常通常需要捕获或声明，运行时异常不强制声明。日志与用户提示承担不同用途，避免把内部细节直接当作界面反馈。",
+      "keyword": "Java Exception try catch finally",
+      "content": "异常处理应区分预期可恢复的问题与编程错误。受检异常通常需要捕获或声明，运行时异常不强制声明。日志与用户提示承担不同用途，避免把内部细节直接当作界面反馈。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\ntry {\n    Integer.parseInt(\"lesson\");\n} catch (NumberFormatException error) {\n    System.out.println(\"请输入数字编号\");\n}\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Java 异常处理",
+      "source_url": "https://www.runoob.com/java/java-exceptions.html"
+    },
+    {
+      "key": "Java:java-files-io",
+      "category": "Java",
+      "title": "Java｜使用 try-with-resources 关闭文件",
+      "summary": "流用于顺序读写数据。实现 AutoCloseable 的资源可以交给 try-with-resources 自动关闭。文本读取时指定字符集，可以避免平台默认编码造成差异。",
+      "keyword": "Java IO 文件 流 try-with-resources",
+      "content": "流用于顺序读写数据。实现 AutoCloseable 的资源可以交给 try-with-resources 自动关闭。文本读取时指定字符集，可以避免平台默认编码造成差异。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\ntry (java.io.BufferedReader reader = java.nio.file.Files.newBufferedReader(\n        java.nio.file.Path.of(\"notes.txt\"), java.nio.charset.StandardCharsets.UTF_8)) {\n    System.out.println(reader.readLine());\n}\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Java Stream、File、IO",
+      "source_url": "https://www.runoob.com/java/java-files-io.html"
+    },
+    {
+      "key": "Java:java-multithreading",
+      "category": "Java",
+      "title": "Java｜线程共享状态为什么需要同步",
+      "summary": "多个线程同时修改共享状态，可能产生竞态条件。自增并不是天然原子操作。可根据场景选择同步锁、原子变量或线程安全容器，并尽量减少共享可变状态。",
+      "keyword": "Java Thread synchronized 并发 竞争",
+      "content": "多个线程同时修改共享状态，可能产生竞态条件。自增并不是天然原子操作。可根据场景选择同步锁、原子变量或线程安全容器，并尽量减少共享可变状态。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\njava.util.concurrent.atomic.AtomicInteger counter =\n    new java.util.concurrent.atomic.AtomicInteger();\ncounter.incrementAndGet();\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Java 多线程编程",
+      "source_url": "https://www.runoob.com/java/java-multithreading.html"
+    },
+    {
+      "key": "Java:java-mysql-connect",
+      "category": "Java",
+      "title": "Java｜JDBC 参数化查询与资源管理",
+      "summary": "JDBC 用连接、预编译语句和结果集访问关系数据库。参数化查询将数据与 SQL 结构分离；连接、语句和结果集都应正确关闭。连接配置和密码应从运行环境读取。",
+      "keyword": "Java JDBC MySQL PreparedStatement SQL注入",
+      "content": "JDBC 用连接、预编译语句和结果集访问关系数据库。参数化查询将数据与 SQL 结构分离；连接、语句和结果集都应正确关闭。连接配置和密码应从运行环境读取。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\n// 在已有 Connection connection 上执行\ntry (java.sql.PreparedStatement statement = connection.prepareStatement(\n        \"SELECT title FROM notes WHERE id = ?\")) {\n    statement.setInt(1, 7);\n}\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Java MySQL 连接",
+      "source_url": "https://www.runoob.com/java/java-mysql-connect.html"
+    },
+    {
+      "key": "FastAPI:fastapi-step1",
+      "category": "FastAPI",
+      "title": "FastAPI｜创建 FastAPI 应用并启动服务",
+      "summary": "FastAPI 实例承载路由与配置，Uvicorn 负责启动 ASGI 服务。main:app 的前半部分是模块名，后半部分是应用对象名。开发时的热重载选项不宜直接作为生产进程管理方案。",
+      "keyword": "FastAPI FastAPI Uvicorn app main 启动",
+      "content": "FastAPI 实例承载路由与配置，Uvicorn 负责启动 ASGI 服务。main:app 的前半部分是模块名，后半部分是应用对象名。开发时的热重载选项不宜直接作为生产进程管理方案。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nfrom fastapi import FastAPI\napp = FastAPI()\n@app.get(\"/hello\")\ndef hello():\n    return {\"message\": \"你好，图书馆\"}\n# 启动：uvicorn main:app --reload\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜第一个 FastAPI 应用",
+      "source_url": "https://www.runoob.com/fastapi/fastapi-step1.html"
+    },
+    {
+      "key": "FastAPI:fastapi-route",
+      "category": "FastAPI",
+      "title": "FastAPI｜GET、POST、PUT、PATCH 与 DELETE",
+      "summary": "路由把请求方法和路径映射到处理函数。GET 用于读取，POST 常用于创建，PUT 常用于完整替换，PATCH 常用于局部更新。不要在读取接口中混入意外的数据修改。",
+      "keyword": "FastAPI HTTP 路由 GET POST PATCH",
+      "content": "路由把请求方法和路径映射到处理函数。GET 用于读取，POST 常用于创建，PUT 常用于完整替换，PATCH 常用于局部更新。不要在读取接口中混入意外的数据修改。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\n@app.patch(\"/notes/{note_id}\")\ndef rename_note(note_id: int):\n    return {\"id\": note_id, \"message\": \"局部更新示例\"}\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜FastAPI 基本路由",
+      "source_url": "https://www.runoob.com/fastapi/fastapi-route.html"
+    },
+    {
+      "key": "FastAPI:fastapi-path-params",
+      "category": "FastAPI",
+      "title": "FastAPI｜路径参数如何进行类型校验",
+      "summary": "路径中的占位符会按函数参数类型转换。声明为 int 的参数无法解析成整数时，会返回校验错误。数值范围等约束可以使用 Path 显式声明。",
+      "keyword": "FastAPI 路径参数 Path 422 参数",
+      "content": "路径中的占位符会按函数参数类型转换。声明为 int 的参数无法解析成整数时，会返回校验错误。数值范围等约束可以使用 Path 显式声明。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nfrom fastapi import Path\n@app.get(\"/notes/{note_id}\")\ndef get_note(note_id: int = Path(gt=0)):\n    return {\"id\": note_id}\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜FastAPI 路径参数",
+      "source_url": "https://www.runoob.com/fastapi/fastapi-path-params.html"
+    },
+    {
+      "key": "FastAPI:fastapi-query-params",
+      "category": "FastAPI",
+      "title": "FastAPI｜查询参数与分页接口",
+      "summary": "不在路径中的简单参数通常作为查询参数。分页参数应设置合理下限和上限。搜索条件属于读取条件，常通过 URL 查询字符串传递，便于记录和分享。",
+      "keyword": "FastAPI Query 分页 keyword page 查询",
+      "content": "不在路径中的简单参数通常作为查询参数。分页参数应设置合理下限和上限。搜索条件属于读取条件，常通过 URL 查询字符串传递，便于记录和分享。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nfrom fastapi import Query\n@app.get(\"/notes\")\ndef notes(page: int = Query(1, ge=1), size: int = Query(20, ge=1, le=100)):\n    return {\"page\": page, \"size\": size}\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜FastAPI 查询参数",
+      "source_url": "https://www.runoob.com/fastapi/fastapi-query-params.html"
+    },
+    {
+      "key": "FastAPI:fastapi-request-body",
+      "category": "FastAPI",
+      "title": "FastAPI｜请求体与 Pydantic 模型",
+      "summary": "Pydantic 模型描述 JSON 结构和字段约束。FastAPI 将请求体解析成模型后再调用函数。输入模型与数据库模型承担不同职责，不能直接把所有输入字段都作为可信数据。",
+      "keyword": "FastAPI 请求体 JSON BaseModel 校验",
+      "content": "Pydantic 模型描述 JSON 结构和字段约束。FastAPI 将请求体解析成模型后再调用函数。输入模型与数据库模型承担不同职责，不能直接把所有输入字段都作为可信数据。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nfrom pydantic import BaseModel, Field\nclass NoteInput(BaseModel):\n    title: str = Field(min_length=1, max_length=100)\n    content: str\n@app.post(\"/notes\")\ndef create_note(payload: NoteInput):\n    return payload.model_dump()\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜FastAPI 请求体",
+      "source_url": "https://www.runoob.com/fastapi/fastapi-request-body.html"
+    },
+    {
+      "key": "FastAPI:fastapi-response-model",
+      "category": "FastAPI",
+      "title": "FastAPI｜响应模型为什么能防止字段泄露",
+      "summary": "响应模型约束并过滤输出字段，使接口契约清楚。用户对象包含密码哈希等内部信息时，应使用专用输出模型。它还会影响自动生成的接口文档。",
+      "keyword": "FastAPI response_model 输出过滤 密码",
+      "content": "响应模型约束并过滤输出字段，使接口契约清楚。用户对象包含密码哈希等内部信息时，应使用专用输出模型。它还会影响自动生成的接口文档。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nclass UserOutput(BaseModel):\n    username: str\n@app.get(\"/profile\", response_model=UserOutput)\ndef profile():\n    return {\"username\": \"reader\", \"internal\": \"不应输出\"}\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜FastAPI 响应模型",
+      "source_url": "https://www.runoob.com/fastapi/fastapi-response-model.html"
+    },
+    {
+      "key": "FastAPI:fastapi-status-code",
+      "category": "FastAPI",
+      "title": "FastAPI｜状态码和响应正文是两回事",
+      "summary": "返回 {404} 并不会把 HTTP 状态设置为 404，而且它是集合而非字典。正常读取通常为 200，创建常用 201，资源不存在可抛出 HTTPException(404)。客户端应同时检查状态和正文。",
+      "keyword": "FastAPI HTTP 200 201 404 422 状态码",
+      "content": "返回 {404} 并不会把 HTTP 状态设置为 404，而且它是集合而非字典。正常读取通常为 200，创建常用 201，资源不存在可抛出 HTTPException(404)。客户端应同时检查状态和正文。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nfrom fastapi import HTTPException\n@app.get(\"/missing\")\ndef missing():\n    raise HTTPException(status_code=404, detail=\"知识不存在\")\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜FastAPI 响应状态码",
+      "source_url": "https://www.runoob.com/fastapi/fastapi-status-code.html"
+    },
+    {
+      "key": "FastAPI:fastapi-path-operation-dependencies",
+      "category": "FastAPI",
+      "title": "FastAPI｜Depends 如何管理共享依赖",
+      "summary": "依赖可以提供数据库会话、当前用户或公共校验。yield 依赖适合在请求完成后关闭资源。依赖注入能减少路由重复代码，但不会自动代替业务层的权限判断。",
+      "keyword": "FastAPI 依赖注入 Depends get_db Session",
+      "content": "依赖可以提供数据库会话、当前用户或公共校验。yield 依赖适合在请求完成后关闭资源。依赖注入能减少路由重复代码，但不会自动代替业务层的权限判断。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nfrom fastapi import Depends\ndef get_settings():\n    return {\"site\": \"library\"}\n@app.get(\"/settings\")\ndef settings(value: dict = Depends(get_settings)):\n    return value\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜FastAPI 依赖注入",
+      "source_url": "https://www.runoob.com/fastapi/fastapi-path-operation-dependencies.html"
+    },
+    {
+      "key": "FastAPI:fastapi-error-handling",
+      "category": "FastAPI",
+      "title": "FastAPI｜HTTPException 与业务错误反馈",
+      "summary": "预期的业务错误可转换为明确的 HTTPException。校验错误、认证失败和服务不可用应有不同状态，便于前端显示合适提示。内部异常细节应留在服务端日志。",
+      "keyword": "FastAPI 异常处理 HTTPException detail",
+      "content": "预期的业务错误可转换为明确的 HTTPException。校验错误、认证失败和服务不可用应有不同状态，便于前端显示合适提示。内部异常细节应留在服务端日志。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nfrom fastapi import HTTPException\ndef require_available(available: bool):\n    if not available:\n        raise HTTPException(503, \"模型服务暂时不可用\")\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜FastAPI 错误处理",
+      "source_url": "https://www.runoob.com/fastapi/fastapi-error-handling.html"
+    },
+    {
+      "key": "FastAPI:fastapi-middleware",
+      "category": "FastAPI",
+      "title": "FastAPI｜中间件的请求与响应顺序",
+      "summary": "中间件包围请求处理流程，适合计时、追踪和添加公共响应头。它应把请求继续交给 call_next，除非有意提前返回。全局共享逻辑与具体业务校验要保持清晰边界。",
+      "keyword": "FastAPI middleware 日志 耗时 call_next",
+      "content": "中间件包围请求处理流程，适合计时、追踪和添加公共响应头。它应把请求继续交给 call_next，除非有意提前返回。全局共享逻辑与具体业务校验要保持清晰边界。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\n@app.middleware(\"http\")\nasync def add_header(request, call_next):\n    response = await call_next(request)\n    response.headers[\"X-Library\"] = \"preview\"\n    return response\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜FastAPI 中间件",
+      "source_url": "https://www.runoob.com/fastapi/fastapi-middleware.html"
+    },
+    {
+      "key": "FastAPI:fastapi-cors",
+      "category": "FastAPI",
+      "title": "FastAPI｜跨域配置与携带 Cookie",
+      "summary": "浏览器按协议、域名和端口判断来源。跨域响应需要明确允许的来源。携带 Cookie 的跨域场景不能把允许来源简单写成通配符，认证还需配合其他请求防护。",
+      "keyword": "FastAPI CORS Origin Cookie 跨域",
+      "content": "浏览器按协议、域名和端口判断来源。跨域响应需要明确允许的来源。携带 Cookie 的跨域场景不能把允许来源简单写成通配符，认证还需配合其他请求防护。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nfrom fastapi.middleware.cors import CORSMiddleware\napp.add_middleware(CORSMiddleware, allow_origins=[\"http://localhost:5173\"],\n    allow_credentials=True, allow_methods=[\"GET\", \"POST\"], allow_headers=[\"Content-Type\"])\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜FastAPI CORS 跨域",
+      "source_url": "https://www.runoob.com/fastapi/fastapi-cors.html"
+    },
+    {
+      "key": "FastAPI:fastapi-file-upload",
+      "category": "FastAPI",
+      "title": "FastAPI｜文件上传与 UploadFile",
+      "summary": "UploadFile 适合接收文件并通过异步接口读取。服务端仍需限制大小、检查内容并生成安全文件名。用户提供的文件名不能直接当作任意文件系统路径使用。",
+      "keyword": "FastAPI UploadFile 文件 上传 multipart",
+      "content": "UploadFile 适合接收文件并通过异步接口读取。服务端仍需限制大小、检查内容并生成安全文件名。用户提供的文件名不能直接当作任意文件系统路径使用。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nfrom fastapi import UploadFile\n@app.post(\"/upload\")\nasync def upload(file: UploadFile):\n    head = await file.read(1024)\n    return {\"filename\": file.filename, \"read_bytes\": len(head)}\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜FastAPI 文件上传",
+      "source_url": "https://www.runoob.com/fastapi/fastapi-file-upload.html"
+    },
+    {
+      "key": "FastAPI:fastapi-header-cookie",
+      "category": "FastAPI",
+      "title": "FastAPI｜Header 和 Cookie 的读取方式",
+      "summary": "请求头和 Cookie 可通过专门参数读取。Cookie 只是一种传输机制，服务端还需验证会话是否合法以及是否过期。HttpOnly 可限制脚本读取 Cookie，但不能替代完整认证。",
+      "keyword": "FastAPI Header Cookie 会话 HttpOnly",
+      "content": "请求头和 Cookie 可通过专门参数读取。Cookie 只是一种传输机制，服务端还需验证会话是否合法以及是否过期。HttpOnly 可限制脚本读取 Cookie，但不能替代完整认证。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nfrom fastapi import Cookie\n@app.get(\"/session-info\")\ndef info(session_id: str = Cookie(default=\"\")):\n    return {\"has_session\": bool(session_id)}\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜FastAPI 请求头与 Cookie",
+      "source_url": "https://www.runoob.com/fastapi/fastapi-header-cookie.html"
+    },
+    {
+      "key": "FastAPI:fastapi-security",
+      "category": "FastAPI",
+      "title": "FastAPI｜认证和授权分别解决什么问题",
+      "summary": "认证确认访问者是谁，授权决定其能访问什么。登录成功并不意味着能读取他人的私有知识。应在数据库查询范围中加入用户条件，而不是读取全部后仅在前端隐藏。",
+      "keyword": "FastAPI 认证 授权 登录 权限 OAuth2",
+      "content": "认证确认访问者是谁，授权决定其能访问什么。登录成功并不意味着能读取他人的私有知识。应在数据库查询范围中加入用户条件，而不是读取全部后仅在前端隐藏。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\ndef can_edit(user_id: int, owner_id: int) -> bool:\n    return user_id == owner_id\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜FastAPI 安全认证",
+      "source_url": "https://www.runoob.com/fastapi/fastapi-security.html"
+    },
+    {
+      "key": "FastAPI:fastapi-testing",
+      "category": "FastAPI",
+      "title": "FastAPI｜用 TestClient 检查接口行为",
+      "summary": "接口测试应覆盖成功响应、非法输入和未授权访问。依赖替换可以让测试使用独立数据库或模拟外部服务，避免测试调用付费模型或修改真实数据。",
+      "keyword": "FastAPI 测试 TestClient pytest 接口",
+      "content": "接口测试应覆盖成功响应、非法输入和未授权访问。依赖替换可以让测试使用独立数据库或模拟外部服务，避免测试调用付费模型或修改真实数据。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nfrom fastapi.testclient import TestClient\nclient = TestClient(app)\ndef test_hello():\n    response = client.get(\"/hello\")\n    assert response.status_code == 200\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜FastAPI 测试",
+      "source_url": "https://www.runoob.com/fastapi/fastapi-testing.html"
+    },
+    {
+      "key": "FastAPI:fastapi-sql-database",
+      "category": "FastAPI",
+      "title": "FastAPI｜路由、服务层和数据库会话如何分工",
+      "summary": "路由负责处理 HTTP 输入与错误，服务层组织业务规则，数据库访问层完成查询和写入。会话通常按请求创建并释放；事务需要在失败时回滚，避免后续请求继承无效状态。",
+      "keyword": "FastAPI SQLAlchemy 数据库 CRUD router service",
+      "content": "路由负责处理 HTTP 输入与错误，服务层组织业务规则，数据库访问层完成查询和写入。会话通常按请求创建并释放；事务需要在失败时回滚，避免后续请求继承无效状态。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\ndef get_db():\n    db = SessionLocal()\n    try:\n        yield db\n    finally:\n        db.close()\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜FastAPI 数据库集成",
+      "source_url": "https://www.runoob.com/fastapi/fastapi-sql-database.html"
+    },
+    {
+      "key": "MySQL:mysql-data-types",
+      "category": "MySQL",
+      "title": "MySQL｜整数、定点数和文本类型怎么选",
+      "summary": "按业务范围选字段类型。金额等需要精确十进制计算的数据通常使用 DECIMAL，而不是浮点数。字符串长度、字符集与排序规则会影响存储和比较；中文及表情通常使用 utf8mb4。",
+      "keyword": "MySQL 类型 INT DECIMAL VARCHAR utf8mb4",
+      "content": "按业务范围选字段类型。金额等需要精确十进制计算的数据通常使用 DECIMAL，而不是浮点数。字符串长度、字符集与排序规则会影响存储和比较；中文及表情通常使用 utf8mb4。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nCREATE TABLE reading_progress (\n    id INT PRIMARY KEY,\n    title VARCHAR(120) NOT NULL,\n    ratio DECIMAL(5,2)\n);\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜MySQL 数据类型",
+      "source_url": "https://www.runoob.com/mysql/mysql-data-types.html"
+    },
+    {
+      "key": "MySQL:mysql-create-tables",
+      "category": "MySQL",
+      "title": "MySQL｜主键、外键和非空约束",
+      "summary": "主键标识一条记录，非空和唯一约束保护数据质量。外键维护相关表之间的引用关系。设计知识库时，应把知识正文、分类和用户拆成合适的关联表。",
+      "keyword": "MySQL CREATE TABLE PRIMARY KEY FOREIGN KEY",
+      "content": "主键标识一条记录，非空和唯一约束保护数据质量。外键维护相关表之间的引用关系。设计知识库时，应把知识正文、分类和用户拆成合适的关联表。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nCREATE TABLE learning_topics (\n    id INT PRIMARY KEY AUTO_INCREMENT,\n    name VARCHAR(80) NOT NULL UNIQUE\n);\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜MySQL 创建数据表",
+      "source_url": "https://www.runoob.com/mysql/mysql-create-tables.html"
+    },
+    {
+      "key": "MySQL:mysql-insert-query",
+      "category": "MySQL",
+      "title": "MySQL｜INSERT 与明确字段列表",
+      "summary": "插入数据时显式列出字段，避免表结构调整改变写入含义。批量插入可降低往返开销。应用代码应使用数据库驱动的参数绑定，而不是拼接用户输入。",
+      "keyword": "MySQL 插入 INSERT VALUES",
+      "content": "插入数据时显式列出字段，避免表结构调整改变写入含义。批量插入可降低往返开销。应用代码应使用数据库驱动的参数绑定，而不是拼接用户输入。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nINSERT INTO learning_topics (name)\nVALUES ('Python'), ('Docker');\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜MySQL 插入数据",
+      "source_url": "https://www.runoob.com/mysql/mysql-insert-query.html"
+    },
+    {
+      "key": "MySQL:mysql-select-query",
+      "category": "MySQL",
+      "title": "MySQL｜SELECT 投影与结果数量",
+      "summary": "SELECT 选出需要的列。列表接口只读取必要字段可降低传输量。使用 LIMIT 限制结果时，通常需要明确排序以获得可解释、可复现的分页顺序。",
+      "keyword": "MySQL 查询 SELECT LIMIT 字段",
+      "content": "SELECT 选出需要的列。列表接口只读取必要字段可降低传输量。使用 LIMIT 限制结果时，通常需要明确排序以获得可解释、可复现的分页顺序。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nSELECT id, name\nFROM learning_topics\nORDER BY id\nLIMIT 10;\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜MySQL 查询数据",
+      "source_url": "https://www.runoob.com/mysql/mysql-select-query.html"
+    },
+    {
+      "key": "MySQL:mysql-where-clause",
+      "category": "MySQL",
+      "title": "MySQL｜WHERE 的 AND、OR 与括号",
+      "summary": "AND 要求同时满足条件，OR 表示满足任一分支。组合条件时明确添加括号，尤其要保证用户权限条件作用于所有搜索分支，避免一个 OR 绕过访问限制。",
+      "keyword": "MySQL 条件 AND OR 优先级 过滤",
+      "content": "AND 要求同时满足条件，OR 表示满足任一分支。组合条件时明确添加括号，尤其要保证用户权限条件作用于所有搜索分支，避免一个 OR 绕过访问限制。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nSELECT id, title FROM notes\nWHERE owner_id = 7\n  AND (title LIKE '%函数%' OR summary LIKE '%函数%');\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜MySQL WHERE 子句",
+      "source_url": "https://www.runoob.com/mysql/mysql-where-clause.html"
+    },
+    {
+      "key": "MySQL:mysql-update-query",
+      "category": "MySQL",
+      "title": "MySQL｜UPDATE 前先确认筛选范围",
+      "summary": "UPDATE 修改匹配条件的记录。漏写 WHERE 可能影响全表，因此可先用相同条件 SELECT 预览。重要修改放入事务，并在提交前检查影响行数。",
+      "keyword": "MySQL UPDATE SET WHERE 更新",
+      "content": "UPDATE 修改匹配条件的记录。漏写 WHERE 可能影响全表，因此可先用相同条件 SELECT 预览。重要修改放入事务，并在提交前检查影响行数。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nUPDATE notes\nSET title = '新的学习笔记'\nWHERE id = 7 AND owner_id = 3;\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜MySQL UPDATE 更新",
+      "source_url": "https://www.runoob.com/mysql/mysql-update-query.html"
+    },
+    {
+      "key": "MySQL:mysql-delete-query",
+      "category": "MySQL",
+      "title": "MySQL｜物理删除与软删除的区别",
+      "summary": "DELETE 从表中移除行，相关外键会影响是否能执行。软删除保留记录并修改状态，便于恢复和审计，但所有读取入口必须一致过滤已删除状态。",
+      "keyword": "MySQL DELETE 软删除 status",
+      "content": "DELETE 从表中移除行，相关外键会影响是否能执行。软删除保留记录并修改状态，便于恢复和审计，但所有读取入口必须一致过滤已删除状态。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nUPDATE notes\nSET status = 'archived'\nWHERE id = 7;\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜MySQL DELETE 语句",
+      "source_url": "https://www.runoob.com/mysql/mysql-delete-query.html"
+    },
+    {
+      "key": "MySQL:mysql-like-clause",
+      "category": "MySQL",
+      "title": "MySQL｜LIKE 模糊匹配与通配符",
+      "summary": "LIKE 中 % 匹配任意长度字符串，_ 匹配单个字符。把整个问题当连续子串搜索，容易漏掉不同表述。前置通配符也常影响普通 B-tree 索引的利用。",
+      "keyword": "MySQL LIKE 模糊搜索 通配符 索引",
+      "content": "LIKE 中 % 匹配任意长度字符串，_ 匹配单个字符。把整个问题当连续子串搜索，容易漏掉不同表述。前置通配符也常影响普通 B-tree 索引的利用。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nSELECT id, title FROM notes\nWHERE title LIKE 'Python%';\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜MySQL LIKE 子句",
+      "source_url": "https://www.runoob.com/mysql/mysql-like-clause.html"
+    },
+    {
+      "key": "MySQL:mysql-order-by",
+      "category": "MySQL",
+      "title": "MySQL｜排序与稳定分页",
+      "summary": "分页前应固定排序规则；当主排序字段重复时，可增加唯一编号作为第二排序键。深分页 OFFSET 可能扫描大量行，数据量大时可考虑基于上页游标继续读取。",
+      "keyword": "MySQL ORDER BY LIMIT OFFSET 分页",
+      "content": "分页前应固定排序规则；当主排序字段重复时，可增加唯一编号作为第二排序键。深分页 OFFSET 可能扫描大量行，数据量大时可考虑基于上页游标继续读取。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nSELECT id, title FROM notes\nORDER BY updated_at DESC, id DESC\nLIMIT 20 OFFSET 20;\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜MySQL ORDER BY 语句",
+      "source_url": "https://www.runoob.com/mysql/mysql-order-by.html"
+    },
+    {
+      "key": "MySQL:mysql-group-by-statement",
+      "category": "MySQL",
+      "title": "MySQL｜GROUP BY、COUNT 和 HAVING",
+      "summary": "GROUP BY 把记录按字段归组，聚合函数计算每组统计。WHERE 在分组前筛选行，HAVING 根据分组结果筛选。选择非聚合列时应满足数据库分组规则。",
+      "keyword": "MySQL 聚合 分组 COUNT HAVING",
+      "content": "GROUP BY 把记录按字段归组，聚合函数计算每组统计。WHERE 在分组前筛选行，HAVING 根据分组结果筛选。选择非聚合列时应满足数据库分组规则。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nSELECT category_id, COUNT(*) AS amount\nFROM notes\nGROUP BY category_id\nHAVING COUNT(*) >= 5;\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜MySQL 分组",
+      "source_url": "https://www.runoob.com/mysql/mysql-group-by-statement.html"
+    },
+    {
+      "key": "MySQL:mysql-join",
+      "category": "MySQL",
+      "title": "MySQL｜INNER JOIN 与 LEFT JOIN",
+      "summary": "INNER JOIN 只返回满足连接条件的组合，LEFT JOIN 保留左表没有匹配的行。右表过滤条件写在 WHERE 中，可能把外连接效果改变为只保留匹配行。",
+      "keyword": "MySQL JOIN 关联 LEFT 空值",
+      "content": "INNER JOIN 只返回满足连接条件的组合，LEFT JOIN 保留左表没有匹配的行。右表过滤条件写在 WHERE 中，可能把外连接效果改变为只保留匹配行。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nSELECT n.title, c.name\nFROM notes AS n\nLEFT JOIN categories AS c ON c.id = n.category_id;\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜MySQL 连接的使用",
+      "source_url": "https://www.runoob.com/mysql/mysql-join.html"
+    },
+    {
+      "key": "MySQL:mysql-null",
+      "category": "MySQL",
+      "title": "MySQL｜为什么不能使用等号比较 NULL",
+      "summary": "NULL 表示缺失或未知。比较表达式中遇到 NULL 可能得到未知值，而非真假，因此应使用 IS NULL 或 IS NOT NULL。COALESCE 可以在显示时提供替代值。",
+      "keyword": "MySQL NULL IS NULL COALESCE 三值逻辑",
+      "content": "NULL 表示缺失或未知。比较表达式中遇到 NULL 可能得到未知值，而非真假，因此应使用 IS NULL 或 IS NOT NULL。COALESCE 可以在显示时提供替代值。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nSELECT title, COALESCE(summary, '暂无摘要')\nFROM notes\nWHERE source_url IS NULL;\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜MySQL NULL 值处理",
+      "source_url": "https://www.runoob.com/mysql/mysql-null.html"
+    },
+    {
+      "key": "MySQL:mysql-index",
+      "category": "MySQL",
+      "title": "MySQL｜B-tree 索引与联合索引",
+      "summary": "索引用额外存储和写入成本换取特定查询效率。联合索引要结合过滤与排序方式设计，常见利用方式受最左前缀等规则影响。用 EXPLAIN 检查计划，比只凭字段名称猜测更可靠。",
+      "keyword": "MySQL 索引 联合索引 EXPLAIN 查询优化",
+      "content": "索引用额外存储和写入成本换取特定查询效率。联合索引要结合过滤与排序方式设计，常见利用方式受最左前缀等规则影响。用 EXPLAIN 检查计划，比只凭字段名称猜测更可靠。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nCREATE INDEX idx_notes_owner_time\nON notes (owner_id, updated_at);\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜MySQL 索引",
+      "source_url": "https://www.runoob.com/mysql/mysql-index.html"
+    },
+    {
+      "key": "MySQL:mysql-transaction",
+      "category": "MySQL",
+      "title": "MySQL｜事务、提交和回滚",
+      "summary": "事务把多个操作作为一个逻辑单元提交或撤销。InnoDB 提供事务能力，隔离级别会影响并发读取行为。异常后及时回滚，且不要让数据库事务跨越漫长的外部模型请求。",
+      "keyword": "MySQL 事务 ACID COMMIT ROLLBACK InnoDB",
+      "content": "事务把多个操作作为一个逻辑单元提交或撤销。InnoDB 提供事务能力，隔离级别会影响并发读取行为。异常后及时回滚，且不要让数据库事务跨越漫长的外部模型请求。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nSTART TRANSACTION;\nUPDATE reading_progress SET ratio = 50 WHERE id = 1;\nROLLBACK; -- 演示撤销，不保留修改\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜MySQL 事务",
+      "source_url": "https://www.runoob.com/mysql/mysql-transaction.html"
+    },
+    {
+      "key": "MySQL:mysql-sql-injection",
+      "category": "MySQL",
+      "title": "MySQL｜参数化查询如何防止 SQL 注入",
+      "summary": "把用户文本直接拼进 SQL 会让数据混入语句结构。预编译参数用于传递值；表名、列名或排序方向通常不能作为值参数绑定，应从固定白名单中选择。",
+      "keyword": "MySQL SQL注入 占位符 参数绑定",
+      "content": "把用户文本直接拼进 SQL 会让数据混入语句结构。预编译参数用于传递值；表名、列名或排序方向通常不能作为值参数绑定，应从固定白名单中选择。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\n# PyMySQL 示例，在已有 cursor 上调用\ncursor.execute(\"SELECT title FROM notes WHERE id = %s\", (7,))\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜MySQL 及 SQL 注入",
+      "source_url": "https://www.runoob.com/mysql/mysql-sql-injection.html"
+    },
+    {
+      "key": "MySQL:mysql-database-export",
+      "category": "MySQL",
+      "title": "MySQL｜数据库备份与恢复演练",
+      "summary": "备份不仅要保存数据，还需要确认编码、结构和恢复步骤。修改大量知识前先做独立快照，并在测试环境验证恢复。包含用户与会话的备份不应提交到公共仓库。",
+      "keyword": "MySQL mysqldump 备份 恢复 数据迁移",
+      "content": "备份不仅要保存数据，还需要确认编码、结构和恢复步骤。修改大量知识前先做独立快照，并在测试环境验证恢复。包含用户与会话的备份不应提交到公共仓库。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\n-- 示例：备份一个专用测试库，使用 -p 交互输入密码\n-- mysqldump -u backup_user -p library_demo > library_demo.sql\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜MySQL 导出数据",
+      "source_url": "https://www.runoob.com/mysql/mysql-database-export.html"
+    },
+    {
+      "key": "Docker:docker-intro",
+      "category": "Docker",
+      "title": "Docker｜镜像和容器到底有什么区别",
+      "summary": "镜像是可复用的运行模板，容器是从镜像创建的运行实例。多个容器可以共享镜像，但各自有独立的可写层。删除容器会丢失未持久化在卷或外部系统中的数据。",
+      "keyword": "Docker 镜像 容器 image container",
+      "content": "镜像是可复用的运行模板，容器是从镜像创建的运行实例。多个容器可以共享镜像，但各自有独立的可写层。删除容器会丢失未持久化在卷或外部系统中的数据。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\ndocker image ls\ndocker container ls -a\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Docker 概念",
+      "source_url": "https://www.runoob.com/docker/docker-intro.html"
+    },
+    {
+      "key": "Docker:docker-architecture",
+      "category": "Docker",
+      "title": "Docker｜Docker 客户端、守护进程与仓库",
+      "summary": "命令行客户端把请求交给 Docker 守护进程，后者负责管理镜像、容器和网络。镜像仓库用于分发镜像。能访问守护进程的权限通常很高，不宜任意暴露管理接口。",
+      "keyword": "Docker Docker 架构 daemon registry client",
+      "content": "命令行客户端把请求交给 Docker 守护进程，后者负责管理镜像、容器和网络。镜像仓库用于分发镜像。能访问守护进程的权限通常很高，不宜任意暴露管理接口。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\ndocker version\ndocker info\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Docker 架构",
+      "source_url": "https://www.runoob.com/docker/docker-architecture.html"
+    },
+    {
+      "key": "Docker:docker-desktop",
+      "category": "Docker",
+      "title": "Docker｜Docker Desktop 与本地开发环境",
+      "summary": "Docker Desktop 把容器管理工具和桌面运行环境整合起来。Windows 与 macOS 运行 Linux 容器时通常依赖虚拟化环境。安装后先检查服务是否可用，再排查项目构建问题。",
+      "keyword": "Docker Desktop Windows macOS 虚拟化",
+      "content": "Docker Desktop 把容器管理工具和桌面运行环境整合起来。Windows 与 macOS 运行 Linux 容器时通常依赖虚拟化环境。安装后先检查服务是否可用，再排查项目构建问题。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\ndocker version\ndocker compose version\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Docker Desktop",
+      "source_url": "https://www.runoob.com/docker/docker-desktop.html"
+    },
+    {
+      "key": "Docker:windows-docker-install",
+      "category": "Docker",
+      "title": "Docker｜Windows 上的 Docker 与 WSL2",
+      "summary": "Windows 上开发 Linux 容器时，可使用支持 WSL2 的 Docker Desktop 环境。项目文件、路径映射和换行格式会影响开发体验。具体系统与版本要求请核对当前官方安装文档。",
+      "keyword": "Docker Windows WSL2 Linux容器",
+      "content": "Windows 上开发 Linux 容器时，可使用支持 WSL2 的 Docker Desktop 环境。项目文件、路径映射和换行格式会影响开发体验。具体系统与版本要求请核对当前官方安装文档。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nwsl --status\ndocker context ls\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Windows Docker 安装",
+      "source_url": "https://www.runoob.com/docker/windows-docker-install.html"
+    },
+    {
+      "key": "Docker:docker-hello-world",
+      "category": "Docker",
+      "title": "Docker｜用一次性容器验证环境",
+      "summary": "先运行一个小型验证容器，可以区分引擎未启动、网络拉取失败和项目本身异常。--rm 在退出后清理容器，不会自动删除下载的镜像。",
+      "keyword": "Docker hello-world run --rm 验证",
+      "content": "先运行一个小型验证容器，可以区分引擎未启动、网络拉取失败和项目本身异常。--rm 在退出后清理容器，不会自动删除下载的镜像。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\ndocker run --rm hello-world\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Docker Hello World",
+      "source_url": "https://www.runoob.com/docker/docker-hello-world.html"
+    },
+    {
+      "key": "Docker:docker-container-usage",
+      "category": "Docker",
+      "title": "Docker｜容器启动、停止与日志排查",
+      "summary": "run 创建并启动新容器，start 启动已有容器，stop 请求正常停止。查看日志和退出码有助于排查应用启动失败。容器的主进程结束后，容器通常随之退出。",
+      "keyword": "Docker run start stop logs exec",
+      "content": "run 创建并启动新容器，start 启动已有容器，stop 请求正常停止。查看日志和退出码有助于排查应用启动失败。容器的主进程结束后，容器通常随之退出。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\ndocker ps -a\ndocker logs --tail 50 library-web\ndocker stop library-web\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Docker 容器使用",
+      "source_url": "https://www.runoob.com/docker/docker-container-usage.html"
+    },
+    {
+      "key": "Docker:docker-image-usage",
+      "category": "Docker",
+      "title": "Docker｜镜像标签、拉取和版本固定",
+      "summary": "镜像标签是人类可读引用，但同一标签可以被重新指向。可复现部署应记录明确版本，必要时固定镜像摘要。精简基础镜像可降低体积，但还需考虑依赖兼容性。",
+      "keyword": "Docker pull image tag digest",
+      "content": "镜像标签是人类可读引用，但同一标签可以被重新指向。可复现部署应记录明确版本，必要时固定镜像摘要。精简基础镜像可降低体积，但还需考虑依赖兼容性。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\ndocker pull python:3.11-slim\ndocker image inspect python:3.11-slim\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Docker 镜像使用",
+      "source_url": "https://www.runoob.com/docker/docker-image-usage.html"
+    },
+    {
+      "key": "Docker:docker-container-connection",
+      "category": "Docker",
+      "title": "Docker｜端口映射与容器网络",
+      "summary": "容器端口与宿主机端口不同，-p 建立访问映射。应用在容器内一般应监听 0.0.0.0。Compose 网络中访问另一个服务使用服务名，容器内的 localhost 通常只指自身。",
+      "keyword": "Docker 端口 -p 网络 localhost 容器互联",
+      "content": "容器端口与宿主机端口不同，-p 建立访问映射。应用在容器内一般应监听 0.0.0.0。Compose 网络中访问另一个服务使用服务名，容器内的 localhost 通常只指自身。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\ndocker run --rm -p 127.0.0.1:8088:80 nginx:stable\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Docker 容器连接",
+      "source_url": "https://www.runoob.com/docker/docker-container-connection.html"
+    },
+    {
+      "key": "Docker:docker-repository",
+      "category": "Docker",
+      "title": "Docker｜镜像仓库与命名空间",
+      "summary": "镜像名称可以包含仓库域名、组织和标签。推送前要确认目标仓库和可见范围。构建产物不应包含 .env、访问令牌或个人数据库备份。",
+      "keyword": "Docker registry tag push 仓库",
+      "content": "镜像名称可以包含仓库域名、组织和标签。推送前要确认目标仓库和可见范围。构建产物不应包含 .env、访问令牌或个人数据库备份。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\ndocker tag library-web:demo example/library-web:demo\n# 确认仓库与权限后再推送\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Docker 仓库管理",
+      "source_url": "https://www.runoob.com/docker/docker-repository.html"
+    },
+    {
+      "key": "Docker:docker-dockerfile",
+      "category": "Docker",
+      "title": "Docker｜Dockerfile 的层缓存与依赖安装",
+      "summary": "Dockerfile 描述镜像构建步骤。先复制依赖清单并安装，再复制业务代码，可以让源代码修改时复用依赖层缓存。使用 .dockerignore 排除模型缓存、密钥和临时文件。",
+      "keyword": "Docker Dockerfile FROM COPY RUN 缓存",
+      "content": "Dockerfile 描述镜像构建步骤。先复制依赖清单并安装，再复制业务代码，可以让源代码修改时复用依赖层缓存。使用 .dockerignore 排除模型缓存、密钥和临时文件。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nFROM python:3.11-slim\nWORKDIR /app\nCOPY requirements.txt .\nRUN pip install --no-cache-dir -r requirements.txt\nCOPY app ./app\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Docker Dockerfile",
+      "source_url": "https://www.runoob.com/docker/docker-dockerfile.html"
+    },
+    {
+      "key": "Docker:docker-compose",
+      "category": "Docker",
+      "title": "Docker｜Compose 如何编排后端和数据库",
+      "summary": "Compose 用声明文件描述服务、网络和持久卷，适合组织后端、数据库与模型服务。depends_on 不总等于应用已就绪；可结合健康检查和连接重试。服务间地址应使用服务名。",
+      "keyword": "Docker Compose services volumes depends_on",
+      "content": "Compose 用声明文件描述服务、网络和持久卷，适合组织后端、数据库与模型服务。depends_on 不总等于应用已就绪；可结合健康检查和连接重试。服务间地址应使用服务名。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nservices:\n  web:\n    image: library-web:demo\n    ports:\n      - \"127.0.0.1:8000:8000\"\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Docker Compose",
+      "source_url": "https://www.runoob.com/docker/docker-compose.html"
+    },
+    {
+      "key": "Docker:docker-install-nginx",
+      "category": "Docker",
+      "title": "Docker｜用 Nginx 提供静态网页",
+      "summary": "Nginx 容器可提供静态资源或作为反向代理。把静态目录以只读挂载方式提供给容器，可避免服务修改源文件。代理到其他服务时要注意网络和上游地址。",
+      "keyword": "Docker Nginx 静态文件 bind mount 只读",
+      "content": "Nginx 容器可提供静态资源或作为反向代理。把静态目录以只读挂载方式提供给容器，可避免服务修改源文件。代理到其他服务时要注意网络和上游地址。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\ndocker run --rm -p 127.0.0.1:8088:80 \\\n  --mount type=bind,src=/absolute/site,dst=/usr/share/nginx/html,readonly nginx:stable\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Docker 安装 Nginx",
+      "source_url": "https://www.runoob.com/docker/docker-install-nginx.html"
+    },
+    {
+      "key": "Docker:docker-install-mysql",
+      "category": "Docker",
+      "title": "Docker｜MySQL 容器为什么需要持久卷",
+      "summary": "数据库文件保存在容器可写层中，容器重建时容易丢失。命名卷可独立于容器保存数据。初始化密码应通过部署配置提供；已有卷中的数据库通常不会因修改初始化变量而重新初始化。",
+      "keyword": "Docker MySQL volume 数据持久化 环境变量",
+      "content": "数据库文件保存在容器可写层中，容器重建时容易丢失。命名卷可独立于容器保存数据。初始化密码应通过部署配置提供；已有卷中的数据库通常不会因修改初始化变量而重新初始化。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\ndocker volume create library_mysql\n# 在部署配置中把卷挂载到 /var/lib/mysql\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Docker 安装 MySQL",
+      "source_url": "https://www.runoob.com/docker/docker-install-mysql.html"
+    },
+    {
+      "key": "Docker:docker-install-python",
+      "category": "Docker",
+      "title": "Docker｜把 Python 应用放进容器",
+      "summary": "Python 容器应固定基础环境并安装运行依赖。FastAPI 在容器中可由 Uvicorn 启动，监听地址要允许容器网络访问。开发重载与生产进程管理应分别配置。",
+      "keyword": "Docker Python FastAPI Uvicorn 依赖部署",
+      "content": "Python 容器应固定基础环境并安装运行依赖。FastAPI 在容器中可由 Uvicorn 启动，监听地址要允许容器网络访问。开发重载与生产进程管理应分别配置。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\nCMD [\"python\", \"-m\", \"uvicorn\", \"app.main:app\", \"--host\", \"0.0.0.0\", \"--port\", \"8000\"]\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Docker 安装 Python",
+      "source_url": "https://www.runoob.com/docker/docker-install-python.html"
+    },
+    {
+      "key": "Docker:docker-install-redis",
+      "category": "Docker",
+      "title": "Docker｜Redis 容器与缓存数据",
+      "summary": "Redis 常用于缓存或短期状态。是否需要持久化取决于数据用途与恢复要求。服务只在应用网络内使用时通常不必把端口公开到宿主机；访问还需配置适当认证。",
+      "keyword": "Docker Redis 缓存 数据卷 网络",
+      "content": "Redis 常用于缓存或短期状态。是否需要持久化取决于数据用途与恢复要求。服务只在应用网络内使用时通常不必把端口公开到宿主机；访问还需配置适当认证。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\ndocker run --rm --name cache-demo redis:7-alpine\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Docker 安装 Redis",
+      "source_url": "https://www.runoob.com/docker/docker-install-redis.html"
+    },
+    {
+      "key": "Docker:docker-command-manual",
+      "category": "Docker",
+      "title": "Docker｜查看容器资源与定位运行故障",
+      "summary": "先检查容器是否运行，再查看日志、健康状态和资源使用。应用无法连接数据库时，应依次确认服务名、端口、网络、就绪状态和凭据，而不是只反复重启。",
+      "keyword": "Docker stats inspect logs 诊断 内存 CPU",
+      "content": "先检查容器是否运行，再查看日志、健康状态和资源使用。应用无法连接数据库时，应依次确认服务名、端口、网络、就绪状态和凭据，而不是只反复重启。\n\n示例（自主编写，部分片段需放入完整程序上下文）：\ndocker compose ps\ndocker compose logs --tail 80\ndocker stats --no-stream\n\n资料性质：自主整理的简短学习笔记，不是菜鸟教程原文。完整教程请通过来源链接阅读。",
+      "source_name": "菜鸟教程｜Docker 命令大全",
+      "source_url": "https://www.runoob.com/docker/docker-command-manual.html"
+    }
+  ]
+}

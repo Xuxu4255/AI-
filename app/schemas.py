@@ -1,84 +1,47 @@
-#校验层，检验前端传过来的Json文件是否合规
-#如果不合规，会报402错误
-
-
-
+"""当前 HTTP 接口使用的认证、分类、检索与来源字段校验。"""
 from typing import Optional,Literal,List
-#typing python自带的类型工具
-
-#Optional:这个字段可以为空
-#Literal:这个字段可以取某几个固定值
 
 from pydantic import BaseModel,EmailStr,Field,ConfigDict,field_validator
-#fastAPI最核心的库，用来做数据校验
 
-#BaseModel:定义一个数据结构模板
-#EmailStr:要求这个字段是邮箱格式
-#Field:给字段加限制，比如最小长度，最大长度
-
-#登录请求：
 class UserLogin(BaseModel):
     username: str
     password: str
 
-    
-#用户注册
 class UserRegister(BaseModel):
     username: str 
     password: str = Field(...,min_length=8,max_length=15)
     email: EmailStr
     role: Literal["admin","user"]="user"
 
-
-#声明
 class CategoryCreate(BaseModel):
     model_config = ConfigDict(str_strip_whitespace=True)
     name: str = Field(min_length=1, max_length=100)
     description: Optional[str] = Field(default=None, max_length=1000)
 
-
 class CategoryUpdate(CategoryCreate):
     pass
-
 
 class AiSearch(BaseModel):
     model_config = ConfigDict(str_strip_whitespace=True)
     question: str = Field(min_length=1, max_length=500)
     category_id: Optional[int] = Field(default=None, gt=0)
-
+    knowledge_id: Optional[int] = Field(default=None, gt=0)
+    space: Literal['public', 'personal'] = 'public'
+    mode: Literal['semantic', 'keyword'] = 'semantic'
 
 class AiExplain(AiSearch):
     knowledge_ids: List[int] = Field(min_length=1, max_length=3)
     search_id: Optional[str] = Field(default=None, min_length=32, max_length=32)
 
-
-class KnowledgeCreate(BaseModel):
-    title: str = Field(...,min_length=5,max_length=255)
-    content: str
-    summary: Optional[str]=None
-    category_id: int
-    created_by: int
-    keyword: str
-
-
-
-class KnowledgeUpdate(BaseModel):
-    title: Optional[str] = None
-    content: Optional[str] = None
-    summary: Optional[str]=None
-    category_id: Optional[int] = None
-    created_by: Optional[int] = None
-    keyword: Optional[str]=None
-
-
-class KnowledgeReview(BaseModel):
-    model_config = ConfigDict(str_strip_whitespace=True)
-    action: Literal['reject', 'withdraw', 'restore']
-    reason: Optional[str] = Field(default=None, max_length=500)
-
+class AiChat(BaseModel):
+    model_config = ConfigDict(str_strip_whitespace=True, extra='forbid')
+    search_id: str = Field(min_length=32, max_length=32)
+    message: str = Field(min_length=1, max_length=2000)
+    conversation_id: Optional[str] = Field(default=None, min_length=32, max_length=32)
+    expected_turns: int = Field(default=0, ge=0)
 
 class KnowledgeSubmission(BaseModel):
-    """用户只能提交内容，作者与审核状态由服务器决定。"""
+    """知识内容与来源字段；公开性和所有权由服务端处理。"""
     model_config = ConfigDict(str_strip_whitespace=True, extra='forbid')
     title: str = Field(min_length=5, max_length=255)
     content: str = Field(min_length=10, max_length=10000)
@@ -98,95 +61,3 @@ class KnowledgeSubmission(BaseModel):
         if parsed.scheme not in ('http', 'https') or not parsed.hostname or parsed.username or parsed.password:
             raise ValueError('来源链接需为不含账号密码的 http 或 https 地址')
         return value
-
-
-class FeedbackCreate(BaseModel):
-    knowledge_id: Optional[int]=None
-    qa_id: Optional[int]=None
-    user_id: int
-    content: Optional[str]=None
-    feedback_type: Literal["like","dislike","error","suggestion"]
-
-
-class FeedbackUpdate(BaseModel):
-    knowledge_id: Optional[int]=None
-    qa_id: Optional[int]=None
-    content: Optional[str]=None
-    feedback_type: Optional[Literal["like","dislike","error","suggestion"]]=None
-
-
-
-class QaCreate(BaseModel):
-    knowledge_id: int
-    question_text: str
-    answer_text: str
-    created_by: int
-    status: Literal["pending","approved","rejected"] = "pending"
-
-
-
-class QueryLogCreate(BaseModel):
-    #model_name 会被pydantic当成保留字段，这里放开限制
-    model_config = {"protected_namespaces": ()}
-
-    user_id: Optional[int]=None
-    question_text: str
-    answer_text: str
-    model_name: Optional[str]=Field(default=None,max_length=100)
-    retrieval_count: int
-    feedback_status: Literal["unrated","liked","disliked"]="unrated"
-
-
-class QueryLogUpdate(BaseModel):
-    model_config = {"protected_namespaces": ()}
-
-    answer_text: Optional[str]=None
-    model_name: Optional[str]=Field(default=None,max_length=100)
-    retrieval_count: Optional[int]=Field(default=None,ge=0)
-    feedback_status: Optional[Literal["unrated","liked","disliked"]]=None
-
-
-#知识操作日志
-class UpdateLogCreate(BaseModel):
-    knowledge_id: int
-    user_id: int
-    action_type: Literal["create","update","delete","publish","revert"]
-    old_value: Optional[str]=None
-    new_value: Optional[str]=None
-
-
-
-#标签
-class TagCreate(BaseModel):
-    name: str = Field(...,min_length=1,max_length=100)
-    description: Optional[str]=None
-
-
-class TagUpdate(BaseModel):
-    name: Optional[str]=Field(default=None,min_length=1,max_length=100)
-    description: Optional[str]=None
-
-
-#知识和标签的绑定，knowledge_id 放在URL里，这里只传标签
-class KnowledgeTagCreate(BaseModel):
-    tag_id: int
-
-
-#相关知识，分数是0~1之间的小数
-class RelatedKnowledgeCreate(BaseModel):
-    knowledge_id: int
-    related_knowledge_id: int
-    relevance_score: float = Field(default=0.0,ge=0,le=1)
-
-
-#知识向量
-class EmbeddingCreate(BaseModel):
-    embedding_model: str = Field(...,min_length=1,max_length=100)
-    embedding_text: Optional[str]=None
-    embedding_vector: Optional[str]=None
-
-
-class EmbeddingUpdate(BaseModel):
-    embedding_model: Optional[str]=Field(default=None,min_length=1,max_length=100)
-    embedding_text: Optional[str]=None
-    embedding_vector: Optional[str]=None

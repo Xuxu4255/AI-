@@ -71,7 +71,9 @@ def main():
     result={'model':MODEL_ID,'device':'cpu','dimension':docs.shape[1],
             'question':question,'ranking':[{'text':passages[i],'score':round(float(scores[i]),6)} for i in order],
             'load_and_infer_seconds':round(time.perf_counter()-start,3)}
-    (ROOT/'tests'/'local-embedding-smoke.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
+    report_dir=ROOT/'data'/'reports'
+    report_dir.mkdir(parents=True,exist_ok=True)
+    (report_dir/'local-embedding-smoke.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
     print(json.dumps(result,ensure_ascii=True,indent=2),flush=True)
     print('PASS: local inference and semantic ranking; no API Key required.',flush=True)
 
