@@ -1,0 +1,16 @@
+# 只发送构建镜像需要的文件，排除 .env、虚拟环境、备份和模型权重。
+*
+!Dockerfile
+!requirement.txt
+!requirements-embedding.txt
+!app/
+!app/**
+!static/
+!static/**
+!scripts/
+!scripts/**
+!data/
+!data/runoob/
+!data/runoob/**
+**/__pycache__/
+**/*.pyc

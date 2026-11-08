@@ -1,16 +1,19 @@
-"""仅监听本机的离线 Embedding 服务。使用模型环境运行，无需数据库依赖。"""
+"""离线 Embedding 服务；默认仅监听本机，Docker 通过参数开放容器内监听。"""
 import argparse
 import json
+import os
 import threading
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlsplit
 from local_embedding import LocalEmbedder, MODEL_ID, MODEL_DIR, QUERY_INSTRUCTION
 
 
-def create_server(embedder, port=8011):
+def create_server(embedder, port=8011, host='127.0.0.1'):
     metadata=json.loads((MODEL_DIR/'MODEL_INFO.json').read_text(encoding='utf-8'))
     model_id=MODEL_ID+'@'+metadata['revision']
     lock=threading.Lock()
+    allowed_hosts = {'127.0.0.1:' + str(port), 'localhost:' + str(port)}
+    allowed_hosts.update(value.strip() for value in os.getenv('EMBEDDING_ALLOWED_HOSTS', '').split(',') if value.strip())
     class Handler(BaseHTTPRequestHandler):
         def setup(self):
             super().setup();self.connection.settimeout(15)
@@ -19,7 +22,7 @@ def create_server(embedder, port=8011):
             self.send_response(status);self.send_header('Content-Type','application/json; charset=utf-8')
             self.send_header('Content-Length',str(len(body)));self.end_headers();self.wfile.write(body)
         def allowed(self):
-            if self.headers.get('Host') not in ('127.0.0.1:'+str(port),'localhost:'+str(port)) or self.headers.get('Origin'):
+            if self.headers.get('Host') not in allowed_hosts or self.headers.get('Origin'):
                 self.send_json(403,{'detail':'Local backend requests only'});return False
             return True
         def do_GET(self):
@@ -55,17 +58,18 @@ def create_server(embedder, port=8011):
             finally:lock.release()
         def log_message(self,fmt,*args):
             print(fmt%args,flush=True)
-    server=ThreadingHTTPServer(('127.0.0.1',port),Handler)
+    server=ThreadingHTTPServer((host,port),Handler)
     server.daemon_threads=True
     return server
 
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--port',type=int,default=8011)
+    parser.add_argument('--host', default='127.0.0.1')
     args=parser.parse_args()
     model=LocalEmbedder()
-    server=create_server(model,args.port)
-    print('Local Embedding ready: http://127.0.0.1:'+str(args.port),flush=True)
+    server=create_server(model,args.port,args.host)
+    print('Local Embedding ready: http://'+args.host+':'+str(args.port),flush=True)
     try:server.serve_forever()
     except KeyboardInterrupt:pass
     finally:server.server_close()

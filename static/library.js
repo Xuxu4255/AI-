@@ -21,7 +21,7 @@ function closePanel(id){$(id).hidden=true;if(id==='reader'){state.detailVersion+
 document.querySelectorAll('[data-close]').forEach(button=>button.onclick=()=>{const target=$(button.dataset.close);target instanceof HTMLDialogElement?target.close():closePanel(target.id);});
 function renderCategories(){const container=$('categories');container.replaceChildren();const all=[{id:null,name:'全部知识',count:state.categories.reduce((sum,c)=>sum+(c.count??demoBooks.filter(b=>b.category_id===c.id).length),0)},...state.categories];for(const cat of all){const button=document.createElement('button');button.textContent=cat.name;button.setAttribute('aria-pressed',String(state.category===cat.id));const count=document.createElement('span');count.textContent=cat.count??demoBooks.filter(b=>b.category_id===cat.id).length;button.append(count);button.onclick=async()=>{state.category=cat.id;state.query='';$('search').value='';state.page=1;closePanel('reader');try{await loadBooks();}catch(error){toast(error.message);}};container.append(button);}}
 function renderList(){const list=$('book-list');list.replaceChildren();$('results-meta').textContent=state.total?`${state.query?'“'+state.query+'” · ':''}共 ${state.total} 条知识 · 当前显示 ${state.items.length} 条`:'这里还没有找到知识，试试其他分类或关键词。';for(const book of state.items){const button=document.createElement('button');button.className='book-row';const cover=document.createElement('span');cover.className='mini-book';const text=document.createElement('span');const title=document.createElement('strong');title.textContent=book.title;const meta=document.createElement('small');meta.textContent=categoryName(book);text.append(title,meta);button.append(cover,text,icon('arrow'));button.onclick=()=>{$('catalog-dialog').close();openBook(book);};list.append(button);}const pages=Math.max(1,Math.ceil(state.total/state.pageSize));$('page-number').textContent=`${state.page} / ${pages}`;$('prev-page').disabled=state.page<=1;$('next-page').disabled=state.page>=pages;}
-function refresh(){state.items=state.allItems.slice((state.page-1)*state.pageSize,state.page*state.pageSize);renderCategories();renderList();view?.setBooks(state.allItems);$('shelf-caption').textContent=`${state.total} 条知识 · 全部上架 · 左右拖动浏览`;$('mode-label').textContent=state.demo?'示例体验 · 登录后读取全部真实资料':`${state.user.username} 的${state.space==='personal'?'个人馆':'公共馆'} · 已连接知识库`;$('account').textContent=state.user?state.user.username+' · 退出':'登录';$('chat-notice').textContent=state.demo?'示例馆可体验阅读；登录后使用真实 AI 问答。':'AI 使用当前空间的资料；回答请结合原文核实。';}
+function refresh(){state.items=state.allItems.slice((state.page-1)*state.pageSize,state.page*state.pageSize);renderCategories();renderList();view?.setBooks(state.allItems);$('shelf-caption').textContent=`${state.total} 条知识 · 全部上架 · 左右拖动浏览`;$('mode-label').textContent=state.demo?'示例体验 · 登录后读取全部真实资料':`${state.user.username} 的${state.space==='personal'?'个人馆':'公共馆'} · 已连接知识库`;$('account').textContent=state.user?state.user.username+' · 退出':'登录';$('manage-link').hidden=!state.user;$('manage-link').textContent=state.user?.role==='admin'?'平台管理':'知识管理';$('manage-link').href=state.user?.role==='admin'?'/admin':'/manage#/personal/list';$('chat-notice').textContent=state.demo?'示例馆可体验阅读；登录后使用真实 AI 问答。':'AI 使用当前空间的资料；回答请结合原文核实。';}
 async function loadBooks(){const version=++state.loadVersion,space=state.space;$('status').textContent='正在加载全部资料…';$('status').hidden=false;try{let records;if(state.demo){records=filteredDemo();}else{records=[];const cats=state.category?state.categories.filter(c=>c.id===state.category):state.categories;for(const cat of cats){for(let page=1;;page++){const params=new URLSearchParams({space,page,page_size:100,category_id:cat.id,q:state.query});const result=await api('/api/knowledge?'+params);if(version!==state.loadVersion||space!==state.space)return;records.push(...result.items);$('status').textContent=`正在加载 ${cat.name} · 已读取 ${records.length} 条`;if(page*100>=result.count||!result.items.length)break;}}}if(version!==state.loadVersion)return;state.allItems=[...new Map(records.map(b=>[b.kid,b])).values()];state.total=state.allItems.length;refresh();view?.reset();}finally{if(version===state.loadVersion)$('status').hidden=true;}}
 async function loadSpace(){const space=state.space,version=(state.spaceVersion||0)+1;if(!state.chatBusy)startChat();state.spaceVersion=version;state.loadVersion++;state.category=null;state.page=1;state.query='';state.allItems=[];state.items=[];state.total=0;state.categories=[];$('search').value='';refresh();$('status').hidden=false;$('status').textContent='正在打开图书馆…';try{if(!state.demo){const result=await api('/api/library/shelves?space='+space);if(version!==state.spaceVersion)return;state.categories=result.items;}else state.categories=sampleGroups;await loadBooks();}catch(error){if(version!==state.spaceVersion)return;$('status').hidden=true;throw error;}}
 document.querySelectorAll('[data-space]').forEach(button=>button.onclick=async()=>{if(state.chatBusy){toast('请等当前回答完成后再切换空间。');return;}if(state.space===button.dataset.space)return;state.space=button.dataset.space;state.searchId=null;state.conversationId=null;state.turns=0;state.selected=null;closePanel('reader');$('messages').replaceChildren();message('assistant','已切换知识空间，可以在这里发起新的提问。');document.querySelectorAll('[data-space]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));try{await loadSpace();}catch(error){state.items=[];state.allItems=[];state.total=0;state.categories=[];refresh();toast(error.message);}});
@@ -58,7 +58,50 @@ function message(role,text,sources=[]){const bubble=document.createElement('div'
 $('chat-form').onsubmit=async event=>{event.preventDefault();if(state.chatBusy)return;const input=$('chat-input'),text=input.value.trim();if(!text)return;if(state.demo){toast('请先登录，AI 会基于你的真实知识库检索并回答。');$('login-dialog').showModal();return;}state.chatBusy=true;$('chat-send').disabled=true;$('new-chat').disabled=true;input.value='';message('user',text);const pending=message('assistant','正在准备参考资料…');try{if(!state.searchId){const result=await api('/ai/search',{method:'POST',body:JSON.stringify({question:text.slice(0,500),space:state.space,category_id:state.category,knowledge_id:state.chatKnowledgeId||null,mode:'semantic'}),timeout:45000});state.searchId=result.search_id;pending.textContent=result.sources.length?`找到 ${result.sources.length} 条参考资料，正在组织回答…`:'直接匹配的资料较少，正在生成谨慎的说明…';}const result=await api('/ai/chat',{method:'POST',body:JSON.stringify({search_id:state.searchId,message:text,conversation_id:state.conversationId,expected_turns:state.turns}),timeout:90000});state.conversationId=result.conversation_id;state.turns=result.turns;pending.remove();message('assistant',result.answer,result.sources);}catch(error){pending.textContent=error.message;if([404,409].includes(error.status)){state.searchId=null;state.conversationId=null;state.turns=0;}input.value=text;}finally{state.chatBusy=false;$('chat-send').disabled=false;$('new-chat').disabled=false;}};
 $('search-form').onsubmit=async event=>{event.preventDefault();if(state.chatBusy){toast('请等当前回答完成。');return;}state.query=$('search').value.trim();state.page=1;try{await loadBooks();$('catalog-title').textContent=state.query?'搜索结果':'知识目录';$('catalog-dialog').showModal();}catch(error){toast(error.message);}};
 $('account').onclick=async()=>{if(!state.user){$('login-dialog').showModal();return;}if(state.chatBusy){toast('请等当前回答完成后退出。');return;}try{await api('/logout',{method:'POST'});state.user=null;state.demo=true;state.searchId=null;state.conversationId=null;state.turns=0;state.selected=null;closePanel('reader');closePanel('chat');$('messages').replaceChildren();message('assistant','当前为示例体验，登录后可以使用真实知识库。');await loadSpace();toast('已退出，正在浏览示例馆。');}catch(error){toast(error.message);}};
-$('login-form').onsubmit=async event=>{event.preventDefault();const button=event.currentTarget.querySelector('button');button.disabled=true;$('login-error').textContent='';try{const result=await api('/login',{method:'POST',body:JSON.stringify({username:$('username').value,password:$('password').value})});state.user=result.user;state.demo=false;$('password').value='';$('login-dialog').close();closePanel('reader');await loadSpace();toast('欢迎回来，已加载真实知识。');}catch(error){$('login-error').textContent=error.message;if(!$('login-dialog').open)toast(error.message);}finally{button.disabled=false;}};
+let registering = false;
+function setAuthMode(register) {
+  registering = register;
+  $('auth-title').textContent = register ? '创建你的图书馆账号' : '欢迎回到你的图书馆';
+  $('email-label').hidden = !register;
+  $('email').hidden = !register;
+  $('email').required = register;
+  $('password').minLength = register ? 8 : 1;
+  $('password').maxLength = register ? 15 : 128;
+  $('password').autocomplete = register ? 'new-password' : 'current-password';
+  $('auth-submit').textContent = register ? '注册并进入图书馆' : '进入图书馆';
+  $('auth-switch').textContent = register ? '已有账号？返回登录' : '还没有账号？注册账号';
+  $('login-error').textContent = '';
+}
+$('auth-switch').onclick = () => setAuthMode(!registering);
+$('login-form').onsubmit = async event => {
+  event.preventDefault();
+  const button = $('auth-submit');
+  button.disabled = true;
+  $('auth-switch').disabled = true;
+  $('login-error').textContent = '';
+  try {
+    const username = $('username').value.trim(), password = $('password').value;
+    if (registering) {
+      await api('/register', {method:'POST', body:JSON.stringify({username,password,email:$('email').value.trim()})});
+      setAuthMode(false);
+      toast('注册成功，正在进入图书馆。');
+    }
+    const result = await api('/login', {method:'POST',body:JSON.stringify({username,password})});
+    state.user = result.user;
+    state.demo = false;
+    $('password').value = '';
+    $('login-dialog').close();
+    closePanel('reader');
+    await loadSpace();
+    toast('欢迎回来，已加载真实知识。');
+  } catch (error) {
+    $('login-error').textContent = error.message;
+    if (!$('login-dialog').open) toast(error.message);
+  } finally {
+    button.disabled = false;
+    $('auth-switch').disabled = false;
+  }
+};
 $('appearance').onclick=()=>{const panel=$('appearance-panel');panel.hidden=!panel.hidden;$('appearance').setAttribute('aria-expanded',String(!panel.hidden));};
 const typography={clean:'LibrarySans,"Microsoft YaHei UI",system-ui,sans-serif',round:'"YouYuan","Yuanti SC",LibrarySans,sans-serif',serif:'"Songti SC","SimSun",serif'};
 function applyTypography(value){const selected=Object.hasOwn(typography,value)?value:'clean';document.documentElement.style.setProperty('--font',typography[selected]);$('font-style').value=selected;}

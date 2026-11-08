@@ -18,3 +18,15 @@ body{isolation:isolate}#scene{z-index:0}.overlay{z-index:1}.topbar{position:fixe
 @media(max-width:650px){.intro h1{font-size:25px}.categories button{font-size:12px}.shelf-nameplate strong{font-size:14px}.shelf-nameplate{padding:4px 8px}.style-preview{transform:scale(.9)}.preview-wide{width:103px}}
 #font-style{width:100%;padding:9px;border:1px solid #bed3c4;border-radius:8px;background:#fff;color:var(--ink);font:inherit;font-size:13px}.view-tools{z-index:3}@media(max-width:650px){.space-tabs button{font-size:12px}}
 .bubble pre{white-space:pre;overflow:auto;background:#edf2ed;border:1px solid #d8e3d8;border-radius:8px;padding:12px;margin:12px 0;font:12px/1.7 "Cascadia Code",Consolas,monospace}.bubble code{font-family:"Cascadia Code",Consolas,monospace}.bubble>span>code{background:#edf2ed;padding:1px 4px;border-radius:4px}#new-chat{font-size:12px;min-height:36px;padding:5px 10px;border-radius:10px;background:#e8f1e9;margin-right:6px}
+
+.manage-link{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 12px;border:1px solid #bed3c4;border-radius:12px;color:var(--ink);text-decoration:none;font-size:12px;white-space:nowrap}.manage-link:hover{background:var(--accent-light)}#auth-switch{min-height:44px;padding:6px 0;text-align:left}#login-form #email{font:inherit}
+
+@media(max-width:650px){
+  .topbar>.brand{order:1;flex:1 1 108px;min-width:108px;gap:8px;white-space:nowrap}
+  .topbar>.brand span{font-size:14px}
+  .topbar>.brand>svg{width:25px;height:25px}
+  .topbar>.manage-link{order:2;min-height:36px;padding:6px;font-size:11px}
+  .topbar>.account{order:3;flex:0 0 auto;max-width:88px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .topbar>.space-tabs{order:4;flex:0 0 auto}
+  .topbar>.search{order:5;flex:1 1 120px;min-width:0;max-width:none}
+}

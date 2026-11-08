@@ -13,7 +13,7 @@ from app.routers import (
     spaces,
 )
 
-app = FastAPI(title='知识星海', version='2.0.0', dependencies=[Depends(check_origin)])
+app = FastAPI(title='知识图书馆', version='2.0.0', dependencies=[Depends(check_origin)])
 
 # 保持原有路由注册顺序，避免改变路径匹配行为。
 app.include_router(auth.router)
@@ -51,3 +51,8 @@ def library_preview():
 def management():
     """知识编辑、注册与管理员操作入口。"""
     return FileResponse(STATIC_DIR / 'manage' / 'index.html', headers={'Cache-Control': 'no-cache'})
+
+
+@app.get('/admin', include_in_schema=False)
+def administration():
+    return FileResponse(STATIC_DIR / 'manage' / 'admin.html', headers={'Cache-Control': 'no-cache'})

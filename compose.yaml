@@ -1,0 +1,83 @@
+name: knowledge-library
+
+services:
+  db:
+    image: mysql:8.0.46
+    command: ["--default-time-zone=+08:00"]
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:?请先运行 scripts/prepare_docker.py}
+      MYSQL_USER: ${MYSQL_USER:?请指定数据库用户}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?请指定数据库密码}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?请先运行 scripts/prepare_docker.py}
+    volumes:
+      - mysql_data:/var/lib/mysql
+      # 首次创建数据库时导入旧数据，以后启动不会重复导入。
+      - ./data/docker-init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "MYSQL_PWD=\"$$MYSQL_PASSWORD\" mysql --protocol=TCP -h 127.0.0.1 -u \"$$MYSQL_USER\" \"$$MYSQL_DATABASE\" -Nse 'SELECT 1'"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+    restart: unless-stopped
+
+  embedding:
+    image: knowledge-library-embedding:local
+    build:
+      context: .
+      target: embedding
+    environment:
+      EMBEDDING_ALLOWED_HOSTS: embedding:8011,127.0.0.1:8011,localhost:8011
+    volumes:
+      - type: bind
+        source: ./.models/bge-small-zh-v1.5
+        target: /app/.models/bge-small-zh-v1.5
+        read_only: true
+        bind:
+          create_host_path: false
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8011/health', timeout=5).close()"]
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 60s
+    restart: unless-stopped
+
+  app:
+    image: knowledge-library-app:local
+    build:
+      context: .
+      target: app
+    environment:
+      MYSQL_HOST: db
+      MYSQL_PORT: "3306"
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      EMBEDDING_PROVIDER: local
+      LOCAL_EMBEDDING_URL: http://embedding:8011
+      SEMANTIC_MIN_SCORE: ${SEMANTIC_MIN_SCORE:-0.48}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
+      DEEPSEEK_BASE_URL: ${DEEPSEEK_BASE_URL:-https://api.deepseek.com}
+      DEEPSEEK_MODEL: ${DEEPSEEK_MODEL:-deepseek-flash}
+      AI_TIMEOUT: ${AI_TIMEOUT:-30}
+    ports:
+      - "127.0.0.1:${APP_PORT:-8080}:8000"
+    volumes:
+      - app_backups:/app/data/backups
+    depends_on:
+      db:
+        condition: service_healthy
+      embedding:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/openapi.json', timeout=5).close()"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+  app_backups:

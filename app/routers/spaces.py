@@ -306,6 +306,7 @@ def appearance(payload: s.AppearanceInput, db: Session = Depends(get_db), user=D
 def admin_categories(db: Session = Depends(get_db), user=Depends(security.get_current_user)):
     # 名称列表对普通用户也可用，包含未放到首页的公共门类。
     records = db.query(m.Category).order_by(m.Category.cid).all()
+    shelves = {row.category_id: row.style for row in db.query(m.LibraryShelfAppearance).filter_by(space='public')}
     items = []
     for i, c in enumerate(records):
         setting = db.get(m.PlanetSetting, c.cid)
@@ -313,8 +314,33 @@ def admin_categories(db: Session = Depends(get_db), user=Depends(security.get_cu
             count=svc.scoped(db, user, 'public', c.cid).count(),
             visible=setting.visible if setting else True,
             style=setting.style if setting else svc.STYLES[i % len(svc.STYLES)],
-            position=setting.position if setting else i))
+            position=setting.position if setting else i,
+            shelf_style=shelves.get(c.cid, LIBRARY_DEFAULT_STYLES.get(c.name, 'glass')),
+            has_shelf=c.cid in shelves))
     return {'items': items}
+
+
+@router.put('/admin/categories/{cid}')
+def edit_library_category(cid: int, payload: s.AdminCategoryInput, db: Session = Depends(get_db),
+                          admin=Depends(security.require_admin)):
+    category = db.query(m.Category).filter_by(cid=cid).with_for_update().first()
+    if not category: raise HTTPException(404, '公共分类不存在')
+    setting = db.get(m.PlanetSetting, cid)
+    shelf = db.query(m.LibraryShelfAppearance).filter_by(space='public', category_id=cid).first()
+    category.name, category.description = payload.name, payload.description
+    if setting is None:
+        setting = m.PlanetSetting(category_id=cid); db.add(setting)
+    setting.visible = payload.visible
+    if shelf is None:
+        shelf = m.LibraryShelfAppearance(space='public', category_id=cid); db.add(shelf)
+    shelf.style = payload.shelf_style
+    db.add(m.SpaceEvent(user_id=admin.uid, action='编辑公共书架',
+                       detail=json.dumps(dict(category_id=cid, **payload.model_dump()), ensure_ascii=False)))
+    try:
+        db.commit()
+    except IntegrityError:
+        db.rollback(); raise HTTPException(409, '分类名称已存在，请更换名称')
+    return {'message': '分类与书架设置已保存'}
 
 
 @router.put('/admin/categories/{cid}/planet')
@@ -327,7 +353,8 @@ def planet(cid: int, payload: s.PlanetInput, db: Session = Depends(get_db), admi
     db.commit(); return payload.model_dump()
 
 
-@router.put('/admin/planets')
+@router.patch('/admin/categories/display')
+@router.put('/admin/planets', include_in_schema=False)
 def batch_planets(payload: s.PlanetBatchInput, db: Session = Depends(get_db), admin=Depends(security.require_admin)):
     cats = db.query(m.Category).order_by(m.Category.cid).all()
     for i, cat in enumerate(cats):
@@ -335,7 +362,7 @@ def batch_planets(payload: s.PlanetBatchInput, db: Session = Depends(get_db), ad
         if row is None:
             row = m.PlanetSetting(category_id=cat.cid, style=svc.STYLES[i % len(svc.STYLES)], position=i); db.add(row)
         row.visible = payload.visible
-    db.add(m.SpaceEvent(user_id=admin.uid, action='批量行星展示', detail=json.dumps(payload.model_dump())))
+    db.add(m.SpaceEvent(user_id=admin.uid, action='批量书架展示', detail=json.dumps(payload.model_dump())))
     db.commit()
     return dict(count=len(cats), visible=payload.visible)
 
@@ -370,6 +397,17 @@ def moderate(kid: int, payload: s.ModerationInput, db: Session = Depends(get_db)
     db.add(m.SpaceEvent(user_id=admin.uid, action='下架公有知识' if payload.hidden else '恢复公有知识',
         detail=json.dumps(dict(knowledge_id=kid, title=item.title, reason=payload.reason), ensure_ascii=False)))
     db.commit(); return {'message': '已下架' if row.hidden else '已恢复'}
+
+
+@router.get('/admin/knowledge/{kid}')
+def admin_knowledge_detail(kid: int, db: Session = Depends(get_db), admin=Depends(security.require_admin)):
+    # 管理员可核实已下架的公有内容，不能通过此接口读取私有知识。
+    item = db.query(m.Knowledge).filter_by(kid=kid, status='published').first()
+    if not item: raise HTTPException(404, '公有知识不存在')
+    data = svc.serialize(db, item, admin, detail=True)
+    moderation = db.get(m.Moderation, kid)
+    data['moderation_reason'] = moderation.reason if moderation else ''
+    return data
 
 
 @router.post('/knowledge/{kid}/reindex')

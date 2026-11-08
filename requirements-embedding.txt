@@ -1,0 +1,4 @@
+# 与当前已经验证可用的模型环境保持一致；CPU 版 PyTorch 在 Dockerfile 中安装。
+transformers==5.16.1
+huggingface-hub==1.29.0
+safetensors==0.8.0

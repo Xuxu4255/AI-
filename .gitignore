@@ -5,6 +5,7 @@ __pycache__/
 venv/
 .venv/
 .env
+.env.docker
 .vscode/
 .idea/
 *.log
@@ -14,3 +15,4 @@ database_experiment/
 .models/
 data/backups/
 data/reports/
+data/docker-init/

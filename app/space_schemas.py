@@ -1,4 +1,4 @@
-"""知识星海接口校验。公开性与所有权由服务端执行，拒绝额外字段。"""
+"""知识书架接口校验。公开性与所有权由服务端执行，拒绝额外字段。"""
 from typing import Optional, Literal
 from pydantic import BaseModel, ConfigDict, Field
 from app.schemas import KnowledgeSubmission
@@ -62,6 +62,13 @@ class PlanetInput(Strict):
 class ModerationInput(Strict):
     hidden: bool
     reason: str = Field(default='', max_length=500)
+
+
+class AdminCategoryInput(Strict):
+    name: str = Field(min_length=1, max_length=100)
+    description: str = Field(default='', max_length=1000)
+    shelf_style: Literal['glass', 'oak', 'arch', 'wide'] = 'glass'
+    visible: bool = True
 
 
 class PlanetBatchInput(Strict):

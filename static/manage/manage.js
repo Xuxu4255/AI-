@@ -83,7 +83,7 @@ async function signedIn(user){
   $('profile-name').textContent=user.username;$('username-label').textContent=user.username+' 的空间';
   $('profile-button').textContent=user.username.slice(0,1).toUpperCase();show('admin-nav',user.role==='admin');
   show('boot',false);show('auth',false);show('app');window.scrollTo({top:0,left:0});
-  if(!location.hash)location.hash='#/personal';else await route();
+  if(!location.hash||location.hash==='#/personal')location.hash='#/personal/list';else await route();
   api('/ai/status').then(info=>{$('model-status').textContent=info.embedding.configured?'本地语义模型已连接':'关键词搜索可用 · 语义模型待连接';}).catch(()=>{});
 }
 async function refreshCategories(){
@@ -113,6 +113,7 @@ async function route(){
   if(!state.user)return;
   window.scrollTo({top:0,left:0});
   const ticket=++state.nav,parts=location.hash.replace(/^#\//,'').split('/');
+  if(parts[0]==='admin'){location.replace('/admin');return;}
   state.view=parts[0]==='admin'?'admin':parts[1]==='category'||parts[1]==='list'?'list':'graph';
   state.space=parts[0]==='public'||parts[0]==='admin'?'public':'personal';show('profile-menu',false);
   state.category=parts[1]==='category'?Number(parts[2]):null;
@@ -130,7 +131,7 @@ async function route(){
     if(state.view==='list'){
       const cat=currentCategory();
       if(state.category!==null&&!cat){toast('门类不存在或无权访问');location.hash='#/'+state.space;return;}
-      $('category-title').textContent=cat?.name||(state.space==='personal'?'我的全部知识':'公有知识星海');
+      $('category-title').textContent=cat?.name||(state.space==='personal'?'我的全部知识':'公有知识图书馆');
       $('category-caption').textContent=state.space==='personal'?'你的笔记与有效收藏 · 私有内容仅自己可见':'所有用户主动分享的知识 · 点击查看原文与来源';
       $('search-scope').textContent='范围：'+(cat?.name||(state.space==='personal'?'我的知识':'公有知识'));
       $('banner-planet').className='planet '+(cat?.style||(state.space==='personal'?'earth':'sun'));
@@ -143,10 +144,10 @@ async function route(){
       $('graph-description').textContent=personal?'把知识连接成自己的世界':'探索共同分享的知识';
       $('central-planet').className='planet '+(personal?'earth':'sun');
       $('central-planet').parentElement.classList.toggle('public-center',!personal);
-      $('center-label').textContent=personal?'我的星球':'共同的知识星海';
+      $('center-label').textContent=personal?'我的星球':'共同的知识图书馆';
       $('size-legend').innerHTML='<i></i>'+(personal?'光点':'行星')+'大小表示知识条数';
       show('empty-graph',!state.nodes.length);
-      if(!state.nodes.length){$('empty-graph').querySelector('h3').textContent=personal?'你的知识星海，从这里开始':'这片星海，等待第一份分享';$('empty-graph').querySelector('p').textContent=personal?'新建一个门类，放入第一份知识。':'分享你的知识，让新的行星亮起来。';$('empty-create').textContent=personal?'＋ 新建门类':'＋ 新建知识';}
+      if(!state.nodes.length){$('empty-graph').querySelector('h3').textContent=personal?'你的知识图书馆，从这里开始':'这片星海，等待第一份分享';$('empty-graph').querySelector('p').textContent=personal?'新建一个门类，放入第一份知识。':'分享你的知识，让新的行星亮起来。';$('empty-create').textContent=personal?'＋ 新建门类':'＋ 新建知识';}
       state.selected=state.nodes.find(n=>n.id===state.lastSelected?.[state.space])||state.nodes[0]||null;await renderInspector();
     }
   }catch(error){if(ticket===state.nav){report(error);$('inspector-content').innerHTML=`<div class="error-state">${esc(error.message)}<button id="retry-route">重新加载</button></div>`;$('retry-route').onclick=route;}}
@@ -235,7 +236,7 @@ function bindOpen(root){root.querySelectorAll('[data-open]').forEach(b=>b.onclic
 function renderCards(items,total){
   $('result-count').textContent=`${state.search?'找到':'共'} ${total} 条知识`;
   $('result-title').textContent=state.search?'相关知识':state.question?'关键词搜索结果':'门类知识';
-  $('knowledge-results').innerHTML=items.map(k=>`<article class="knowledge-card" tabindex="0" role="button" data-open="${k.kid}"><div class="card-top"><h3>${esc(k.title)}</h3><span class="pill ${k.visibility==='private'?'private':''}">${k.hidden?'已下架':k.visibility==='private'?'仅自己可见':'公有知识'}</span></div><p>${esc(k.summary||k.excerpt||'')}</p><div class="card-meta"><span>${esc(k.author||'知识星海')}</span><span>${date(k.updated_at)}</span>${k.bookmarked?'<span class="pill">已收藏</span>':''}<span class="card-link">查看知识 ↗</span></div></article>`).join('')||`<div class="empty-state"><h3>${state.question?'暂未找到相关知识':'这里还没有知识'}</h3><p>${state.question?'换一种描述，或切换关键词搜索试试。':'添加一份知识，让这个门类亮起来。'}</p></div>`;
+  $('knowledge-results').innerHTML=items.map(k=>`<article class="knowledge-card" tabindex="0" role="button" data-open="${k.kid}"><div class="card-top"><h3>${esc(k.title)}</h3><span class="pill ${k.visibility==='private'?'private':''}">${k.hidden?'已下架':k.visibility==='private'?'仅自己可见':'公有知识'}</span></div><p>${esc(k.summary||k.excerpt||'')}</p><div class="card-meta"><span>${esc(k.author||'知识图书馆')}</span><span>${date(k.updated_at)}</span>${k.bookmarked?'<span class="pill">已收藏</span>':''}<span class="card-link">查看知识 ↗</span></div></article>`).join('')||`<div class="empty-state"><h3>${state.question?'暂未找到相关知识':'这里还没有知识'}</h3><p>${state.question?'换一种描述，或切换关键词搜索试试。':'添加一份知识，让这个门类亮起来。'}</p></div>`;
   bindOpen($('knowledge-results'));$('knowledge-results').querySelectorAll('[data-open]').forEach(e=>e.onkeydown=ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();e.click();}});
 }
 async function loadItems(preserveChat=false){
@@ -409,7 +410,7 @@ function cancelAppearance(){if(previewBefore)applyAppearance(previewBefore);prev
 
 hydrateIcons();
 $('auth-form').onsubmit=async e=>{e.preventDefault();const b=$('auth-submit');buttonBusy(b,true);$('auth-error').textContent='';const form=e.currentTarget,username=form.elements.username.value.trim(),password=form.elements.password.value;try{if(state.register)await send('/register',{username,password,email:form.elements.email.value});const result=await send('/login',{username,password});await signedIn(result.user);}catch(error){$('auth-error').textContent=error.message;}finally{buttonBusy(b,false);}};
-$('auth-switch').onclick=()=>{state.register=!state.register;show('email-label',state.register);$('auth-form').elements.email.required=state.register;$('auth-form').elements.password.minLength=state.register?8:1;$('auth-form').elements.password.maxLength=state.register?15:128;$('auth-form').elements.password.autocomplete=state.register?'new-password':'current-password';$('auth-title').textContent=state.register?'创建你的星球':'欢迎回来';$('auth-subtitle').textContent=state.register?'注册账号，开启个人知识空间。':'登录，继续探索你的知识星海。';$('auth-submit').textContent=state.register?'注册并进入星海':'登录星海';$('auth-switch').textContent=state.register?'已有账号？返回登录':'还没有账号？创建个人星球';$('auth-error').textContent='';};
+$('auth-switch').onclick=()=>{state.register=!state.register;show('email-label',state.register);$('auth-form').elements.email.required=state.register;$('auth-form').elements.password.minLength=state.register?8:1;$('auth-form').elements.password.maxLength=state.register?15:128;$('auth-form').elements.password.autocomplete=state.register?'new-password':'current-password';$('auth-title').textContent=state.register?'创建账号':'欢迎回来';$('auth-subtitle').textContent=state.register?'注册账号，开启个人知识空间。':'登录，继续探索你的知识图书馆。';$('auth-submit').textContent=state.register?'注册并进入图书馆':'登录图书馆';$('auth-switch').textContent=state.register?'已有账号？返回登录':'还没有账号？注册账号';$('auth-error').textContent='';};
 $('profile-button').onclick=()=>$('profile-menu').classList.toggle('hidden');
 document.addEventListener('click',e=>{if(!e.target.closest('#profile-button,#profile-menu'))show('profile-menu',false);});
 $('logout').onclick=async()=>{try{await send('/logout',{});signedOut();}catch(e){report(e);}};
@@ -417,7 +418,7 @@ $('new-knowledge').onclick=()=>openEditor().catch(report);$('new-category').oncl
 $('empty-create').onclick=()=>state.space==='personal'?newCategory():openEditor().catch(report);
 $('manage-category').onclick=()=>manageCategory().catch(report);
 $('all-categories').onclick=()=>{location.hash=`#/${state.space}/list`;};
-$('list-view').onclick=()=>{location.hash=`#/${state.space}/list`;};$('back-graph').onclick=()=>{location.hash='#/'+state.space;};
+$('list-view').onclick=()=>{location.hash=`#/${state.space}/list`;};$('back-graph').onclick=()=>{location.href='/library';};
 $('pause-orbit').onclick=async()=>{previewAppearance({paused:!state.appearance.paused,reduced_motion:state.appearance.reduced_motion});try{state.savedAppearance=await send('/api/appearance',state.appearance,'PUT');}catch(e){report(e);}};
 $('reset-orbit').onclick=()=>{state.zoom=1;state.phase=0;positionNodes();};$('zoom-in').onclick=()=>{state.zoom=Math.min(1.8,state.zoom+.15);};$('zoom-out').onclick=()=>{state.zoom=Math.max(.65,state.zoom-.15);};
 $('top-search').onsubmit=e=>{e.preventDefault();runSearch($('top-question').value).catch(report);};$('category-search').onsubmit=e=>{e.preventDefault();runSearch($('category-question').value).catch(report);};

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#edf4ef">
+  <title>平台管理 · 知识图书馆</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/static/manage/admin.css?v=20261108-2">
+  <script src="/static/manage/admin.js?v=20261108-2" defer></script>
+</head>
+<body>
+<svg class="svg-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 5c-3-2-7-2-10-1v15c3-1 7-1 10 1 3-2 7-2 10-1V4c-3-1-7-1-10 1Z"/><path d="M12 5v15"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 9a8 8 0 0 0-14-3L3 9m0-6v6h6m-5 6a8 8 0 0 0 14 3l3-3m0 6v-6h-6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Z"/><path d="m8 12 3 3 5-6"/></symbol>
+</defs></svg>
+
+<section id="access-state" class="access-state glass" role="status"><svg><use href="#i-book"/></svg><h1 id="access-title">正在打开管理中心</h1><p id="access-description">核实登录状态，读取公共知识。</p><a id="access-link" class="button primary" href="/library" hidden>返回图书馆登录 <svg><use href="#i-arrow"/></svg></a></section>
+
+<div id="dashboard" class="dashboard" hidden>
+  <aside class="sidebar glass">
+    <a class="brand" href="/library"><svg><use href="#i-book"/></svg><span>知识图书馆<small>LIBRARY WORKSPACE</small></span></a>
+    <span class="nav-caption">管理空间</span>
+    <nav aria-label="管理导航">
+      <a href="#content" data-tab="content"><svg><use href="#i-book"/></svg>公共知识<span id="nav-count"></span></a>
+      <a href="#categories" data-tab="categories"><svg><use href="#i-grid"/></svg>分类与书架</a>
+      <a href="#events" data-tab="events"><svg><use href="#i-clock"/></svg>操作记录</a>
+    </nav>
+    <div class="sidebar-note"><svg><use href="#i-shield"/></svg><strong>各自珍藏，共同生长。</strong><p>管理公共内容，<br>尊重每个人的私有空间。</p></div>
+    <div class="sidebar-footer"><span class="avatar" id="avatar">A</span><div><strong id="username"></strong><small>管理员</small></div><button id="logout" class="quiet" aria-label="退出登录">退出</button></div>
+  </aside>
+
+  <main>
+    <header class="topbar"><p>工作台 <span>/</span> <strong id="breadcrumb">公共知识</strong></p><div><button id="refresh" class="icon-button" aria-label="刷新管理数据" title="刷新"><svg><use href="#i-refresh"/></svg></button><a class="button outline" href="/library">返回图书馆 <svg><use href="#i-arrow"/></svg></a></div></header>
+    <section class="page-heading"><div><span class="eyebrow">A LITTLE ORDER, MORE DISCOVERY</span><h1>让知识，有序生长<span>。</span></h1><p>整理公共内容，照顾每一份分享。</p></div><button id="new-category" class="button primary"><svg><use href="#i-plus"/></svg>新建书架</button></section>
+    <section class="stats" aria-label="公共知识概览">
+      <article class="stat glass"><span class="stat-icon"><svg><use href="#i-book"/></svg></span><div><span>公有知识</span><strong id="stat-total">—</strong><small>所有已分享的知识</small></div></article>
+      <article class="stat glass"><span class="stat-icon"><svg><use href="#i-grid"/></svg></span><div><span>当前书架</span><strong id="stat-categories">—</strong><small>有内容或独立设置的分类</small></div></article>
+      <article class="stat glass"><span class="stat-icon warm"><svg><use href="#i-eye"/></svg></span><div><span>已下架知识</span><strong id="stat-hidden">—</strong><small>对其他用户暂停展示</small></div></article>
+    </section>
+    <p id="page-error" class="error-banner" role="alert" hidden></p>
+
+    <section id="content-view" class="panel glass" aria-labelledby="content-title">
+      <div class="panel-heading"><div><h2 id="content-title">公共知识</h2><p>分享无需事先审核；发现问题时，可以下架并说明原因。</p></div><span class="pill" id="content-count"></span></div>
+      <div class="toolbar"><div class="filters" role="group" aria-label="知识状态"><button data-state="all" aria-pressed="true">全部 <span id="count-all"></span></button><button data-state="active" aria-pressed="false">展示中 <span id="count-active"></span></button><button data-state="hidden" aria-pressed="false">已下架 <span id="count-hidden"></span></button></div><div class="search-controls"><label class="search-field"><svg aria-hidden="true"><use href="#i-search"/></svg><span class="sr-only">搜索知识标题、摘要或作者</span><input id="knowledge-search" type="search" placeholder="搜索标题、摘要或作者…" maxlength="500"></label><label><span class="sr-only">知识分类</span><select id="knowledge-category"><option value="">全部分类</option></select></label></div></div>
+      <div class="table-wrap"><table class="knowledge-table"><thead><tr><th scope="col">知识内容</th><th scope="col">所属分类</th><th scope="col">分享者</th><th scope="col">状态</th><th scope="col">更新时间</th><th scope="col">操作</th></tr></thead><tbody id="knowledge-rows"></tbody></table></div>
+      <div id="content-empty" class="empty-state" hidden><svg><use href="#i-search"/></svg><h3>没有找到符合条件的知识</h3><p>试试其他关键词，或清除当前筛选。</p><button id="clear-filters" class="button outline">清除筛选</button></div>
+      <footer class="pagination"><span id="page-summary" role="status" aria-live="polite"></span><div><button id="prev-page" class="button outline">上一页</button><span id="page-number"></span><button id="next-page" class="button outline">下一页</button></div></footer>
+    </section>
+
+    <section id="categories-view" class="panel glass" aria-labelledby="categories-title" hidden>
+      <div class="panel-heading"><div><h2 id="categories-title">分类与书架</h2><p>选择书架样式，整理分类，控制图书馆中的展示。</p></div></div>
+      <div class="toolbar"><label class="search-field"><svg aria-hidden="true"><use href="#i-search"/></svg><span class="sr-only">搜索分类</span><input id="category-search" type="search" placeholder="搜索分类名称…"></label><div class="category-tools"><label><span class="sr-only">分类范围</span><select id="category-scope"><option value="current">当前书架</option><option value="all">全部分类</option></select></label><button id="show-all" class="button outline">全部展示</button><button id="hide-all" class="button outline">全部隐藏</button></div></div>
+      <div id="category-grid" class="category-grid"></div>
+      <div id="category-empty" class="empty-state" hidden><h3>这里还没有对应的分类</h3><p>创建一个书架，或切换到全部分类查看。</p></div>
+      <p class="panel-note">隐藏书架只影响图书馆展示，分类中的公有知识仍可被搜索到。</p>
+    </section>
+
+    <section id="events-view" class="panel glass" aria-labelledby="events-title" hidden><div class="panel-heading"><div><h2 id="events-title">操作记录</h2><p>最近 100 次公共内容与展示设置的管理操作。</p></div></div><div id="event-list" class="event-list"></div><div id="events-empty" class="empty-state" hidden><h3>还没有管理操作</h3><p>之后的维护操作会记录在这里。</p></div></section>
+    <footer class="page-footer"><span>知识图书馆 · 管理中心</span><span id="service-status" role="status">正在检查模型连接…</span></footer>
+  </main>
+</div>
+
+<dialog id="form-dialog" class="modal glass"><form id="action-form"><div class="modal-heading"><div><span class="eyebrow">LIBRARY MANAGEMENT</span><h2 id="dialog-title"></h2></div><button type="button" class="icon-button" data-close="form-dialog" aria-label="关闭窗口"><svg><use href="#i-close"/></svg></button></div><div id="form-fields"></div><p id="form-error" class="form-error" role="alert"></p><footer class="dialog-actions"><button type="button" class="button outline" data-close="form-dialog">取消</button><button id="form-submit" class="button primary" type="submit">保存设置</button></footer></form></dialog>
+<dialog id="detail-dialog" class="modal detail-modal glass"><div class="modal-heading"><span class="eyebrow">KNOWLEDGE PREVIEW</span><button class="icon-button" data-close="detail-dialog" aria-label="关闭知识预览"><svg><use href="#i-close"/></svg></button></div><div id="detail-content"></div></dialog>
+<div id="toast" class="toast glass" role="status" hidden></div>
+</body>
+</html>
